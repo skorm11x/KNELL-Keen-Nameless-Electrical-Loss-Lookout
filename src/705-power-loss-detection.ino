@@ -11,22 +11,22 @@
 int debug; // control variable for print statements
 float battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
 FuelGauge fuel; // fuel object used to access the battery monitoring circuit
-int LED1 = D1;
+int LED1 = D5;
 
 /*
   Function prototypes for C pre-processor
 */
-void get_battery_voltage()
-void flash_led(int LED, int time)
-void pinMode(uint16_t pin, PinMode mode)
+void get_battery_voltage();
+void flash_led(int LED, int time);
+void pinMode(uint16_t pin, PinMode mode);
 
 
 // setup() runs once, when the device is first turned on.
 void setup() {
   // Put initialization like pinMode and begin functions here.
-  pinMode(LED, OUTPUT);               // sets pin as output
+  pinMode(LED1, OUTPUT);               // sets pin as output
   debug = 1; // 0  represents no debug, 1 represents debug
-  Serial.begin();
+  Serial.begin(9600);
   Serial.println("Hello World!");
 }
 
@@ -34,9 +34,9 @@ void setup() {
 void loop() {
   
   if(debug){
-    println("Beginning main loop in debug.")
-    println("Flashing LED: ")
-    flash_led(D1, 200);
+    Serial.println("Beginning main loop in debug.");
+    Serial.println("Flashing LED: ");
+    flash_led(LED1, 200);
   }
   else{
     //TBD
