@@ -25,6 +25,7 @@ int debug; // control variable for print statements
 float cell_sig_str; //celluar signal strength
 float cell_sig_qual; //celluar signal quality
 float battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
+bool isOnWallPower;
 unsigned long lastSync = millis();
 // char *cell_private_ip; //cellular connection private ip, TBD
 int LED1 = D5;
@@ -103,6 +104,7 @@ void get_battery_voltage(){
 }
 
 /*
+  TEST/Debug function.
   Flash the LED: turning on for a set time and then turning off.
   LED: the led setup to be turned on and off
   time: time in milliseconds, as an integer
