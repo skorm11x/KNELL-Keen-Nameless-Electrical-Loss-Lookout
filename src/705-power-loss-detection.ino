@@ -33,7 +33,8 @@ bool isOnWallPower;
 unsigned long lastSync = millis();
 // char *cell_private_ip; //cellular connection private ip, TBD
 int LED1 = D5;
-//int USB_PWR = VUSB;
+int lastPowerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE); 
+//int powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
 
 /*
   Function prototypes for C pre-processor
@@ -42,6 +43,13 @@ void get_battery_voltage();
 void check_day_time_sync();
 void flash_led(int LED, int time);
 void pinMode(uint16_t pin, PinMode mode);
+
+    // POWER_SOURCE_UNKNOWN = 0,
+    // POWER_SOURCE_VIN = 1,
+    // POWER_SOURCE_USB_HOST = 2,
+    // POWER_SOURCE_USB_ADAPTER = 3,
+    // POWER_SOURCE_USB_OTG = 4,
+    // POWER_SOURCE_BATTERY = 5
 
 
 // setup() runs once, when the device is first turned on.
@@ -77,8 +85,15 @@ void setup() {
 
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
+  int powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
   check_day_time_sync();
-  //isOnWallPower = digitalRead(USB_PWR);
+  if (powerSource != lastPowerSource) {
+      // the power source just changed from its initial 
+      if(powerSource == 5) {
+        Particle.publish("onBattery", "true");
+        delay(2000);
+      }
+  }
   if(debug){
     // Serial.println("Beginning main loop in debug.");
     // Serial.println("Flashing LED: ");
