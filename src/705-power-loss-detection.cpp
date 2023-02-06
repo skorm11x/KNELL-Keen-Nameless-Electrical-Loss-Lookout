@@ -11,10 +11,13 @@
  * Date: 2 February 2023
  */
 
+// The following is our call to the community library for device diagnostics
+// https://github.com/rickkas7/DiagnosticsHelperRK
+#include "DiagnosticsHelperRK.h"
 void setup();
 void loop();
 int ledToggle(String command);
-#line 8 "/Users/christopherkosik/Documents/particle_deviceos/705-power-loss-detection/src/705-power-loss-detection.ino"
+#line 11 "/Users/christopherkosik/Documents/particle_deviceos/705-power-loss-detection/src/705-power-loss-detection.ino"
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 /*
@@ -29,15 +32,18 @@ SYSTEM_THREAD(ENABLED); // handles data/ cloud messaging in a seperate thread fr
 /*
   Global variables, including class definitions
 */
+particle::Future<bool> publish(const char* name, const char* data);
 FuelGauge fuel; // fuel object used to access the battery monitoring circuit
 SerialLogHandler logHandler;
 int debug; // control variable for print statements
 float cell_sig_str; //celluar signal strength
 float cell_sig_qual; //celluar signal quality
 float battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
+bool isOnWallPower;
 unsigned long lastSync = millis();
 // char *cell_private_ip; //cellular connection private ip, TBD
 int LED1 = D5;
+//int USB_PWR = VUSB;
 
 /*
   Function prototypes for C pre-processor
@@ -55,6 +61,7 @@ void setup() {
 
   // Put initialization like pinMode and begin functions here.
   pinMode(LED1, OUTPUT);               // sets pin as output
+  //pinMode(USB_PWR, INPUT);
   debug = 1; // 0  represents no debug, 1 represents debug
 
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
@@ -81,6 +88,7 @@ void setup() {
 // loop() runs over and over again, as quickly as it can execute.
 void loop() {
   check_day_time_sync();
+  //isOnWallPower = digitalRead(USB_PWR);
   if(debug){
     // Serial.println("Beginning main loop in debug.");
     // Serial.println("Flashing LED: ");
@@ -91,7 +99,7 @@ void loop() {
       cell_sig_str = sig.getStrength();
       cell_sig_qual = sig.getQuality();
       Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
-
+      get_battery_voltage();
     }
   }
   else{
@@ -108,11 +116,12 @@ void loop() {
 void get_battery_voltage(){
   battery_voltage = fuel.getVCell();
   if(debug == 1){
-    Serial.printf("voltage=%.2f", battery_voltage);
+    Log.info("Current battery voltage: %f", battery_voltage);
   }
 }
 
 /*
+  TEST/Debug function.
   Flash the LED: turning on for a set time and then turning off.
   LED: the led setup to be turned on and off
   time: time in milliseconds, as an integer
