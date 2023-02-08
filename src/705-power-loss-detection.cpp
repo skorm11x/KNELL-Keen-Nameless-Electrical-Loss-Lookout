@@ -47,6 +47,29 @@ int initPowerSource;
 int lastPowerSource = -1;
 
 /*
+  define a structure to map the integer power codes to names of power sources
+      POWER_SOURCE_UNKNOWN = 0,
+		  POWER_SOURCE_VIN = 1,
+			POWER_SOURCE_USB_HOST = 2,
+			POWER_SOURCE_USB_ADAPTER = 3,
+			POWER_SOURCE_USB_OTG = 4,
+			POWER_SOURCE_BATTERY = 5
+*/ 
+typedef struct power_codes {
+  int key;
+  const char *value;
+} POWER_CODES;
+
+POWER_CODES p_table[] = {
+  {0, "Unknown power source"}, 
+  {1, "VIN power source"}, 
+  {2, "Wall AC power source"}, 
+  {3, "Wall AC power source"},
+  {4, "Wall AC power source"},
+  {5, "Battery power source"}, 
+};
+
+/*
   Function prototypes for C pre-processor
 */
 void get_battery_voltage();
@@ -60,7 +83,7 @@ void pinMode(uint16_t pin, PinMode mode);
 void setup() {
   // This is how we expose a variable to GET requests from the cloud
   Particle.variable("debug", debug);
-  initPowerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE); //this should be USB/ wall power for our design
+  initPowerSource = 3; //this should be USB/ wall power for our design
   pinMode(LED1, OUTPUT);               // sets pin as output
   debug = 0; // 0  represents no debug, 1 represents debug
 
@@ -158,41 +181,46 @@ void check_day_time_sync() {
 void detect_power_source() {
   bool success;
   int powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+  String powerSourceStr = p_table[powerSource].value;
   if (powerSource != initPowerSource && powerSource != lastPowerSource) {
       // the power source just changed from its initial 
       // wait 5 seconds and double check to see if it was just a blip/ misread then affirm or break
       if(debug) {
-        Log.info("Potential Power source change: %d", powerSource);
+        Log.info("Potential Power source change: %s", powerSourceStr);
       } 
       delay(5000);
       powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
       if(powerSource != initPowerSource) {
         if(debug) {
-          Log.info("Confirmed Power source change: %d", powerSource);
+          Log.info("Confirmed Power source change: %s", powerSourceStr);
         }
         if(powerSource == 5) {
           get_battery_voltage();
-          success = Particle.publish("From Wall power to Battery: Power Loss", String("Changed from "+String(initPowerSource)+" to: battery @"+battery_voltage+" V."));
+          //String status = String("Changed from "+String(initPowerSource)+" to: battery @"+battery_voltage+" V.");
+          String status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr);
+          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           lastPowerSource = powerSource;
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("From Wall power to Battery: Power Loss", String("Changed from "+String(initPowerSource)+" to: battery @"+battery_voltage+" V."));
+            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           }
         }
         if(powerSource == 1) {
-          success = Particle.publish("From Wall power to VIN: Power Loss", String("Changed from "+String(initPowerSource)+" to: VIN."));
+          String status = String("Changed from "+powerSourceStr+" to: VIN.");
+          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("From Wall power to VIN: Power Loss", String("Changed from "+String(initPowerSource)+" to: VIN."));
+            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           }
           lastPowerSource = powerSource;
         }
         // should never get here if we initialized initPowerSource to USB correctly
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          success = Particle.publish("Power source: USB", String("Changed from "+String(initPowerSource)+" to: USB/Wall power."));
+          String status = String((initPowerSource)+" to: USB/Wall power.");
+          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("Power source: USB", String("Changed from "+String(initPowerSource)+" to: USB/Wall power."));
+            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           }
           lastPowerSource = powerSource;
         }
@@ -203,19 +231,20 @@ void detect_power_source() {
     // and then we restored back to the original initialized power source 
     // Basically, this is going onto battery for a while and then back to USB power
     if(debug) {
-      Log.info("Potential Power source change: %d", powerSource);
+      Log.info("Potential Power source change: %s", powerSourceStr);
     } 
     delay(5000);
     powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
     if(powerSource == initPowerSource) {
       if(debug) {
-        Log.info("Confirmed Power source change: %d", powerSource);
+        Log.info("Confirmed Power source change: %s", powerSourceStr);
       }
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          success = Particle.publish("Power source: USB", String("Changed from "+String(initPowerSource)+" to: USB/Wall power."));
+          String status = String("Changed from "+powerSourceStr+" to: USB/Wall power.");
+          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("Power source: USB", String("Changed from "+String(initPowerSource)+" to: USB/Wall power."));
+            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
           }
           lastPowerSource = powerSource;
         }
