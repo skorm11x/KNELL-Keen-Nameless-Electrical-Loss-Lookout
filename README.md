@@ -1,10 +1,10 @@
-# 705-power-loss-detection
 
-A Particle project named 705-power-loss-detection
+# KNELL: Keen Nameless Electronic Loss Lookout
+## 705-power-loss-detection
 
-## Welcome to your project!
+A cellular Internet of Things (IOT) device that can detect power loss from main AC. Designed as a system as a whole to send out notifications to facility managers/ Staff of interest so that memebers can perform graceful shutdown of key Information Technology infrastructure and services withon alloted Uninterrupted Power Supply (UPS) alloted time. 
 
-Every new Particle project is composed of 3 important elements that you'll see have been created in your project directory for 705-power-loss-detection.
+## Particle software orginization
 
 #### ```/src``` folder:  
 This is the source folder that contains the firmware files for your project. It should *not* be renamed. 
@@ -18,18 +18,28 @@ This file is the firmware that will run as the primary application on your Parti
 #### ```project.properties``` file:  
 This is the file that specifies the name and version number of the libraries that your project depends on. Dependencies are added automatically to your `project.properties` file when you add a library to a project using the `particle library add` command in the CLI or add a library in the Desktop IDE.
 
-## Adding additional files to your project
-
-#### Projects with multiple sources
-If you would like add additional files to your application, they should be added to the `/src` folder. All files in the `/src` folder will be sent to the Particle Cloud to produce a compiled binary.
+## Current libraries in use
+ DiagnosticsHelperRK : a library to access lower level things inside of the Device OS that particle boards run. Specifically, we use it to read the system power source. 
+ Credit to rickkas7: https://github.com/rickkas7/DiagnosticsHelperRK
+ MIT license type so can be utilized for proprietery/ commercial use. 
 
 #### Projects with external libraries
+TODO: we need to restructure the simple library use in this repo to match the below: 
+
 If your project includes a library that has not been registered in the Particle libraries system, you should create a new folder named `/lib/<libraryname>/src` under `/<project dir>` and add the `.h`, `.cpp` & `library.properties` files for your library there. Read the [Firmware Libraries guide](https://docs.particle.io/guide/tools-and-features/libraries/) for more details on how to develop libraries. Note that all contents of the `/lib` folder and subfolders will also be sent to the Cloud for compilation.
 
-## Compiling your project
+## Device setup
 
-When you're ready to compile your project, make sure you have the correct Particle device target selected and run `particle compile <platform>` in the CLI or click the Compile button in the Desktop IDE. The following files in your project folder will be sent to the compile service:
+Follow the Boron 404x quickstart: https://tools.particle.io/setup
+Specifically, there may be some issues with the default firmware/ version of device OS that came installed on the device. Please visit the device doctor for diagnosing any problems encountered with the device not connecting to the cloud properly:
+https://docs.particle.io/tools/doctor/
 
-- Everything in the `/src` folder, including your `.ino` application file
-- The `project.properties` file for your project
-- Any libraries stored under `lib/<libraryname>/src`
+Once firmware is flashed properly you should have success for connection to the particle cloud. It is recommended you download the mobile app onto your device and log onto the particle cloud console https://console.particle.io/ to see your device connected.
+
+From here you can do any of the LED flash setups/ tests to ensure you are understanding the Particle object etc. part of this code **currently** maintains some test code and explanations on how to use the Particle objects/ cloud.
+
+## System description
+
+The entire system is composed of a device layer, a cloud layer, a service layer, and a user layer.
+See the following diagram for a visual model:
+Markup : ![picture alt](http://via.placeholder.com/200x150 "Title is optional")
