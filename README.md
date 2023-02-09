@@ -42,4 +42,4 @@ From here you can do any of the LED flash setups/ tests to ensure you are unders
 
 The entire system is composed of a device layer, a cloud layer, a service layer, and a user layer.
 See the following diagram for a visual model:
-Markup : ![picture alt](http://via.placeholder.com/200x150 "Title is optional")
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/docs/KNELLv0.1.drawio.pdf/)
