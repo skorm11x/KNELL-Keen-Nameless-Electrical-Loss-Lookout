@@ -33,7 +33,7 @@ If your project includes a library that has not been registered in the Particle 
 Hardware required:
 
 BORON 404x LTE (USA)
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/BORON-LTE-CAT-M1.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/Boron-LTE-CAT-M1.png/)
 
 STOCK ANTENNA:
 Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/Taoglas-Cellular-Flex-Antenna.png/)
