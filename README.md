@@ -30,6 +30,18 @@ If your project includes a library that has not been registered in the Particle 
 
 ## Device setup
 
+Hardware required:
+
+BORON 404x LTE (USA)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/BORON-LTE-CAT-M1.png/)
+
+STOCK ANTENNA:
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/Taoglas-Cellular-Flex-Antenna.png/)
+
+Battery (any 3.7 LIPO):
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/3.7LIPO.jpg/)
+
+
 Follow the Boron 404x quickstart: https://tools.particle.io/setup
 Specifically, there may be some issues with the default firmware/ version of device OS that came installed on the device. Please visit the device doctor for diagnosing any problems encountered with the device not connecting to the cloud properly:
 https://docs.particle.io/tools/doctor/
@@ -43,3 +55,13 @@ From here you can do any of the LED flash setups/ tests to ensure you are unders
 The entire system is composed of a device layer, a cloud layer, a service layer, and a user layer.
 See the following diagram for a visual model:
 Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/KNELLv0.1.drawio.png/)
+
+## Account credentials
+TBD
+
+### Push notification service: Pushover
+Why? it is $$$$cheap$$$$
+TBD
+
+### Particle Console webhook setup
+TBD WIP
