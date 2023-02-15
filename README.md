@@ -1,5 +1,5 @@
 
-# KNELL: Keen Nameless Electronic Loss Lookout
+# KNELL: Keen Nameless Electrical Loss Lookout
 ## 705-power-loss-detection
 
 A cellular Internet of Things (IOT) device that can detect power loss from main AC. Designed as a system as a whole to send out notifications to facility managers/ Staff of interest so that memebers can perform graceful shutdown of key Information Technology infrastructure and services withon alloted Uninterrupted Power Supply (UPS) alloted time. 
