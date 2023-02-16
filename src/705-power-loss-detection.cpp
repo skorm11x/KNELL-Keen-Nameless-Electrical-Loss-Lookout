@@ -198,29 +198,29 @@ void detect_power_source() {
           get_battery_voltage();
           //String status = String("Changed from "+String(initPowerSource)+" to: battery @"+battery_voltage+" V.");
           String status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr);
-          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+          success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           lastPowerSource = powerSource;
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+            success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           }
         }
         if(powerSource == 1) {
           String status = String("Changed from "+powerSourceStr+" to: VIN.");
-          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+          success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+            success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           }
           lastPowerSource = powerSource;
         }
         // should never get here if we initialized initPowerSource to USB correctly
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
           String status = String((initPowerSource)+" to: USB/Wall power.");
-          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+          success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+            success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           }
           lastPowerSource = powerSource;
         }
@@ -241,10 +241,10 @@ void detect_power_source() {
       }
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
           String status = String("Changed from "+powerSourceStr+" to: USB/Wall power.");
-          success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+          success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
-            success = Particle.publish("power change", status, PRIVATE, WITH_ACK);
+            success = Particle.publish("power_change s", status, PRIVATE, WITH_ACK);
           }
           lastPowerSource = powerSource;
         }
