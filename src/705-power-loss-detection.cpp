@@ -38,12 +38,15 @@ SerialLogHandler logHandler;
 int debug; // control variable for print statements
 float cell_sig_str; //celluar signal strength
 float cell_sig_qual; //celluar signal quality
-float battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
+double battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
 bool isOnWallPower;
 unsigned long lastSync = millis();
 // char *cell_private_ip; //cellular connection private ip, TBD
 int LED1 = D5;
 int initPowerSource;
+int powerSource;
+String powerSourceStr;
+String status;
 int lastPowerSource = -1;
 
 /*
@@ -61,12 +64,12 @@ typedef struct power_codes {
 } POWER_CODES;
 
 POWER_CODES p_table[] = {
-  {0, "Unknown power source"}, 
-  {1, "VIN power source"}, 
-  {2, "Wall AC power source"}, 
-  {3, "Wall AC power source"},
-  {4, "Wall AC power source"},
-  {5, "Battery power source"}, 
+  {0, "UNKNOWN POWER"}, 
+  {1, "VIN POWER"}, 
+  {2, "WALL AC POWER"}, 
+  {3, "WALL AC POWER"},
+  {4, "WALL AC POWER"},
+  {5, "BATTERY POWER"}, 
 };
 
 /*
@@ -82,10 +85,11 @@ void pinMode(uint16_t pin, PinMode mode);
 // setup() runs once, when the device is first turned on.
 void setup() {
   // This is how we expose a variable to GET requests from the cloud
-  Particle.variable("debug", debug);
+  // Particle.variable("debug", debug);
+  Particle.variable("battery_voltage", battery_voltage);
   initPowerSource = 3; //this should be USB/ wall power for our design
   pinMode(LED1, OUTPUT);               // sets pin as output
-  debug = 0; // 0  represents no debug, 1 represents debug
+  debug = 1; // 0  represents no debug, 1 represents debug
 
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
    Particle.function("led",ledToggle);
@@ -180,24 +184,32 @@ void check_day_time_sync() {
 */
 void detect_power_source() {
   bool success;
-  int powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
-  String powerSourceStr = p_table[powerSource].value;
+  powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+  powerSourceStr = p_table[powerSource].value;
+  //String powerSourceStr = "test string!!!!";
+  if(debug) {
+    Log.info("power src str: %s", powerSourceStr.c_str());
+    Log.info("power src INT: %d", powerSource);
+    //Serial.println("power source str: %s", powerSourceStr.c_str());
+  }
   if (powerSource != initPowerSource && powerSource != lastPowerSource) {
       // the power source just changed from its initial 
       // wait 5 seconds and double check to see if it was just a blip/ misread then affirm or break
       if(debug) {
-        Log.info("Potential Power source change: %s", powerSourceStr);
+        Log.info("Potential Power source change: %s", powerSourceStr.c_str());
       } 
       delay(5000);
       powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+      Log.info("power src INT: %d", powerSource);
+      powerSourceStr = p_table[powerSource].value;
       if(powerSource != initPowerSource) {
         if(debug) {
-          Log.info("Confirmed Power source change: %s", powerSourceStr);
+          Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
         }
         if(powerSource == 5) {
           get_battery_voltage();
           //String status = String("Changed from "+String(initPowerSource)+" to: battery @"+battery_voltage+" V.");
-          String status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr);
+          status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           lastPowerSource = powerSource;
           while(!success) {
@@ -206,7 +218,8 @@ void detect_power_source() {
           }
         }
         if(powerSource == 1) {
-          String status = String("Changed from "+powerSourceStr+" to: VIN.");
+          //String status = String("Changed from "+powerSourceStr+" to: VIN.");
+          status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
@@ -216,7 +229,8 @@ void detect_power_source() {
         }
         // should never get here if we initialized initPowerSource to USB correctly
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          String status = String((initPowerSource)+" to: USB/Wall power.");
+          //String status = String((initPowerSource)+" to: USB/Wall power.");
+          status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
@@ -231,16 +245,19 @@ void detect_power_source() {
     // and then we restored back to the original initialized power source 
     // Basically, this is going onto battery for a while and then back to USB power
     if(debug) {
-      Log.info("Potential Power source change: %s", powerSourceStr);
+      Log.info("Potential Power source change: %s", powerSourceStr.c_str());
     } 
     delay(5000);
     powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+    powerSourceStr = p_table[powerSource].value;
     if(powerSource == initPowerSource) {
       if(debug) {
-        Log.info("Confirmed Power source change: %s", powerSourceStr);
+        Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
+        Log.info("power src INT: %d", powerSource);
       }
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          String status = String("Changed from "+powerSourceStr+" to: USB/Wall power.");
+          //String status = String("Changed from "+powerSourceStr+" to: USB/Wall power.");
+          status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
             // get here if event publish did not work, reattempt
