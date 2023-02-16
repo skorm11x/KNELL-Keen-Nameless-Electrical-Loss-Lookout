@@ -53,6 +53,9 @@ typedef struct power_codes {
   const char *value;
 } POWER_CODES;
 
+/*
+  We store these for more diagnostic messages for the future.
+*/
 POWER_CODES p_table[] = {
   {0, "UNKNOWN POWER"}, 
   {1, "VIN POWER"}, 
@@ -70,6 +73,7 @@ void check_day_time_sync();
 void test_flash_led(int LED, int time);
 void detect_power_source();
 void pinMode(uint16_t pin, PinMode mode);
+void dev_tests();
 
 
 // setup() runs once, when the device is first turned on.
@@ -79,12 +83,11 @@ void setup() {
   Particle.variable("battery_voltage", battery_voltage);
   initPowerSource = 3; //this should be USB/ wall power for our design
   pinMode(LED1, OUTPUT);               // sets pin as output
-  debug = 1; // 0  represents no debug, 1 represents debug
+  debug = 0; // 0  represents no debug, 1 represents debug
 
    // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
    Particle.function("led",ledToggle);
    // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
-
 
   if (Cellular.ready()) {
       CellularSignal sig = Cellular.RSSI();
@@ -95,7 +98,6 @@ void setup() {
         Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
         // Prints out the local (private) IP over Serial
         Log.info("localIP: %s", Cellular.localIP().toString().c_str());
-
         Serial.begin(9600);
       }
     }
@@ -105,23 +107,24 @@ void setup() {
 
 void loop() {
 
-  if(debug){
-    // Serial.println("Beginning main loop in debug.");
-    // Serial.println("Flashing LED: ");
-    test_flash_led(LED1, 200);
-    if (Cellular.ready()) {
-      CellularSignal sig = Cellular.RSSI();
-      cell_sig_str = sig.getStrength();
-      cell_sig_qual = sig.getQuality();
-      Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
-      get_battery_voltage();
-    }
-    detect_power_source();
-  }
-  else{
-    check_day_time_sync();
-    detect_power_source();
-  }
+  // if(debug){
+  //   // Serial.println("Beginning main loop in debug.");
+  //   // Serial.println("Flashing LED: ");
+  //   test_flash_led(LED1, 200);
+  //   if (Cellular.ready()) {
+  //     CellularSignal sig = Cellular.RSSI();
+  //     cell_sig_str = sig.getStrength();
+  //     cell_sig_qual = sig.getQuality();
+  //     Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
+  //     get_battery_voltage();
+  //   }
+  //   detect_power_source();
+  // }
+  // else{
+  //   check_day_time_sync();
+  //   detect_power_source();
+  // }
+  //dev_tests();
   delay(10000);
   
 }
@@ -165,17 +168,12 @@ void check_day_time_sync() {
 
 /*
   Checked at top of every loop and during setup() to see if power has changed from its initialization source
-      POWER_SOURCE_UNKNOWN = 0,
-		  POWER_SOURCE_VIN = 1,
-			POWER_SOURCE_USB_HOST = 2,
-			POWER_SOURCE_USB_ADAPTER = 3,
-			POWER_SOURCE_USB_OTG = 4,
-			POWER_SOURCE_BATTERY = 5
+  See POWER_CODES structure for string messages associated with message reads.
 */
 void detect_power_source() {
   bool success;
   powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
-  powerSourceStr = p_table[powerSource].value;
+  //powerSourceStr = p_table[powerSource].value;
   //String powerSourceStr = "test string!!!!";
   if(debug) {
     Log.info("power src str: %s", powerSourceStr.c_str());
@@ -190,15 +188,15 @@ void detect_power_source() {
       } 
       delay(5000);
       powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
-      Log.info("power src INT: %d", powerSource);
-      powerSourceStr = p_table[powerSource].value;
+      //powerSourceStr = p_table[powerSource].value;
       if(powerSource != initPowerSource) {
         if(debug) {
           Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
         }
         if(powerSource == 5) {
+          // Power changed from last and we are now on battery power: yields power loss!
+          powerSourceStr = "POWER LOSS AT DMOC";
           get_battery_voltage();
-          //String status = String("Changed from "+String(initPowerSource)+" to: battery @"+battery_voltage+" V.");
           status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           lastPowerSource = powerSource;
@@ -208,7 +206,8 @@ void detect_power_source() {
           }
         }
         if(powerSource == 1) {
-          //String status = String("Changed from "+powerSourceStr+" to: VIN.");
+          // Power changed from last and we are now on VIN power: yields power restored!
+          powerSourceStr = "POWER RESTORED AT DMOC";
           status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
@@ -219,7 +218,8 @@ void detect_power_source() {
         }
         // should never get here if we initialized initPowerSource to USB correctly
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          //String status = String((initPowerSource)+" to: USB/Wall power.");
+          // Power changed from last and we are running off of USB now: yields power restored / on AC power!
+          powerSourceStr = "POWER RESTORED AT DMOC";
           status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
@@ -239,14 +239,15 @@ void detect_power_source() {
     } 
     delay(5000);
     powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
-    powerSourceStr = p_table[powerSource].value;
+    //powerSourceStr = p_table[powerSource].value;
+    powerSourceStr = "POWER RESTORED AT DMOC";
     if(powerSource == initPowerSource) {
       if(debug) {
         Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
         Log.info("power src INT: %d", powerSource);
       }
         if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          //String status = String("Changed from "+powerSourceStr+" to: USB/Wall power.");
+          // Power changed from last and we are running off of USB now: yields power restored / on AC power!
           status = String::format("{\"powerSource\":\"%s\"}", powerSourceStr.c_str());
           success = Particle.publish("power_change", status, PRIVATE, WITH_ACK);
           while(!success) {
@@ -257,6 +258,18 @@ void detect_power_source() {
         }
     }
 }
+}
+
+void dev_tests() {
+   String devStr = "HELLO WORLD";
+   String test_status = String::format("{\"DEV\":\"%s\"}", devStr.c_str());
+
+   bool tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
+   while(!tst_success) {
+        // get here if event publish did not work, reattempt
+        tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
+      }
+
 }
 
 /*
