@@ -107,23 +107,23 @@ void setup() {
 
 void loop() {
 
-  // if(debug){
-  //   // Serial.println("Beginning main loop in debug.");
-  //   // Serial.println("Flashing LED: ");
-  //   test_flash_led(LED1, 200);
-  //   if (Cellular.ready()) {
-  //     CellularSignal sig = Cellular.RSSI();
-  //     cell_sig_str = sig.getStrength();
-  //     cell_sig_qual = sig.getQuality();
-  //     Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
-  //     get_battery_voltage();
-  //   }
-  //   detect_power_source();
-  // }
-  // else{
-  //   check_day_time_sync();
-  //   detect_power_source();
-  // }
+  if(debug){
+    // Serial.println("Beginning main loop in debug.");
+    // Serial.println("Flashing LED: ");
+    test_flash_led(LED1, 200);
+    if (Cellular.ready()) {
+      CellularSignal sig = Cellular.RSSI();
+      cell_sig_str = sig.getStrength();
+      cell_sig_qual = sig.getQuality();
+      Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
+      get_battery_voltage();
+    }
+    detect_power_source();
+  }
+  else{
+    check_day_time_sync();
+    detect_power_source();
+  }
   //dev_tests();
   delay(10000);
   
