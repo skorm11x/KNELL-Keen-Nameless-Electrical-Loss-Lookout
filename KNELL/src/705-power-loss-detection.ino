@@ -1,5 +1,6 @@
 /*
- * Project 705-power-loss-detection
+ * Project 705-power-loss-detection (KNELL)
+ * Keen Nameless Electronic Loss Lookout
  * Description: Detect building 942 power loss (on mains)
  * Author: Christopher J. Kosik
  * Date: 2 February 2023
@@ -133,7 +134,7 @@ void loop() {
 /*
   Reads battery voltage and updates global value
 */
-void get_battery_voltage(){
+ get_battery_voltage(){
   battery_voltage = fuel.getVCell();
   if(debug == 1){
     Log.info("Current battery voltage: %f", battery_voltage);

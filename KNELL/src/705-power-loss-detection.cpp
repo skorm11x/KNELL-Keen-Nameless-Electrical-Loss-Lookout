@@ -3,9 +3,10 @@
 /******************************************************/
 
 #include "Particle.h"
-#line 1 "/Users/christopherkosik/Documents/particle_deviceos/705-power-loss-detection/src/705-power-loss-detection.ino"
+#line 1 "/Volumes/s_ssd_ext/codes/KNELL_SYS/KNELL/src/705-power-loss-detection.ino"
 /*
- * Project 705-power-loss-detection
+ * Project 705-power-loss-detection (KNELL)
+ * Keen Nameless Electronic Loss Lookout
  * Description: Detect building 942 power loss (on mains)
  * Author: Christopher J. Kosik
  * Date: 2 February 2023
@@ -17,7 +18,7 @@
 void setup();
 void loop();
 int ledToggle(String command);
-#line 11 "/Users/christopherkosik/Documents/particle_deviceos/705-power-loss-detection/src/705-power-loss-detection.ino"
+#line 12 "/Volumes/s_ssd_ext/codes/KNELL_SYS/KNELL/src/705-power-loss-detection.ino"
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 /*
@@ -143,7 +144,7 @@ void loop() {
 /*
   Reads battery voltage and updates global value
 */
-void get_battery_voltage(){
+ get_battery_voltage(){
   battery_voltage = fuel.getVCell();
   if(debug == 1){
     Log.info("Current battery voltage: %f", battery_voltage);
