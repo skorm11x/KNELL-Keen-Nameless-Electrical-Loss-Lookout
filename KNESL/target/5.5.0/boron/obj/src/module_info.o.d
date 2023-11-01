@@ -1,4 +1,4 @@
-/Volumes/s_ssd_ext/codes/particle_deviceos/KNETL/target/5.5.0/boron//obj/./src/module_info.o: \
+/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/target/5.5.0/boron//obj/./src/module_info.o: \
  src/module_info.c ../../../dynalib/inc/module_info.inc \
  ../../../dynalib/inc/module_info.h ../../../services/inc/static_assert.h \
  /Users/christopherkosik/.particle/toolchains/gcc-arm/10.2.1/arm-none-eabi/include/assert.h \

@@ -3,7 +3,7 @@
 /******************************************************/
 
 #include "Particle.h"
-#line 1 "/Volumes/s_ssd_ext/codes/KNELL_SYS/KNESL/src/KNESL.ino"
+#line 1 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
 /*
  * Project 705-sensor-nodes (KNESL) 
  * Keen Nameless Electronic Sensor Lookout
@@ -20,11 +20,14 @@
 
 // The following is our call to the community library for device diagnostics
 // https://github.com/rickkas7/DiagnosticsHelperRK
+// The following for DS18/OneWire library 
+// https://github.com/particle-iot/OneWireLibrary/tree/master
 #include "DiagnosticsHelperRK.h"
 #include "DS18.h"
 void setup();
 void loop();
-#line 19 "/Volumes/s_ssd_ext/codes/KNELL_SYS/KNESL/src/KNESL.ino"
+void convert_to_gatt_format(float temperature, uint8_t* buf);
+#line 21 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 /*
@@ -41,7 +44,7 @@ particle::Future<bool> publish(const char* name, const char* data);
 FuelGauge fuel; // fuel object used to access the battery monitoring circuit
 SerialLogHandler logHandler;
 int debug; // control variable for print statements
-DS18 sensor0(D5);
+DS18 sensor0(D5, true);
 
 const unsigned long UPDATE_INTERVAL_MS = 2000;
 unsigned long lastUpdate = 0;
@@ -60,9 +63,7 @@ int lastPowerSource = -1;
 //TODO: update debug to be C preprocessor part
 //TODO: refactor battery detection code to remove cloud connection
 //TODO: fragment this out to some other files to clean up the code
-// We don't actually have a thermometer here, we just randomly adjust this value
-float lastValue = 37.0; // 98.6 deg F;
-
+float last_temp_0 = 25.0; // 77.0 deg F initialized
 uint8_t lastBattery = 100;
 
 /*
@@ -106,8 +107,8 @@ POWER_CODES p_table[] = {
 */
 void get_battery_voltage();
 void check_day_time_sync();
-float getTempC();
-uint32_t ieee11073_from_float(float temperature);
+void poll_temp_c();
+void convert_to_gatt_format();
 
 void setup() {
   initPowerSource = 3; //this should be USB/ wall power for our design
@@ -144,55 +145,33 @@ void setup() {
 
 }
 
-
 void loop() {
-
+  poll_temp_c();
 
   if(debug){
     if (millis() - lastUpdate >= UPDATE_INTERVAL_MS)
       {
         lastUpdate = millis();
 
-        if (BLE.connected())
-        {
-          uint8_t buf[6];
+        if (BLE.connected()) {
+            // The Temperature Measurement characteristic data is defined here:
+            // https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_measurement.xml
 
-          // The Temperature Measurement characteristic data is defined here:
-          // https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_measurement.xml
+            uint8_t sensor0_buf[2];
+            convert_to_gatt_format(last_temp_0, sensor0_buf);
 
-          // First byte is flags. We're using Celsius (bit 0b001 == 0), no timestamp (bit 0b010 == 0), with temperature type (bit 0b100), so the flags are 0x04.
-          buf[0] = 0x04;
+            temperatureMeasurementCharacteristic.setValue(sensor0_buf, sizeof(sensor0_buf));
 
-          // Value is a ieee11073 floating point number
-          uint32_t value = ieee11073_from_float(getTempC());
-          memcpy(&buf[1], &value, 4);
-
-          // TempType is a constant for where the sensor is sensing:
-          // <Enumeration key="1" value="Armpit" />
-          // <Enumeration key="2" value="Body (general)" />
-          // <Enumeration key="3" value="Ear (usually ear lobe)" />
-          // <Enumeration key="4" value="Finger" />
-          // <Enumeration key="5" value="Gastro-intestinal Tract" />
-          // <Enumeration key="6" value="Mouth" />
-          // <Enumeration key="7" value="Rectum" />
-          // <Enumeration key="8" value="Toe" />
-          // <Enumeration key="9" value="Tympanum (ear drum)" />
-          buf[5] = 6; // Mouth
-
-          temperatureMeasurementCharacteristic.setValue(buf, sizeof(buf));
-
-          // The battery starts at 100% and drops to 10% then will jump back up again
-          batteryLevelCharacteristic.setValue(&lastBattery, 1);
-          if (--lastBattery < 10)
-          {
-            lastBattery = 100;
-          }
+            // The battery starts at 100% and drops to 10% then will jump back up again
+            batteryLevelCharacteristic.setValue(&lastBattery, 1);
+            if (--lastBattery < 10) {
+              lastBattery = 100;
+            }
         }
       }
   }
 
 }
-
 
 /*
   Checked at top of every loop, sync time with cloud at least daily.
@@ -205,7 +184,6 @@ void check_day_time_sync() {
   }
 }
 
-
 /*
   Reads battery voltage and updates global value
 */
@@ -216,28 +194,18 @@ void get_battery_voltage(){
   }
 }
 
-float getTempC()
-{
-	// Adjust this by a little bit each check so we can see it change
-	if (rand() > (RAND_MAX / 2))
-	{
-		lastValue += 0.1;
-	}
-	else
-	{
-		lastValue -= 0.1;
-	}
-
-	return lastValue;
+void poll_temp_c(){
+  bool success = sensor0.read();
+  if (success) {
+    last_temp_0 = sensor0.celsius();
+    if(debug){
+      Serial.printlnf("temperature: %f", last_temp_0);
+    }
+  }
 }
 
-uint32_t ieee11073_from_float(float temperature)
-{
-	// This code is from the ARM mbed temperature demo:
-	// https://github.com/ARMmbed/ble/blob/master/ble/services/HealthThermometerService.h
-	// I'm pretty sure this only works for positive values of temperature, but that's OK for the health thermometer.
-	uint8_t exponent = 0xFE; // Exponent is -2
-	uint32_t mantissa = (uint32_t)(temperature * 100);
-
-	return (((uint32_t)exponent) << 24) | mantissa;
+void convert_to_gatt_format(float temperature, uint8_t* buf) {
+  int16_t raw_temperature = temperature * 100;
+  buf[0] = raw_temperature & 0xFF;
+  buf[1] = (raw_temperature >> 8) & 0xFF;
 }

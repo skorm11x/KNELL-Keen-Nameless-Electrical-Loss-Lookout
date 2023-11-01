@@ -1,5 +1,5 @@
 
-/Volumes/s_ssd_ext/codes/particle_deviceos/KNELL/target/5.5.0/boron/KNELL.elf:     file format elf32-littlearm
+/Users/christopherkosik/Documents/codes/KNELL_SYS/KNELL/target/5.5.0/boron/KNELL.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -23,23 +23,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   9 .module_info_crc 00000004  000b8e56  000b8e56  00018e56  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 10 .debug_info   0015de86  00000000  00000000  00018e5a  2**0
+ 10 .debug_info   0015de8c  00000000  00000000  00018e5a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_abbrev 00016582  00000000  00000000  00176ce0  2**0
+ 11 .debug_abbrev 00016582  00000000  00000000  00176ce6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_loc    00042f41  00000000  00000000  0018d262  2**0
+ 12 .debug_loc    00042f41  00000000  00000000  0018d268  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_aranges 00003258  00000000  00000000  001d01a3  2**0
+ 13 .debug_aranges 00003258  00000000  00000000  001d01a9  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_ranges 0000c118  00000000  00000000  001d33fb  2**0
+ 14 .debug_ranges 0000c118  00000000  00000000  001d3401  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_macro  0003b5f0  00000000  00000000  001df513  2**0
+ 15 .debug_macro  0003b5f0  00000000  00000000  001df519  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_line   000486ac  00000000  00000000  0021ab03  2**0
+ 16 .debug_line   00048670  00000000  00000000  0021ab09  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_str    00148e29  00000000  00000000  002631af  2**0
+ 17 .debug_str    00148e24  00000000  00000000  00263179  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_frame  00009178  00000000  00000000  003abfd8  2**2
+ 18 .debug_frame  00009178  00000000  00000000  003abfa0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -956,7 +956,7 @@ void module_user_init()
  */
 void module_user_setup() {
     setup();
-   b4a0c:	f000 b876 	b.w	b4afc <setup>
+   b4a0c:	f000 b8a4 	b.w	b4b58 <setup>
 
 000b4a10 <module_user_loop>:
 }
@@ -964,7 +964,7 @@ void module_user_setup() {
 void module_user_loop() {
    b4a10:	b508      	push	{r3, lr}
     loop();
-   b4a12:	f000 fb47 	bl	b50a4 <loop>
+   b4a12:	f000 fb75 	bl	b5100 <loop>
     _post_loop();
 }
    b4a16:	e8bd 4008 	ldmia.w	sp!, {r3, lr}
@@ -1030,1149 +1030,1149 @@ void __cxa_guard_release (__guard *g) {*(char *)g = 1;};
    b4a50:	7003      	strb	r3, [r0, #0]
    b4a52:	4770      	bx	lr
 
-000b4a54 <_ZN5spark10LogHandler5writeEPKcj>:
-    }
-}
-
-inline void spark::LogHandler::write(const char *data, size_t size) {
-    // Default implementation does nothing
-}
-   b4a54:	4770      	bx	lr
-	...
-
-000b4a58 <_Z9ledToggle6String>:
-   b4a58:	b510      	push	{r4, lr}
-	operator StringIfHelperType() const { return buffer ? &String::StringIfHelper : 0; }
-	int compareTo(const String &s) const;
-	unsigned char equals(const String &s) const;
-	unsigned char equals(const char *cstr) const;
-	unsigned char operator == (const String &rhs) const {return equals(rhs);}
-	unsigned char operator == (const char *cstr) const {return equals(cstr);}
-   b4a5a:	4908      	ldr	r1, [pc, #32]	; (b4a7c <_Z9ledToggle6String+0x24>)
-   b4a5c:	4604      	mov	r4, r0
-   b4a5e:	f003 f9a8 	bl	b7db2 <_ZNK6String6equalsEPKc>
-   b4a62:	b940      	cbnz	r0, b4a76 <_Z9ledToggle6String+0x1e>
-   b4a64:	4906      	ldr	r1, [pc, #24]	; (b4a80 <_Z9ledToggle6String+0x28>)
-   b4a66:	4620      	mov	r0, r4
-   b4a68:	f003 f9a3 	bl	b7db2 <_ZNK6String6equalsEPKc>
-   b4a6c:	fab0 f080 	clz	r0, r0
-   b4a70:	0940      	lsrs	r0, r0, #5
-   b4a72:	4240      	negs	r0, r0
-   b4a74:	bd10      	pop	{r4, pc}
-   b4a76:	2001      	movs	r0, #1
-   b4a78:	e7fc      	b.n	b4a74 <_Z9ledToggle6String+0x1c>
-   b4a7a:	bf00      	nop
-   b4a7c:	000b87a1 	.word	0x000b87a1
-   b4a80:	000b87a4 	.word	0x000b87a4
-
-000b4a84 <_ZN5spark16SerialLogHandlerD1Ev>:
-            StreamLogHandler(Serial, level, filters) {
-        Serial.begin(baud);
-        LogManager::instance()->addHandler(this);
-    }
-
-    virtual ~SerialLogHandler() {
-   b4a84:	4b0a      	ldr	r3, [pc, #40]	; (b4ab0 <_ZN5spark16SerialLogHandlerD1Ev+0x2c>)
-   b4a86:	b510      	push	{r4, lr}
-   b4a88:	4604      	mov	r4, r0
-   b4a8a:	6003      	str	r3, [r0, #0]
-        LogManager::instance()->removeHandler(this);
-   b4a8c:	f002 f882 	bl	b6b94 <_ZN5spark10LogManager8instanceEv>
-   b4a90:	4621      	mov	r1, r4
-   b4a92:	f002 faba 	bl	b700a <_ZN5spark10LogManager13removeHandlerEPNS_10LogHandlerE>
-        Serial.end();
-   b4a96:	f003 fabb 	bl	b8010 <_Z16_fetch_usbserialv>
-   b4a9a:	f003 faad 	bl	b7ff8 <_ZN9USBSerial3endEv>
-    virtual ~LogHandler() = default;
-   b4a9e:	4620      	mov	r0, r4
-   b4aa0:	4b04      	ldr	r3, [pc, #16]	; (b4ab4 <_ZN5spark16SerialLogHandlerD1Ev+0x30>)
-   b4aa2:	f840 3b04 	str.w	r3, [r0], #4
-   b4aa6:	f002 f94b 	bl	b6d40 <_ZN5spark6detail9LogFilterD1Ev>
-    }
-   b4aaa:	4620      	mov	r0, r4
-   b4aac:	bd10      	pop	{r4, pc}
-   b4aae:	bf00      	nop
-   b4ab0:	000b8900 	.word	0x000b8900
-   b4ab4:	000b88e8 	.word	0x000b88e8
-
-000b4ab8 <_ZN5spark16SerialLogHandlerD0Ev>:
-    virtual ~SerialLogHandler() {
-   b4ab8:	b510      	push	{r4, lr}
-   b4aba:	4604      	mov	r4, r0
-    }
-   b4abc:	f7ff ffe2 	bl	b4a84 <_ZN5spark16SerialLogHandlerD1Ev>
-   b4ac0:	4620      	mov	r0, r4
-   b4ac2:	2124      	movs	r1, #36	; 0x24
-   b4ac4:	f7ff ffaf 	bl	b4a26 <_ZdlPvj>
-   b4ac8:	4620      	mov	r0, r4
-   b4aca:	bd10      	pop	{r4, pc}
-
-000b4acc <_ZNK5spark6Logger4infoEPKcz>:
-    va_start(args, fmt);
-    log(LOG_LEVEL_TRACE, fmt, args);
-    va_end(args);
-}
-
-inline void spark::Logger::info(const char *fmt, ...) const {
-   b4acc:	b40e      	push	{r1, r2, r3}
-   b4ace:	b500      	push	{lr}
-   b4ad0:	b08c      	sub	sp, #48	; 0x30
-   b4ad2:	aa0d      	add	r2, sp, #52	; 0x34
-}
-
-inline void spark::Logger::log(LogLevel level, const char *fmt, va_list args) const {
-    LogAttributes attr;
-    attr.size = sizeof(LogAttributes);
-    attr.flags = 0;
-   b4ad4:	f04f 0c20 	mov.w	ip, #32
-inline void spark::Logger::info(const char *fmt, ...) const {
-   b4ad8:	f852 1b04 	ldr.w	r1, [r2], #4
-    va_start(args, fmt);
-   b4adc:	9203      	str	r2, [sp, #12]
-    log_message_v(level, name_, &attr, nullptr, fmt, args);
-   b4ade:	e9cd 1200 	strd	r1, r2, [sp]
-    attr.flags = 0;
-   b4ae2:	2300      	movs	r3, #0
-    log_message_v(level, name_, &attr, nullptr, fmt, args);
-   b4ae4:	6801      	ldr	r1, [r0, #0]
-   b4ae6:	aa04      	add	r2, sp, #16
-   b4ae8:	201e      	movs	r0, #30
-    attr.flags = 0;
-   b4aea:	e9cd c304 	strd	ip, r3, [sp, #16]
-    log_message_v(level, name_, &attr, nullptr, fmt, args);
-   b4aee:	f000 fdab 	bl	b5648 <log_message_v>
-}
-   b4af2:	b00c      	add	sp, #48	; 0x30
-   b4af4:	f85d eb04 	ldr.w	lr, [sp], #4
-   b4af8:	b003      	add	sp, #12
-   b4afa:	4770      	bx	lr
-
-000b4afc <setup>:
-   b4afc:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-        return _variable(varKey, (const char*)userVar, userVarType);
-    }
-
-    template<typename T> static inline bool _variable(const char *varKey, typename T::PointerType userVar, const T& userVarType)
-    {
-        return spark_variable(varKey, (const void*)userVar, T::TYPE_ID, NULL);
-   b4b00:	4932      	ldr	r1, [pc, #200]	; (b4bcc <setup+0xd0>)
-   b4b02:	4833      	ldr	r0, [pc, #204]	; (b4bd0 <setup+0xd4>)
-   b4b04:	f8df 80f8 	ldr.w	r8, [pc, #248]	; b4c00 <setup+0x104>
-    virtual void setListenTimeout(uint16_t timeout);
-    virtual uint16_t getListenTimeout();
-    virtual bool listening();
-
-    operator network_interface_t() const {
-        return iface_;
-   b4b08:	4e32      	ldr	r6, [pc, #200]	; (b4bd4 <setup+0xd8>)
-   b4b0a:	b096      	sub	sp, #88	; 0x58
-   b4b0c:	2300      	movs	r3, #0
-   b4b0e:	2209      	movs	r2, #9
-   b4b10:	f000 fdf8 	bl	b5704 <spark_variable>
-   b4b14:	4b30      	ldr	r3, [pc, #192]	; (b4bd8 <setup+0xdc>)
-   b4b16:	2203      	movs	r2, #3
-   b4b18:	601a      	str	r2, [r3, #0]
-   b4b1a:	4b30      	ldr	r3, [pc, #192]	; (b4bdc <setup+0xe0>)
-   b4b1c:	2101      	movs	r1, #1
-   b4b1e:	8818      	ldrh	r0, [r3, #0]
-   b4b20:	f003 fb76 	bl	b8210 <pinMode>
-   b4b24:	2400      	movs	r4, #0
-        return _function(name, args...);
-    }
-
-    static bool _function(const char *funcKey, user_function_int_str_t* func)
-    {
-        return register_function(call_raw_user_function, (void*)func, funcKey);
-   b4b26:	4a2e      	ldr	r2, [pc, #184]	; (b4be0 <setup+0xe4>)
-   b4b28:	492e      	ldr	r1, [pc, #184]	; (b4be4 <setup+0xe8>)
-   b4b2a:	482f      	ldr	r0, [pc, #188]	; (b4be8 <setup+0xec>)
-   b4b2c:	f8c8 4000 	str.w	r4, [r8]
-   b4b30:	f001 f8a7 	bl	b5c82 <_ZN10CloudClass17register_functionEPFiPvPKcS0_ES0_S2_>
-        return network_listening(*this, 0, NULL);
-    }
-
-    bool ready()
-    {
-        return network_ready(*this, 0,  NULL);
-   b4b34:	6870      	ldr	r0, [r6, #4]
-   b4b36:	4622      	mov	r2, r4
-   b4b38:	4621      	mov	r1, r4
-   b4b3a:	f000 fe3b 	bl	b57b4 <network_ready>
-   b4b3e:	2800      	cmp	r0, #0
-   b4b40:	d041      	beq.n	b4bc6 <setup+0xca>
-   b4b42:	4631      	mov	r1, r6
-   b4b44:	a80e      	add	r0, sp, #56	; 0x38
-   b4b46:	f000 ff59 	bl	b59fc <_ZN5spark13CellularClass4RSSIEv>
-   b4b4a:	a80e      	add	r0, sp, #56	; 0x38
-   b4b4c:	f000 ffd2 	bl	b5af4 <_ZNK14CellularSignal11getStrengthEv>
-   b4b50:	4f26      	ldr	r7, [pc, #152]	; (b4bec <setup+0xf0>)
-   b4b52:	a80e      	add	r0, sp, #56	; 0x38
-   b4b54:	ed87 0a00 	vstr	s0, [r7]
-   b4b58:	f000 fffc 	bl	b5b54 <_ZNK14CellularSignal10getQualityEv>
-   b4b5c:	4b24      	ldr	r3, [pc, #144]	; (b4bf0 <setup+0xf4>)
-   b4b5e:	ed83 0a00 	vstr	s0, [r3]
-   b4b62:	f8d8 3000 	ldr.w	r3, [r8]
-   b4b66:	ee10 5a10 	vmov	r5, s0
-   b4b6a:	b363      	cbz	r3, b4bc6 <setup+0xca>
-   b4b6c:	6838      	ldr	r0, [r7, #0]
-   b4b6e:	f7ff fbb9 	bl	b42e4 <__aeabi_f2d>
-   b4b72:	4602      	mov	r2, r0
-   b4b74:	460b      	mov	r3, r1
-   b4b76:	4628      	mov	r0, r5
-   b4b78:	e9cd 2302 	strd	r2, r3, [sp, #8]
-   b4b7c:	f7ff fbb2 	bl	b42e4 <__aeabi_f2d>
-   b4b80:	e9dd 2302 	ldrd	r2, r3, [sp, #8]
-   b4b84:	e9cd 0100 	strd	r0, r1, [sp]
-   b4b88:	491a      	ldr	r1, [pc, #104]	; (b4bf4 <setup+0xf8>)
-   b4b8a:	481b      	ldr	r0, [pc, #108]	; (b4bf8 <setup+0xfc>)
-   b4b8c:	f7ff ff9e 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-        return IPAddress(((CellularConfig*)network_config(*this, 0, NULL))->nw.aucIP);
-   b4b90:	4622      	mov	r2, r4
-   b4b92:	4621      	mov	r1, r4
-   b4b94:	6870      	ldr	r0, [r6, #4]
-   b4b96:	f000 fded 	bl	b5774 <network_config>
-   b4b9a:	1c81      	adds	r1, r0, #2
-   b4b9c:	a808      	add	r0, sp, #32
-   b4b9e:	f001 fc6b 	bl	b6478 <_ZN9IPAddressC1ERK16_HAL_IPAddress_t>
-
-    virtual size_t printTo(Print& p) const;
-
-    void clear() { memset(&address, 0, sizeof (address)); }
-
-    String toString() const { return String(*this); }
-   b4ba2:	a908      	add	r1, sp, #32
-   b4ba4:	a804      	add	r0, sp, #16
-   b4ba6:	f003 f917 	bl	b7dd8 <_ZN6StringC1ERK9Printable>
-   b4baa:	4914      	ldr	r1, [pc, #80]	; (b4bfc <setup+0x100>)
-   b4bac:	9a04      	ldr	r2, [sp, #16]
-   b4bae:	4812      	ldr	r0, [pc, #72]	; (b4bf8 <setup+0xfc>)
-   b4bb0:	f7ff ff8c 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4bb4:	a804      	add	r0, sp, #16
-   b4bb6:	f003 f80d 	bl	b7bd4 <_ZN6StringD1Ev>
-   b4bba:	f003 fa29 	bl	b8010 <_Z16_fetch_usbserialv>
-   b4bbe:	f44f 5116 	mov.w	r1, #9600	; 0x2580
-   b4bc2:	f003 fa15 	bl	b7ff0 <_ZN9USBSerial5beginEl>
-   b4bc6:	b016      	add	sp, #88	; 0x58
-   b4bc8:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-   b4bcc:	2003e5d8 	.word	0x2003e5d8
-   b4bd0:	000b87a8 	.word	0x000b87a8
-   b4bd4:	2003e648 	.word	0x2003e648
-   b4bd8:	2003e5f4 	.word	0x2003e5f4
-   b4bdc:	2003e54c 	.word	0x2003e54c
-   b4be0:	000b87b8 	.word	0x000b87b8
-   b4be4:	000b4a59 	.word	0x000b4a59
-   b4be8:	000b5c57 	.word	0x000b5c57
-   b4bec:	2003e5e4 	.word	0x2003e5e4
-   b4bf0:	2003e5e0 	.word	0x2003e5e0
-   b4bf4:	000b87bc 	.word	0x000b87bc
-   b4bf8:	2003e68c 	.word	0x2003e68c
-   b4bfc:	000b87f2 	.word	0x000b87f2
-   b4c00:	2003e5e8 	.word	0x2003e5e8
-
-000b4c04 <_Z19get_battery_voltagev>:
-   b4c04:	b508      	push	{r3, lr}
-   b4c06:	480a      	ldr	r0, [pc, #40]	; (b4c30 <_Z19get_battery_voltagev+0x2c>)
-   b4c08:	f001 fb42 	bl	b6290 <_ZN9FuelGauge8getVCellEv>
-   b4c0c:	ee10 0a10 	vmov	r0, s0
-   b4c10:	f7ff fb68 	bl	b42e4 <__aeabi_f2d>
-   b4c14:	4b07      	ldr	r3, [pc, #28]	; (b4c34 <_Z19get_battery_voltagev+0x30>)
-   b4c16:	e9c3 0100 	strd	r0, r1, [r3]
-   b4c1a:	4b07      	ldr	r3, [pc, #28]	; (b4c38 <_Z19get_battery_voltagev+0x34>)
-   b4c1c:	681b      	ldr	r3, [r3, #0]
-   b4c1e:	2b01      	cmp	r3, #1
-   b4c20:	d105      	bne.n	b4c2e <_Z19get_battery_voltagev+0x2a>
-   b4c22:	4602      	mov	r2, r0
-   b4c24:	460b      	mov	r3, r1
-   b4c26:	4805      	ldr	r0, [pc, #20]	; (b4c3c <_Z19get_battery_voltagev+0x38>)
-   b4c28:	4905      	ldr	r1, [pc, #20]	; (b4c40 <_Z19get_battery_voltagev+0x3c>)
-   b4c2a:	f7ff ff4f 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4c2e:	bd08      	pop	{r3, pc}
-   b4c30:	2003e5ec 	.word	0x2003e5ec
-   b4c34:	2003e5d8 	.word	0x2003e5d8
-   b4c38:	2003e5e8 	.word	0x2003e5e8
-   b4c3c:	2003e68c 	.word	0x2003e68c
-   b4c40:	000b87fe 	.word	0x000b87fe
-
-000b4c44 <_Z14test_flash_ledii>:
-   b4c44:	b538      	push	{r3, r4, r5, lr}
-   b4c46:	b285      	uxth	r5, r0
-   b4c48:	460c      	mov	r4, r1
-   b4c4a:	4628      	mov	r0, r5
-   b4c4c:	2101      	movs	r1, #1
-   b4c4e:	f003 faf0 	bl	b8232 <digitalWrite>
-   b4c52:	4620      	mov	r0, r4
-   b4c54:	f000 fe3e 	bl	b58d4 <delay>
-   b4c58:	4628      	mov	r0, r5
-   b4c5a:	2100      	movs	r1, #0
-   b4c5c:	f003 fae9 	bl	b8232 <digitalWrite>
-   b4c60:	4620      	mov	r0, r4
-   b4c62:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
-   b4c66:	f000 be35 	b.w	b58d4 <delay>
-	...
-
-000b4c6c <_Z19check_day_time_syncv>:
-   b4c6c:	b510      	push	{r4, lr}
-   b4c6e:	4c09      	ldr	r4, [pc, #36]	; (b4c94 <_Z19check_day_time_syncv+0x28>)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-inline system_tick_t millis(void) { return HAL_Timer_Get_Milli_Seconds(); }
-   b4c70:	f000 fbaa 	bl	b53c8 <HAL_Timer_Get_Milli_Seconds>
-   b4c74:	6823      	ldr	r3, [r4, #0]
-   b4c76:	1ac0      	subs	r0, r0, r3
-   b4c78:	4b07      	ldr	r3, [pc, #28]	; (b4c98 <_Z19check_day_time_syncv+0x2c>)
-   b4c7a:	4298      	cmp	r0, r3
-   b4c7c:	d908      	bls.n	b4c90 <_Z19check_day_time_syncv+0x24>
-    static void sleep(Spark_Sleep_TypeDef sleepMode, long seconds=0) __attribute__ ((deprecated("Please use System.sleep() instead.")))
-    { SystemClass::sleep(sleepMode, seconds); }
-    static void sleep(uint16_t wakeUpPin, InterruptMode edgeTriggerMode, long seconds=0) __attribute__ ((deprecated("Please use System.sleep() instead.")))
-    { SystemClass::sleep(wakeUpPin, edgeTriggerMode, seconds); }
-
-    static bool connected(void) { return spark_cloud_flag_connected(); }
-   b4c7e:	f000 fd59 	bl	b5734 <spark_cloud_flag_connected>
-        if (!connected()) {
-   b4c82:	b110      	cbz	r0, b4c8a <_Z19check_day_time_syncv+0x1e>
-        return spark_sync_time(NULL);
-   b4c84:	2000      	movs	r0, #0
-   b4c86:	f000 fd65 	bl	b5754 <spark_sync_time>
-   b4c8a:	f000 fb9d 	bl	b53c8 <HAL_Timer_Get_Milli_Seconds>
-   b4c8e:	6020      	str	r0, [r4, #0]
-   b4c90:	bd10      	pop	{r4, pc}
-   b4c92:	bf00      	nop
-   b4c94:	2003e5f8 	.word	0x2003e5f8
-   b4c98:	05265c00 	.word	0x05265c00
-
-000b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>:
-      explicit __shared_count(const __weak_count<_Lp>& __r);
-
-      // Does not throw if __r._M_get_use_count() == 0, caller must check.
-      explicit __shared_count(const __weak_count<_Lp>& __r, std::nothrow_t);
-
-      ~__shared_count() noexcept
-   b4c9c:	b538      	push	{r3, r4, r5, lr}
-      {
-	if (_M_pi != nullptr)
-   b4c9e:	6804      	ldr	r4, [r0, #0]
-      ~__shared_count() noexcept
-   b4ca0:	4605      	mov	r5, r0
-	if (_M_pi != nullptr)
-   b4ca2:	b17c      	cbz	r4, b4cc4 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x28>
-      if (--_M_use_count == 0)
-   b4ca4:	6863      	ldr	r3, [r4, #4]
-   b4ca6:	3b01      	subs	r3, #1
-   b4ca8:	6063      	str	r3, [r4, #4]
-   b4caa:	b95b      	cbnz	r3, b4cc4 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x28>
-          _M_dispose();
-   b4cac:	6823      	ldr	r3, [r4, #0]
-   b4cae:	4620      	mov	r0, r4
-   b4cb0:	689b      	ldr	r3, [r3, #8]
-   b4cb2:	4798      	blx	r3
-          if (--_M_weak_count == 0)
-   b4cb4:	68a3      	ldr	r3, [r4, #8]
-   b4cb6:	3b01      	subs	r3, #1
-   b4cb8:	60a3      	str	r3, [r4, #8]
-   b4cba:	b91b      	cbnz	r3, b4cc4 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x28>
-            _M_destroy();
-   b4cbc:	6823      	ldr	r3, [r4, #0]
-   b4cbe:	4620      	mov	r0, r4
-   b4cc0:	68db      	ldr	r3, [r3, #12]
-   b4cc2:	4798      	blx	r3
-	  _M_pi->_M_release();
-      }
-   b4cc4:	4628      	mov	r0, r5
-   b4cc6:	bd38      	pop	{r3, r4, r5, pc}
-
-000b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>:
-inline spark::Vector<T, AllocatorT>::Vector(Vector<T, AllocatorT>&& vector) : Vector() {
-    swap(*this, vector);
-}
-
-template<typename T, typename AllocatorT>
-inline spark::Vector<T, AllocatorT>::~Vector() {
-   b4cc8:	b570      	push	{r4, r5, r6, lr}
-    destruct(data_, data_ + size_);
-   b4cca:	e9d0 5300 	ldrd	r5, r3, [r0]
-   b4cce:	2614      	movs	r6, #20
-inline spark::Vector<T, AllocatorT>::~Vector() {
-   b4cd0:	4604      	mov	r4, r0
-    destruct(data_, data_ + size_);
-   b4cd2:	fb06 5603 	mla	r6, r6, r3, r5
-        for (; p != end; ++p) {
-   b4cd6:	42ae      	cmp	r6, r5
-   b4cd8:	d004      	beq.n	b4ce4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev+0x1c>
-class LogCategoryFilter {
-   b4cda:	4628      	mov	r0, r5
-   b4cdc:	f002 ff7a 	bl	b7bd4 <_ZN6StringD1Ev>
-   b4ce0:	3514      	adds	r5, #20
-   b4ce2:	e7f8      	b.n	b4cd6 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev+0xe>
-    ::free(ptr);
-   b4ce4:	6820      	ldr	r0, [r4, #0]
-   b4ce6:	f000 fdb5 	bl	b5854 <free>
-    AllocatorT::free(data_);
-}
-   b4cea:	4620      	mov	r0, r4
-   b4cec:	bd70      	pop	{r4, r5, r6, pc}
-
-000b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>:
-    // Constructs succeeded future
-    explicit Future(ResultT result = ResultT()) :
-            FutureBase<ResultT, ContextT>(std::make_shared<detail::FutureImpl<ResultT, ContextT>>(std::move(result))) {
-    }
-
-    ResultT result() const {
-   b4cee:	b538      	push	{r3, r4, r5, lr}
-        { __shared_ptr(__p, std::move(__d), std::move(__a)).swap(*this); }
-
-      /// Return the stored pointer.
-      element_type*
-      get() const noexcept
-      { return _M_ptr; }
-   b4cf0:	6804      	ldr	r4, [r0, #0]
-        return (application_thread_current(nullptr) != 0);
-   b4cf2:	2000      	movs	r0, #0
-   b4cf4:	f000 fcd8 	bl	b56a8 <application_thread_current>
-        if (ContextT::isApplicationThreadCurrent()) {
-   b4cf8:	b120      	cbz	r0, b4d04 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x16>
-      {
-	memory_order __b = __m & __memory_order_mask;
-	__glibcxx_assert(__b != memory_order_release);
-	__glibcxx_assert(__b != memory_order_acq_rel);
-
-	return __atomic_load_n(&_M_i, int(__m));
-   b4cfa:	7863      	ldrb	r3, [r4, #1]
-                if (isDone()) { // We can use relaxed ordering here, as long as the future's result is not examined
-   b4cfc:	b913      	cbnz	r3, b4d04 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x16>
-        spark_process();
-   b4cfe:	f000 fd11 	bl	b5724 <spark_process>
-    }
-   b4d02:	e7fa      	b.n	b4cfa <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0xc>
-   b4d04:	7863      	ldrb	r3, [r4, #1]
-   b4d06:	f3bf 8f5b 	dmb	ish
-   b4d0a:	1c65      	adds	r5, r4, #1
-        if (this->acquireDone() && this->isSucceeded()) {
-   b4d0c:	b90b      	cbnz	r3, b4d12 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x24>
-        return std::move(defaultValue);
-   b4d0e:	2000      	movs	r0, #0
-        return this->p_->result();
-    }
-   b4d10:	bd38      	pop	{r3, r4, r5, pc}
-        return (application_thread_current(nullptr) != 0);
-   b4d12:	2000      	movs	r0, #0
-   b4d14:	f000 fcc8 	bl	b56a8 <application_thread_current>
-        if (ContextT::isApplicationThreadCurrent()) {
-   b4d18:	b120      	cbz	r0, b4d24 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x36>
-   b4d1a:	782b      	ldrb	r3, [r5, #0]
-                if (isDone()) { // We can use relaxed ordering here, as long as the future's result is not examined
-   b4d1c:	b913      	cbnz	r3, b4d24 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x36>
-        spark_process();
-   b4d1e:	f000 fd01 	bl	b5724 <spark_process>
-    }
-   b4d22:	e7fa      	b.n	b4d1a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x2c>
-      _Tp
-      load(memory_order __m = memory_order_seq_cst) const noexcept
-      {
-	alignas(_Tp) unsigned char __buf[sizeof(_Tp)];
-	_Tp* __ptr = reinterpret_cast<_Tp*>(__buf);
-	__atomic_load(std::__addressof(_M_i), __ptr, int(__m));
-   b4d24:	7823      	ldrb	r3, [r4, #0]
-        if (this->acquireDone() && this->isSucceeded()) {
-   b4d26:	2b01      	cmp	r3, #1
-   b4d28:	d1f1      	bne.n	b4d0e <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x20>
-            return result_;
-   b4d2a:	7b20      	ldrb	r0, [r4, #12]
-   b4d2c:	e7f0      	b.n	b4d10 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x22>
-	...
-
-000b4d30 <_Z19detect_power_sourcev>:
-   b4d30:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
-   b4d34:	2018      	movs	r0, #24
-   b4d36:	4e81      	ldr	r6, [pc, #516]	; (b4f3c <_Z19detect_power_sourcev+0x20c>)
-   b4d38:	4c81      	ldr	r4, [pc, #516]	; (b4f40 <_Z19detect_power_sourcev+0x210>)
-   b4d3a:	b087      	sub	sp, #28
-   b4d3c:	f000 faee 	bl	b531c <_ZN17DiagnosticsHelper8getValueEt>
-   b4d40:	6833      	ldr	r3, [r6, #0]
-   b4d42:	6020      	str	r0, [r4, #0]
-   b4d44:	b153      	cbz	r3, b4d5c <_Z19detect_power_sourcev+0x2c>
-	char operator [] (unsigned int index) const;
-	char& operator [] (unsigned int index);
-	void getBytes(unsigned char *buf, unsigned int bufsize, unsigned int index=0) const;
-	void toCharArray(char *buf, unsigned int bufsize, unsigned int index=0) const
-		{getBytes((unsigned char *)buf, bufsize, index);}
-	const char * c_str() const { return buffer; }
-   b4d46:	4b7f      	ldr	r3, [pc, #508]	; (b4f44 <_Z19detect_power_sourcev+0x214>)
-   b4d48:	497f      	ldr	r1, [pc, #508]	; (b4f48 <_Z19detect_power_sourcev+0x218>)
-   b4d4a:	681a      	ldr	r2, [r3, #0]
-   b4d4c:	487f      	ldr	r0, [pc, #508]	; (b4f4c <_Z19detect_power_sourcev+0x21c>)
-   b4d4e:	f7ff febd 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4d52:	6822      	ldr	r2, [r4, #0]
-   b4d54:	497e      	ldr	r1, [pc, #504]	; (b4f50 <_Z19detect_power_sourcev+0x220>)
-   b4d56:	487d      	ldr	r0, [pc, #500]	; (b4f4c <_Z19detect_power_sourcev+0x21c>)
-   b4d58:	f7ff feb8 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4d5c:	4f7d      	ldr	r7, [pc, #500]	; (b4f54 <_Z19detect_power_sourcev+0x224>)
-   b4d5e:	6823      	ldr	r3, [r4, #0]
-   b4d60:	683a      	ldr	r2, [r7, #0]
-   b4d62:	4293      	cmp	r3, r2
-   b4d64:	f000 810f 	beq.w	b4f86 <_Z19detect_power_sourcev+0x256>
-   b4d68:	f8df 820c 	ldr.w	r8, [pc, #524]	; b4f78 <_Z19detect_power_sourcev+0x248>
-   b4d6c:	f8d8 2000 	ldr.w	r2, [r8]
-   b4d70:	4293      	cmp	r3, r2
-   b4d72:	f000 8108 	beq.w	b4f86 <_Z19detect_power_sourcev+0x256>
-   b4d76:	6833      	ldr	r3, [r6, #0]
-   b4d78:	b12b      	cbz	r3, b4d86 <_Z19detect_power_sourcev+0x56>
-   b4d7a:	4b72      	ldr	r3, [pc, #456]	; (b4f44 <_Z19detect_power_sourcev+0x214>)
-   b4d7c:	4976      	ldr	r1, [pc, #472]	; (b4f58 <_Z19detect_power_sourcev+0x228>)
-   b4d7e:	681a      	ldr	r2, [r3, #0]
-   b4d80:	4872      	ldr	r0, [pc, #456]	; (b4f4c <_Z19detect_power_sourcev+0x21c>)
-   b4d82:	f7ff fea3 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4d86:	f241 3088 	movw	r0, #5000	; 0x1388
-   b4d8a:	f000 fda3 	bl	b58d4 <delay>
-   b4d8e:	2018      	movs	r0, #24
-   b4d90:	f000 fac4 	bl	b531c <_ZN17DiagnosticsHelper8getValueEt>
-   b4d94:	683b      	ldr	r3, [r7, #0]
-   b4d96:	6020      	str	r0, [r4, #0]
-   b4d98:	4298      	cmp	r0, r3
-   b4d9a:	f000 80f4 	beq.w	b4f86 <_Z19detect_power_sourcev+0x256>
-   b4d9e:	6833      	ldr	r3, [r6, #0]
-   b4da0:	b12b      	cbz	r3, b4dae <_Z19detect_power_sourcev+0x7e>
-   b4da2:	4b68      	ldr	r3, [pc, #416]	; (b4f44 <_Z19detect_power_sourcev+0x214>)
-   b4da4:	496d      	ldr	r1, [pc, #436]	; (b4f5c <_Z19detect_power_sourcev+0x22c>)
-   b4da6:	681a      	ldr	r2, [r3, #0]
-   b4da8:	4868      	ldr	r0, [pc, #416]	; (b4f4c <_Z19detect_power_sourcev+0x21c>)
-   b4daa:	f7ff fe8f 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4dae:	6823      	ldr	r3, [r4, #0]
-   b4db0:	2b05      	cmp	r3, #5
-   b4db2:	d147      	bne.n	b4e44 <_Z19detect_power_sourcev+0x114>
-   b4db4:	4d63      	ldr	r5, [pc, #396]	; (b4f44 <_Z19detect_power_sourcev+0x214>)
-   b4db6:	496a      	ldr	r1, [pc, #424]	; (b4f60 <_Z19detect_power_sourcev+0x230>)
-   b4db8:	f8df 91b4 	ldr.w	r9, [pc, #436]	; b4f70 <_Z19detect_power_sourcev+0x240>
-        val_(val) {
-}
-
-template<typename TagT, typename ValueT>
-inline particle::Flags<TagT, ValueT> particle::Flags<TagT, ValueT>::operator|(Flags<TagT, ValueT> flags) const {
-    return Flags<TagT, ValueT>(val_ | flags.val_);
-   b4dbc:	f8df b1bc 	ldr.w	fp, [pc, #444]	; b4f7c <_Z19detect_power_sourcev+0x24c>
-   b4dc0:	f8df a1b0 	ldr.w	sl, [pc, #432]	; b4f74 <_Z19detect_power_sourcev+0x244>
-   b4dc4:	4628      	mov	r0, r5
-   b4dc6:	f002 ffaf 	bl	b7d28 <_ZN6StringaSEPKc>
-   b4dca:	f7ff ff1b 	bl	b4c04 <_Z19get_battery_voltagev>
-   b4dce:	682a      	ldr	r2, [r5, #0]
-   b4dd0:	4964      	ldr	r1, [pc, #400]	; (b4f64 <_Z19detect_power_sourcev+0x234>)
-   b4dd2:	a802      	add	r0, sp, #8
-   b4dd4:	f003 f81a 	bl	b7e0c <_ZN6String6formatEPKcz>
-   b4dd8:	a902      	add	r1, sp, #8
-   b4dda:	4648      	mov	r0, r9
-   b4ddc:	f002 ff9c 	bl	b7d18 <_ZN6StringaSEOS_>
-   b4de0:	a802      	add	r0, sp, #8
-   b4de2:	f002 fef7 	bl	b7bd4 <_ZN6StringD1Ev>
-   b4de6:	f89a 2000 	ldrb.w	r2, [sl]
-   b4dea:	f89b 3000 	ldrb.w	r3, [fp]
-        return publish_event(eventName, eventData, ttl, flags1 | flags2);
-   b4dee:	495e      	ldr	r1, [pc, #376]	; (b4f68 <_Z19detect_power_sourcev+0x238>)
-   b4df0:	4313      	orrs	r3, r2
-   b4df2:	f88d 3000 	strb.w	r3, [sp]
-   b4df6:	f8d9 2000 	ldr.w	r2, [r9]
-   b4dfa:	233c      	movs	r3, #60	; 0x3c
-   b4dfc:	a802      	add	r0, sp, #8
-   b4dfe:	f001 f837 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
-    ResultT result(ResultT defaultValue) const {
-        return this->p_->result(std::move(defaultValue));
-    }
-
-    operator ResultT() const {
-        return result();
-   b4e02:	a802      	add	r0, sp, #8
-   b4e04:	f7ff ff73 	bl	b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
-   b4e08:	4605      	mov	r5, r0
-      ~__shared_ptr() = default;
-   b4e0a:	a803      	add	r0, sp, #12
-   b4e0c:	f7ff ff46 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
-   b4e10:	6823      	ldr	r3, [r4, #0]
-   b4e12:	f8c8 3000 	str.w	r3, [r8]
-   b4e16:	4954      	ldr	r1, [pc, #336]	; (b4f68 <_Z19detect_power_sourcev+0x238>)
-   b4e18:	b9a5      	cbnz	r5, b4e44 <_Z19detect_power_sourcev+0x114>
-   b4e1a:	f89a 2000 	ldrb.w	r2, [sl]
-   b4e1e:	f89b 3000 	ldrb.w	r3, [fp]
-   b4e22:	4313      	orrs	r3, r2
-   b4e24:	f88d 3000 	strb.w	r3, [sp]
-   b4e28:	f8d9 2000 	ldr.w	r2, [r9]
-   b4e2c:	233c      	movs	r3, #60	; 0x3c
-   b4e2e:	a802      	add	r0, sp, #8
-   b4e30:	f001 f81e 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
-   b4e34:	a802      	add	r0, sp, #8
-   b4e36:	f7ff ff5a 	bl	b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
-   b4e3a:	4605      	mov	r5, r0
-   b4e3c:	a803      	add	r0, sp, #12
-   b4e3e:	f7ff ff2d 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
-   b4e42:	e7e8      	b.n	b4e16 <_Z19detect_power_sourcev+0xe6>
-   b4e44:	6823      	ldr	r3, [r4, #0]
-   b4e46:	2b01      	cmp	r3, #1
-   b4e48:	d13b      	bne.n	b4ec2 <_Z19detect_power_sourcev+0x192>
-   b4e4a:	4d3e      	ldr	r5, [pc, #248]	; (b4f44 <_Z19detect_power_sourcev+0x214>)
-   b4e4c:	4947      	ldr	r1, [pc, #284]	; (b4f6c <_Z19detect_power_sourcev+0x23c>)
-   b4e4e:	f8df 9120 	ldr.w	r9, [pc, #288]	; b4f70 <_Z19detect_power_sourcev+0x240>
-   b4e52:	f8df a128 	ldr.w	sl, [pc, #296]	; b4f7c <_Z19detect_power_sourcev+0x24c>
-   b4e56:	f8df b11c 	ldr.w	fp, [pc, #284]	; b4f74 <_Z19detect_power_sourcev+0x244>
-   b4e5a:	4628      	mov	r0, r5
-   b4e5c:	f002 ff64 	bl	b7d28 <_ZN6StringaSEPKc>
-   b4e60:	682a      	ldr	r2, [r5, #0]
-   b4e62:	4940      	ldr	r1, [pc, #256]	; (b4f64 <_Z19detect_power_sourcev+0x234>)
-   b4e64:	a802      	add	r0, sp, #8
-   b4e66:	f002 ffd1 	bl	b7e0c <_ZN6String6formatEPKcz>
-   b4e6a:	a902      	add	r1, sp, #8
-   b4e6c:	4648      	mov	r0, r9
-   b4e6e:	f002 ff53 	bl	b7d18 <_ZN6StringaSEOS_>
-   b4e72:	a802      	add	r0, sp, #8
-   b4e74:	f002 feae 	bl	b7bd4 <_ZN6StringD1Ev>
-   b4e78:	f89b 2000 	ldrb.w	r2, [fp]
-   b4e7c:	f89a 3000 	ldrb.w	r3, [sl]
-   b4e80:	4939      	ldr	r1, [pc, #228]	; (b4f68 <_Z19detect_power_sourcev+0x238>)
-   b4e82:	4313      	orrs	r3, r2
-   b4e84:	f88d 3000 	strb.w	r3, [sp]
-   b4e88:	f8d9 2000 	ldr.w	r2, [r9]
-   b4e8c:	233c      	movs	r3, #60	; 0x3c
-   b4e8e:	a802      	add	r0, sp, #8
-   b4e90:	f000 ffee 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
-   b4e94:	a802      	add	r0, sp, #8
-   b4e96:	f7ff ff2a 	bl	b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
-   b4e9a:	4605      	mov	r5, r0
-   b4e9c:	a803      	add	r0, sp, #12
-   b4e9e:	f7ff fefd 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
-   b4ea2:	4931      	ldr	r1, [pc, #196]	; (b4f68 <_Z19detect_power_sourcev+0x238>)
-   b4ea4:	b955      	cbnz	r5, b4ebc <_Z19detect_power_sourcev+0x18c>
-   b4ea6:	f89a 2000 	ldrb.w	r2, [sl]
-   b4eaa:	f89b 3000 	ldrb.w	r3, [fp]
-   b4eae:	4313      	orrs	r3, r2
-   b4eb0:	f88d 3000 	strb.w	r3, [sp]
-   b4eb4:	f8d9 2000 	ldr.w	r2, [r9]
-   b4eb8:	233c      	movs	r3, #60	; 0x3c
-   b4eba:	e7e8      	b.n	b4e8e <_Z19detect_power_sourcev+0x15e>
-   b4ebc:	6823      	ldr	r3, [r4, #0]
-   b4ebe:	f8c8 3000 	str.w	r3, [r8]
-   b4ec2:	6823      	ldr	r3, [r4, #0]
-   b4ec4:	3b02      	subs	r3, #2
-   b4ec6:	2b02      	cmp	r3, #2
-   b4ec8:	d85d      	bhi.n	b4f86 <_Z19detect_power_sourcev+0x256>
-   b4eca:	4d1e      	ldr	r5, [pc, #120]	; (b4f44 <_Z19detect_power_sourcev+0x214>)
-   b4ecc:	4927      	ldr	r1, [pc, #156]	; (b4f6c <_Z19detect_power_sourcev+0x23c>)
-   b4ece:	f8df 90a0 	ldr.w	r9, [pc, #160]	; b4f70 <_Z19detect_power_sourcev+0x240>
-   b4ed2:	f8df b0a8 	ldr.w	fp, [pc, #168]	; b4f7c <_Z19detect_power_sourcev+0x24c>
-   b4ed6:	f8df a09c 	ldr.w	sl, [pc, #156]	; b4f74 <_Z19detect_power_sourcev+0x244>
-   b4eda:	4628      	mov	r0, r5
-   b4edc:	f002 ff24 	bl	b7d28 <_ZN6StringaSEPKc>
-   b4ee0:	682a      	ldr	r2, [r5, #0]
-   b4ee2:	4920      	ldr	r1, [pc, #128]	; (b4f64 <_Z19detect_power_sourcev+0x234>)
-   b4ee4:	a802      	add	r0, sp, #8
-   b4ee6:	f002 ff91 	bl	b7e0c <_ZN6String6formatEPKcz>
-   b4eea:	a902      	add	r1, sp, #8
-   b4eec:	4648      	mov	r0, r9
-   b4eee:	f002 ff13 	bl	b7d18 <_ZN6StringaSEOS_>
-   b4ef2:	a802      	add	r0, sp, #8
-   b4ef4:	f002 fe6e 	bl	b7bd4 <_ZN6StringD1Ev>
-   b4ef8:	f89a 2000 	ldrb.w	r2, [sl]
-   b4efc:	f89b 3000 	ldrb.w	r3, [fp]
-   b4f00:	4919      	ldr	r1, [pc, #100]	; (b4f68 <_Z19detect_power_sourcev+0x238>)
-   b4f02:	4313      	orrs	r3, r2
-   b4f04:	f88d 3000 	strb.w	r3, [sp]
-   b4f08:	f8d9 2000 	ldr.w	r2, [r9]
-   b4f0c:	233c      	movs	r3, #60	; 0x3c
-   b4f0e:	a802      	add	r0, sp, #8
-   b4f10:	f000 ffae 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
-   b4f14:	a802      	add	r0, sp, #8
-   b4f16:	f7ff feea 	bl	b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
-   b4f1a:	4605      	mov	r5, r0
-   b4f1c:	a803      	add	r0, sp, #12
-   b4f1e:	f7ff febd 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
-   b4f22:	4911      	ldr	r1, [pc, #68]	; (b4f68 <_Z19detect_power_sourcev+0x238>)
-   b4f24:	bb65      	cbnz	r5, b4f80 <_Z19detect_power_sourcev+0x250>
-   b4f26:	f89a 2000 	ldrb.w	r2, [sl]
-   b4f2a:	f89b 3000 	ldrb.w	r3, [fp]
-   b4f2e:	4313      	orrs	r3, r2
-   b4f30:	f88d 3000 	strb.w	r3, [sp]
-   b4f34:	f8d9 2000 	ldr.w	r2, [r9]
-   b4f38:	233c      	movs	r3, #60	; 0x3c
-   b4f3a:	e7e8      	b.n	b4f0e <_Z19detect_power_sourcev+0x1de>
-   b4f3c:	2003e5e8 	.word	0x2003e5e8
-   b4f40:	2003e620 	.word	0x2003e620
-   b4f44:	2003e624 	.word	0x2003e624
-   b4f48:	000b881a 	.word	0x000b881a
-   b4f4c:	2003e68c 	.word	0x2003e68c
-   b4f50:	000b882c 	.word	0x000b882c
-   b4f54:	2003e5f4 	.word	0x2003e5f4
-   b4f58:	000b883e 	.word	0x000b883e
-   b4f5c:	000b8860 	.word	0x000b8860
-   b4f60:	000b8882 	.word	0x000b8882
-   b4f64:	000b8895 	.word	0x000b8895
-   b4f68:	000b88aa 	.word	0x000b88aa
-   b4f6c:	000b88b7 	.word	0x000b88b7
-   b4f70:	2003e634 	.word	0x2003e634
-   b4f74:	2003e5d5 	.word	0x2003e5d5
-   b4f78:	2003e550 	.word	0x2003e550
-   b4f7c:	2003e5d4 	.word	0x2003e5d4
-   b4f80:	6823      	ldr	r3, [r4, #0]
-   b4f82:	f8c8 3000 	str.w	r3, [r8]
-   b4f86:	6822      	ldr	r2, [r4, #0]
-   b4f88:	683b      	ldr	r3, [r7, #0]
-   b4f8a:	429a      	cmp	r2, r3
-   b4f8c:	d16c      	bne.n	b5068 <_Z19detect_power_sourcev+0x338>
-   b4f8e:	f8df 8108 	ldr.w	r8, [pc, #264]	; b5098 <_Z19detect_power_sourcev+0x368>
-   b4f92:	f8d8 3000 	ldr.w	r3, [r8]
-   b4f96:	429a      	cmp	r2, r3
-   b4f98:	d066      	beq.n	b5068 <_Z19detect_power_sourcev+0x338>
-   b4f9a:	3301      	adds	r3, #1
-   b4f9c:	d064      	beq.n	b5068 <_Z19detect_power_sourcev+0x338>
-   b4f9e:	6833      	ldr	r3, [r6, #0]
-   b4fa0:	4d33      	ldr	r5, [pc, #204]	; (b5070 <_Z19detect_power_sourcev+0x340>)
-   b4fa2:	b123      	cbz	r3, b4fae <_Z19detect_power_sourcev+0x27e>
-   b4fa4:	682a      	ldr	r2, [r5, #0]
-   b4fa6:	4933      	ldr	r1, [pc, #204]	; (b5074 <_Z19detect_power_sourcev+0x344>)
-   b4fa8:	4833      	ldr	r0, [pc, #204]	; (b5078 <_Z19detect_power_sourcev+0x348>)
-   b4faa:	f7ff fd8f 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4fae:	f241 3088 	movw	r0, #5000	; 0x1388
-   b4fb2:	f000 fc8f 	bl	b58d4 <delay>
-   b4fb6:	2018      	movs	r0, #24
-   b4fb8:	f000 f9b0 	bl	b531c <_ZN17DiagnosticsHelper8getValueEt>
-   b4fbc:	492f      	ldr	r1, [pc, #188]	; (b507c <_Z19detect_power_sourcev+0x34c>)
-   b4fbe:	6020      	str	r0, [r4, #0]
-   b4fc0:	482b      	ldr	r0, [pc, #172]	; (b5070 <_Z19detect_power_sourcev+0x340>)
-   b4fc2:	f002 feb1 	bl	b7d28 <_ZN6StringaSEPKc>
-   b4fc6:	6822      	ldr	r2, [r4, #0]
-   b4fc8:	683b      	ldr	r3, [r7, #0]
-   b4fca:	429a      	cmp	r2, r3
-   b4fcc:	d14c      	bne.n	b5068 <_Z19detect_power_sourcev+0x338>
-   b4fce:	6833      	ldr	r3, [r6, #0]
-   b4fd0:	b14b      	cbz	r3, b4fe6 <_Z19detect_power_sourcev+0x2b6>
-   b4fd2:	682a      	ldr	r2, [r5, #0]
-   b4fd4:	492a      	ldr	r1, [pc, #168]	; (b5080 <_Z19detect_power_sourcev+0x350>)
-   b4fd6:	4828      	ldr	r0, [pc, #160]	; (b5078 <_Z19detect_power_sourcev+0x348>)
-   b4fd8:	f7ff fd78 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4fdc:	6822      	ldr	r2, [r4, #0]
-   b4fde:	4929      	ldr	r1, [pc, #164]	; (b5084 <_Z19detect_power_sourcev+0x354>)
-   b4fe0:	4825      	ldr	r0, [pc, #148]	; (b5078 <_Z19detect_power_sourcev+0x348>)
-   b4fe2:	f7ff fd73 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b4fe6:	6823      	ldr	r3, [r4, #0]
-   b4fe8:	3b02      	subs	r3, #2
-   b4fea:	2b02      	cmp	r3, #2
-   b4fec:	d83c      	bhi.n	b5068 <_Z19detect_power_sourcev+0x338>
-   b4fee:	4e26      	ldr	r6, [pc, #152]	; (b5088 <_Z19detect_power_sourcev+0x358>)
-   b4ff0:	682a      	ldr	r2, [r5, #0]
-   b4ff2:	4926      	ldr	r1, [pc, #152]	; (b508c <_Z19detect_power_sourcev+0x35c>)
-   b4ff4:	4f26      	ldr	r7, [pc, #152]	; (b5090 <_Z19detect_power_sourcev+0x360>)
-   b4ff6:	f8df 90a4 	ldr.w	r9, [pc, #164]	; b509c <_Z19detect_power_sourcev+0x36c>
-   b4ffa:	f8df a0a4 	ldr.w	sl, [pc, #164]	; b50a0 <_Z19detect_power_sourcev+0x370>
-   b4ffe:	a802      	add	r0, sp, #8
-   b5000:	f002 ff04 	bl	b7e0c <_ZN6String6formatEPKcz>
-   b5004:	a902      	add	r1, sp, #8
-   b5006:	4630      	mov	r0, r6
-   b5008:	f002 fe86 	bl	b7d18 <_ZN6StringaSEOS_>
-   b500c:	a802      	add	r0, sp, #8
-   b500e:	f002 fde1 	bl	b7bd4 <_ZN6StringD1Ev>
-   b5012:	f899 2000 	ldrb.w	r2, [r9]
-   b5016:	783b      	ldrb	r3, [r7, #0]
-   b5018:	491e      	ldr	r1, [pc, #120]	; (b5094 <_Z19detect_power_sourcev+0x364>)
-   b501a:	4313      	orrs	r3, r2
-   b501c:	f88d 3000 	strb.w	r3, [sp]
-   b5020:	6832      	ldr	r2, [r6, #0]
-   b5022:	233c      	movs	r3, #60	; 0x3c
-   b5024:	a802      	add	r0, sp, #8
-   b5026:	f000 ff23 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
-   b502a:	a802      	add	r0, sp, #8
-   b502c:	f7ff fe5f 	bl	b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
-   b5030:	4605      	mov	r5, r0
-   b5032:	a803      	add	r0, sp, #12
-   b5034:	f7ff fe32 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
-   b5038:	b99d      	cbnz	r5, b5062 <_Z19detect_power_sourcev+0x332>
-   b503a:	783a      	ldrb	r2, [r7, #0]
-   b503c:	f899 3000 	ldrb.w	r3, [r9]
-   b5040:	4313      	orrs	r3, r2
-   b5042:	f88d 3000 	strb.w	r3, [sp]
-   b5046:	6832      	ldr	r2, [r6, #0]
-   b5048:	233c      	movs	r3, #60	; 0x3c
-   b504a:	4651      	mov	r1, sl
-   b504c:	a802      	add	r0, sp, #8
-   b504e:	f000 ff0f 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
-   b5052:	a802      	add	r0, sp, #8
-   b5054:	f7ff fe4b 	bl	b4cee <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
-   b5058:	4605      	mov	r5, r0
-   b505a:	a803      	add	r0, sp, #12
-   b505c:	f7ff fe1e 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
-   b5060:	e7ea      	b.n	b5038 <_Z19detect_power_sourcev+0x308>
-   b5062:	6823      	ldr	r3, [r4, #0]
-   b5064:	f8c8 3000 	str.w	r3, [r8]
-   b5068:	b007      	add	sp, #28
-   b506a:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
-   b506e:	bf00      	nop
-   b5070:	2003e624 	.word	0x2003e624
-   b5074:	000b883e 	.word	0x000b883e
-   b5078:	2003e68c 	.word	0x2003e68c
-   b507c:	000b88b7 	.word	0x000b88b7
-   b5080:	000b8860 	.word	0x000b8860
-   b5084:	000b882c 	.word	0x000b882c
-   b5088:	2003e634 	.word	0x2003e634
-   b508c:	000b8895 	.word	0x000b8895
-   b5090:	2003e5d5 	.word	0x2003e5d5
-   b5094:	000b88aa 	.word	0x000b88aa
-   b5098:	2003e550 	.word	0x2003e550
-   b509c:	2003e5d4 	.word	0x2003e5d4
-   b50a0:	000b88ce 	.word	0x000b88ce
-
-000b50a4 <loop>:
-   b50a4:	b530      	push	{r4, r5, lr}
-   b50a6:	4b21      	ldr	r3, [pc, #132]	; (b512c <loop+0x88>)
-   b50a8:	681b      	ldr	r3, [r3, #0]
-   b50aa:	b08d      	sub	sp, #52	; 0x34
-   b50ac:	2b00      	cmp	r3, #0
-   b50ae:	d03a      	beq.n	b5126 <loop+0x82>
-   b50b0:	4b1f      	ldr	r3, [pc, #124]	; (b5130 <loop+0x8c>)
-   b50b2:	4c20      	ldr	r4, [pc, #128]	; (b5134 <loop+0x90>)
-   b50b4:	6818      	ldr	r0, [r3, #0]
-   b50b6:	21c8      	movs	r1, #200	; 0xc8
-   b50b8:	f7ff fdc4 	bl	b4c44 <_Z14test_flash_ledii>
-        return network_ready(*this, 0,  NULL);
-   b50bc:	2200      	movs	r2, #0
-   b50be:	6860      	ldr	r0, [r4, #4]
-   b50c0:	4611      	mov	r1, r2
-   b50c2:	f000 fb77 	bl	b57b4 <network_ready>
-   b50c6:	b328      	cbz	r0, b5114 <loop+0x70>
-   b50c8:	4621      	mov	r1, r4
-   b50ca:	a804      	add	r0, sp, #16
-   b50cc:	f000 fc96 	bl	b59fc <_ZN5spark13CellularClass4RSSIEv>
-   b50d0:	a804      	add	r0, sp, #16
-   b50d2:	f000 fd0f 	bl	b5af4 <_ZNK14CellularSignal11getStrengthEv>
-   b50d6:	4d18      	ldr	r5, [pc, #96]	; (b5138 <loop+0x94>)
-   b50d8:	a804      	add	r0, sp, #16
-   b50da:	ed85 0a00 	vstr	s0, [r5]
-   b50de:	f000 fd39 	bl	b5b54 <_ZNK14CellularSignal10getQualityEv>
-   b50e2:	4b16      	ldr	r3, [pc, #88]	; (b513c <loop+0x98>)
-   b50e4:	6828      	ldr	r0, [r5, #0]
-   b50e6:	ed83 0a00 	vstr	s0, [r3]
-   b50ea:	ee10 4a10 	vmov	r4, s0
-   b50ee:	f7ff f8f9 	bl	b42e4 <__aeabi_f2d>
-   b50f2:	4602      	mov	r2, r0
-   b50f4:	460b      	mov	r3, r1
-   b50f6:	4620      	mov	r0, r4
-   b50f8:	e9cd 2302 	strd	r2, r3, [sp, #8]
-   b50fc:	f7ff f8f2 	bl	b42e4 <__aeabi_f2d>
-   b5100:	e9dd 2302 	ldrd	r2, r3, [sp, #8]
-   b5104:	e9cd 0100 	strd	r0, r1, [sp]
-   b5108:	490d      	ldr	r1, [pc, #52]	; (b5140 <loop+0x9c>)
-   b510a:	480e      	ldr	r0, [pc, #56]	; (b5144 <loop+0xa0>)
-   b510c:	f7ff fcde 	bl	b4acc <_ZNK5spark6Logger4infoEPKcz>
-   b5110:	f7ff fd78 	bl	b4c04 <_Z19get_battery_voltagev>
-   b5114:	f7ff fe0c 	bl	b4d30 <_Z19detect_power_sourcev>
-   b5118:	f242 7010 	movw	r0, #10000	; 0x2710
-   b511c:	b00d      	add	sp, #52	; 0x34
-   b511e:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
-   b5122:	f000 bbd7 	b.w	b58d4 <delay>
-   b5126:	f7ff fda1 	bl	b4c6c <_Z19check_day_time_syncv>
-   b512a:	e7f3      	b.n	b5114 <loop+0x70>
-   b512c:	2003e5e8 	.word	0x2003e5e8
-   b5130:	2003e54c 	.word	0x2003e54c
-   b5134:	2003e648 	.word	0x2003e648
-   b5138:	2003e5e4 	.word	0x2003e5e4
-   b513c:	2003e5e0 	.word	0x2003e5e0
-   b5140:	000b87bc 	.word	0x000b87bc
-   b5144:	2003e68c 	.word	0x2003e68c
-
-000b5148 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_>:
-        if (dest > p && dest < end) {
-   b5148:	4288      	cmp	r0, r1
-    static void move(T* dest, T* p, T* end) {
-   b514a:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
-   b514c:	4604      	mov	r4, r0
-   b514e:	460d      	mov	r5, r1
-   b5150:	4616      	mov	r6, r2
-        if (dest > p && dest < end) {
-   b5152:	d916      	bls.n	b5182 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x3a>
-   b5154:	4290      	cmp	r0, r2
-   b5156:	d215      	bcs.n	b5184 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x3c>
-            --end;
-   b5158:	f1a2 0614 	sub.w	r6, r2, #20
-            dest += end - p - 1;
-   b515c:	1a75      	subs	r5, r6, r1
-   b515e:	f1a1 0714 	sub.w	r7, r1, #20
-   b5162:	442c      	add	r4, r5
-            for (; end != p; --end, --dest) {
-   b5164:	42b7      	cmp	r7, r6
-   b5166:	d01c      	beq.n	b51a2 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x5a>
-                new(dest) T(std::move(*end));
-   b5168:	b12c      	cbz	r4, b5176 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x2e>
-   b516a:	4631      	mov	r1, r6
-   b516c:	4620      	mov	r0, r4
-   b516e:	f002 fdae 	bl	b7cce <_ZN6StringC1EOS_>
-   b5172:	7c33      	ldrb	r3, [r6, #16]
-   b5174:	7423      	strb	r3, [r4, #16]
-   b5176:	4630      	mov	r0, r6
-   b5178:	f002 fd2c 	bl	b7bd4 <_ZN6StringD1Ev>
-            for (; end != p; --end, --dest) {
-   b517c:	3e14      	subs	r6, #20
-   b517e:	3c14      	subs	r4, #20
-   b5180:	e7f0      	b.n	b5164 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x1c>
-        } else if (dest != p) {
-   b5182:	d00e      	beq.n	b51a2 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x5a>
-            for (; p != end; ++p, ++dest) {
-   b5184:	42b5      	cmp	r5, r6
-   b5186:	d00c      	beq.n	b51a2 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x5a>
-                new(dest) T(std::move(*p));
-   b5188:	b12c      	cbz	r4, b5196 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x4e>
-   b518a:	4629      	mov	r1, r5
-   b518c:	4620      	mov	r0, r4
-   b518e:	f002 fd9e 	bl	b7cce <_ZN6StringC1EOS_>
-   b5192:	7c2b      	ldrb	r3, [r5, #16]
-   b5194:	7423      	strb	r3, [r4, #16]
-   b5196:	4628      	mov	r0, r5
-   b5198:	f002 fd1c 	bl	b7bd4 <_ZN6StringD1Ev>
-            for (; p != end; ++p, ++dest) {
-   b519c:	3514      	adds	r5, #20
-   b519e:	3414      	adds	r4, #20
-   b51a0:	e7f0      	b.n	b5184 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x3c>
-    }
-   b51a2:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
-
-000b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>:
-inline spark::Vector<T, AllocatorT>::Vector(const Vector<T, AllocatorT>& vector) : Vector() {
-   b51a4:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
-        capacity_(0) {
-   b51a8:	2300      	movs	r3, #0
-   b51aa:	e9c0 3300 	strd	r3, r3, [r0]
-   b51ae:	6083      	str	r3, [r0, #8]
-    if (vector.size_ > 0 && realloc(vector.size_)) {
-   b51b0:	684f      	ldr	r7, [r1, #4]
-   b51b2:	429f      	cmp	r7, r3
-inline spark::Vector<T, AllocatorT>::Vector(const Vector<T, AllocatorT>& vector) : Vector() {
-   b51b4:	4604      	mov	r4, r0
-   b51b6:	460e      	mov	r6, r1
-    if (vector.size_ > 0 && realloc(vector.size_)) {
-   b51b8:	dd23      	ble.n	b5202 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x5e>
-            d = (T*)AllocatorT::malloc(n * sizeof(T));
-   b51ba:	f04f 0814 	mov.w	r8, #20
-    return ::malloc(size);
-   b51be:	fb08 f007 	mul.w	r0, r8, r7
-   b51c2:	f000 fb3f 	bl	b5844 <malloc>
-            if (!d) {
-   b51c6:	4605      	mov	r5, r0
-   b51c8:	b1d8      	cbz	r0, b5202 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x5e>
-            move(d, data_, data_ + size_);
-   b51ca:	e9d4 1200 	ldrd	r1, r2, [r4]
-   b51ce:	fb08 1202 	mla	r2, r8, r2, r1
-   b51d2:	f7ff ffb9 	bl	b5148 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_>
-    ::free(ptr);
-   b51d6:	6820      	ldr	r0, [r4, #0]
-   b51d8:	f000 fb3c 	bl	b5854 <free>
-        data_ = d;
-   b51dc:	6025      	str	r5, [r4, #0]
-        capacity_ = n;
-   b51de:	60a7      	str	r7, [r4, #8]
-        copy(data_, vector.data_, vector.data_ + vector.size_);
-   b51e0:	e9d6 7300 	ldrd	r7, r3, [r6]
-   b51e4:	fb08 7803 	mla	r8, r8, r3, r7
-        for (; it != end; ++it, ++dest) {
-   b51e8:	45b8      	cmp	r8, r7
-   b51ea:	d008      	beq.n	b51fe <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x5a>
-   b51ec:	4639      	mov	r1, r7
-   b51ee:	4628      	mov	r0, r5
-   b51f0:	f002 fd87 	bl	b7d02 <_ZN6StringC1ERKS_>
-   b51f4:	7c3b      	ldrb	r3, [r7, #16]
-   b51f6:	742b      	strb	r3, [r5, #16]
-   b51f8:	3714      	adds	r7, #20
-   b51fa:	3514      	adds	r5, #20
-   b51fc:	e7f4      	b.n	b51e8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x44>
-        size_ = vector.size_;
-   b51fe:	6873      	ldr	r3, [r6, #4]
-   b5200:	6063      	str	r3, [r4, #4]
-}
-   b5202:	4620      	mov	r0, r4
-   b5204:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
-
-000b5208 <_GLOBAL__sub_I_SystemMode>:
-        val_(val) {
-   b5208:	4b2f      	ldr	r3, [pc, #188]	; (b52c8 <_GLOBAL__sub_I_SystemMode+0xc0>)
-   b520a:	b570      	push	{r4, r5, r6, lr}
-   b520c:	2501      	movs	r5, #1
-   b520e:	701d      	strb	r5, [r3, #0]
-   b5210:	4b2e      	ldr	r3, [pc, #184]	; (b52cc <_GLOBAL__sub_I_SystemMode+0xc4>)
-   b5212:	2208      	movs	r2, #8
-   b5214:	701a      	strb	r2, [r3, #0]
-
-class SystemSleepResult {
-public:
-    SystemSleepResult()
-            : wakeupSource_(nullptr),
-              error_(SYSTEM_ERROR_NONE) {
-   b5216:	4b2e      	ldr	r3, [pc, #184]	; (b52d0 <_GLOBAL__sub_I_SystemMode+0xc8>)
-    SleepResult() {}
-   b5218:	4a2e      	ldr	r2, [pc, #184]	; (b52d4 <_GLOBAL__sub_I_SystemMode+0xcc>)
-   b521a:	609a      	str	r2, [r3, #8]
-              error_(SYSTEM_ERROR_NONE) {
-   b521c:	2400      	movs	r4, #0
-   b521e:	b08c      	sub	sp, #48	; 0x30
-   b5220:	e9c3 4400 	strd	r4, r4, [r3]
-
-class SystemClass {
-public:
-
-    SystemClass(System_Mode_TypeDef mode = DEFAULT) {
-        set_system_mode(mode);
-   b5224:	4628      	mov	r0, r5
-   b5226:	f000 fa27 	bl	b5678 <set_system_mode>
-   b522a:	4621      	mov	r1, r4
-   b522c:	4628      	mov	r0, r5
-   b522e:	f000 fa33 	bl	b5698 <system_thread_set_state>
-   b5232:	4621      	mov	r1, r4
-   b5234:	4828      	ldr	r0, [pc, #160]	; (b52d8 <_GLOBAL__sub_I_SystemMode+0xd0>)
-   b5236:	f000 ffdf 	bl	b61f8 <_ZN9FuelGaugeC1Eb>
-        capacity_(0) {
-   b523a:	e9cd 4400 	strd	r4, r4, [sp]
-   b523e:	9402      	str	r4, [sp, #8]
-            StreamLogHandler(Serial, level, filters) {
-   b5240:	f002 fee6 	bl	b8010 <_Z16_fetch_usbserialv>
-        filter_(level, filters) {
-   b5244:	4c25      	ldr	r4, [pc, #148]	; (b52dc <_GLOBAL__sub_I_SystemMode+0xd4>)
-   b5246:	4605      	mov	r5, r0
-   b5248:	4669      	mov	r1, sp
-   b524a:	a803      	add	r0, sp, #12
-   b524c:	f7ff ffaa 	bl	b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
-   b5250:	4626      	mov	r6, r4
-        stream_(&stream) {
-   b5252:	a903      	add	r1, sp, #12
-   b5254:	a806      	add	r0, sp, #24
-   b5256:	f7ff ffa5 	bl	b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
-        filter_(level, filters) {
-   b525a:	4b21      	ldr	r3, [pc, #132]	; (b52e0 <_GLOBAL__sub_I_SystemMode+0xd8>)
-   b525c:	f846 3b04 	str.w	r3, [r6], #4
-   b5260:	a906      	add	r1, sp, #24
-   b5262:	a809      	add	r0, sp, #36	; 0x24
-   b5264:	f7ff ff9e 	bl	b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
-   b5268:	aa09      	add	r2, sp, #36	; 0x24
-   b526a:	211e      	movs	r1, #30
-   b526c:	4630      	mov	r0, r6
-   b526e:	f001 ffaf 	bl	b71d0 <_ZN5spark6detail9LogFilterC1E8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEE>
-   b5272:	a809      	add	r0, sp, #36	; 0x24
-   b5274:	f7ff fd28 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
-        stream_(&stream) {
-   b5278:	a806      	add	r0, sp, #24
-   b527a:	f7ff fd25 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
-   b527e:	4b19      	ldr	r3, [pc, #100]	; (b52e4 <_GLOBAL__sub_I_SystemMode+0xdc>)
-   b5280:	6023      	str	r3, [r4, #0]
-   b5282:	6225      	str	r5, [r4, #32]
-   b5284:	a803      	add	r0, sp, #12
-   b5286:	f7ff fd1f 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
-   b528a:	4b17      	ldr	r3, [pc, #92]	; (b52e8 <_GLOBAL__sub_I_SystemMode+0xe0>)
-   b528c:	6023      	str	r3, [r4, #0]
-        Serial.begin();
-   b528e:	f002 febf 	bl	b8010 <_Z16_fetch_usbserialv>
-   b5292:	f44f 5116 	mov.w	r1, #9600	; 0x2580
-   b5296:	f002 feab 	bl	b7ff0 <_ZN9USBSerial5beginEl>
-        LogManager::instance()->addHandler(this);
-   b529a:	f001 fc7b 	bl	b6b94 <_ZN5spark10LogManager8instanceEv>
-   b529e:	4621      	mov	r1, r4
-   b52a0:	f001 fe6c 	bl	b6f7c <_ZN5spark10LogManager10addHandlerEPNS_10LogHandlerE>
-   b52a4:	4668      	mov	r0, sp
-   b52a6:	f7ff fd0f 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
-   b52aa:	f000 f88d 	bl	b53c8 <HAL_Timer_Get_Milli_Seconds>
-   b52ae:	4b0f      	ldr	r3, [pc, #60]	; (b52ec <_GLOBAL__sub_I_SystemMode+0xe4>)
-   b52b0:	490f      	ldr	r1, [pc, #60]	; (b52f0 <_GLOBAL__sub_I_SystemMode+0xe8>)
-   b52b2:	6018      	str	r0, [r3, #0]
-   b52b4:	480f      	ldr	r0, [pc, #60]	; (b52f4 <_GLOBAL__sub_I_SystemMode+0xec>)
-   b52b6:	f002 fcd8 	bl	b7c6a <_ZN6StringC1EPK19__FlashStringHelper>
-   b52ba:	490d      	ldr	r1, [pc, #52]	; (b52f0 <_GLOBAL__sub_I_SystemMode+0xe8>)
-   b52bc:	480e      	ldr	r0, [pc, #56]	; (b52f8 <_GLOBAL__sub_I_SystemMode+0xf0>)
-   b52be:	b00c      	add	sp, #48	; 0x30
-   b52c0:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
-   b52c4:	f002 bcd1 	b.w	b7c6a <_ZN6StringC1EPK19__FlashStringHelper>
-   b52c8:	2003e5d4 	.word	0x2003e5d4
-   b52cc:	2003e5d5 	.word	0x2003e5d5
-   b52d0:	2003e5c8 	.word	0x2003e5c8
-   b52d4:	ffff0000 	.word	0xffff0000
-   b52d8:	2003e5ec 	.word	0x2003e5ec
-   b52dc:	2003e5fc 	.word	0x2003e5fc
-   b52e0:	000b88e8 	.word	0x000b88e8
-   b52e4:	000b8ab8 	.word	0x000b8ab8
-   b52e8:	000b8900 	.word	0x000b8900
-   b52ec:	2003e5f8 	.word	0x2003e5f8
-   b52f0:	000b8a7f 	.word	0x000b8a7f
-   b52f4:	2003e624 	.word	0x2003e624
-   b52f8:	2003e634 	.word	0x2003e634
-
-000b52fc <_ZZN17DiagnosticsHelper8getValueEtENUt_8appenderEPvPKhj>:
+000b4a54 <_ZZN17DiagnosticsHelper8getValueEtENUt_8appenderEPvPKhj>:
 	};
     Data data;
     data.offset = data.u.d.value = 0;
 
     struct {
         static bool appender(void* appender, const uint8_t* data, size_t size) {
-   b52fc:	b538      	push	{r3, r4, r5, lr}
-   b52fe:	4604      	mov	r4, r0
+   b4a54:	b538      	push	{r3, r4, r5, lr}
+   b4a56:	4604      	mov	r4, r0
             Data *d = (Data *)appender;
             if ((d->offset + size) <= sizeof(Data::u)) {
-   b5300:	68c0      	ldr	r0, [r0, #12]
-   b5302:	1883      	adds	r3, r0, r2
-   b5304:	2b0a      	cmp	r3, #10
+   b4a58:	68c0      	ldr	r0, [r0, #12]
+   b4a5a:	1883      	adds	r3, r0, r2
+   b4a5c:	2b0a      	cmp	r3, #10
         static bool appender(void* appender, const uint8_t* data, size_t size) {
-   b5306:	4615      	mov	r5, r2
+   b4a5e:	4615      	mov	r5, r2
             if ((d->offset + size) <= sizeof(Data::u)) {
-   b5308:	d805      	bhi.n	b5316 <_ZZN17DiagnosticsHelper8getValueEtENUt_8appenderEPvPKhj+0x1a>
+   b4a60:	d805      	bhi.n	b4a6e <_ZZN17DiagnosticsHelper8getValueEtENUt_8appenderEPvPKhj+0x1a>
                 memcpy(&d->u.b[d->offset], data, size);
-   b530a:	4420      	add	r0, r4
-   b530c:	f003 f87e 	bl	b840c <memcpy>
+   b4a62:	4420      	add	r0, r4
+   b4a64:	f003 fcd2 	bl	b840c <memcpy>
                 d->offset += size;
-   b5310:	68e2      	ldr	r2, [r4, #12]
-   b5312:	442a      	add	r2, r5
-   b5314:	60e2      	str	r2, [r4, #12]
+   b4a68:	68e2      	ldr	r2, [r4, #12]
+   b4a6a:	442a      	add	r2, r5
+   b4a6c:	60e2      	str	r2, [r4, #12]
             }
             return true;
         }
-   b5316:	2001      	movs	r0, #1
-   b5318:	bd38      	pop	{r3, r4, r5, pc}
+   b4a6e:	2001      	movs	r0, #1
+   b4a70:	bd38      	pop	{r3, r4, r5, pc}
 	...
 
-000b531c <_ZN17DiagnosticsHelper8getValueEt>:
+000b4a74 <_ZN17DiagnosticsHelper8getValueEt>:
 int32_t DiagnosticsHelper::getValue(uint16_t id) {
-   b531c:	b510      	push	{r4, lr}
-   b531e:	b088      	sub	sp, #32
+   b4a74:	b510      	push	{r4, lr}
+   b4a76:	b088      	sub	sp, #32
     data.offset = data.u.d.value = 0;
-   b5320:	2400      	movs	r4, #0
+   b4a78:	2400      	movs	r4, #0
     } Callback;
 
     system_format_diag_data(&id, 1, 1, Callback.appender, &data, nullptr);
-   b5322:	ab04      	add	r3, sp, #16
-   b5324:	2201      	movs	r2, #1
+   b4a7a:	ab04      	add	r3, sp, #16
+   b4a7c:	2201      	movs	r2, #1
 int32_t DiagnosticsHelper::getValue(uint16_t id) {
-   b5326:	f8ad 000e 	strh.w	r0, [sp, #14]
+   b4a7e:	f8ad 000e 	strh.w	r0, [sp, #14]
     system_format_diag_data(&id, 1, 1, Callback.appender, &data, nullptr);
-   b532a:	9300      	str	r3, [sp, #0]
-   b532c:	9401      	str	r4, [sp, #4]
-   b532e:	4b09      	ldr	r3, [pc, #36]	; (b5354 <_ZN17DiagnosticsHelper8getValueEt+0x38>)
+   b4a82:	9300      	str	r3, [sp, #0]
+   b4a84:	9401      	str	r4, [sp, #4]
+   b4a86:	4b09      	ldr	r3, [pc, #36]	; (b4aac <_ZN17DiagnosticsHelper8getValueEt+0x38>)
     data.offset = data.u.d.value = 0;
-   b5330:	f8ad 4016 	strh.w	r4, [sp, #22]
+   b4a88:	f8ad 4016 	strh.w	r4, [sp, #22]
     system_format_diag_data(&id, 1, 1, Callback.appender, &data, nullptr);
-   b5334:	4611      	mov	r1, r2
-   b5336:	f10d 000e 	add.w	r0, sp, #14
+   b4a8c:	4611      	mov	r1, r2
+   b4a8e:	f10d 000e 	add.w	r0, sp, #14
     data.offset = data.u.d.value = 0;
-   b533a:	f8ad 4018 	strh.w	r4, [sp, #24]
-   b533e:	9407      	str	r4, [sp, #28]
+   b4a92:	f8ad 4018 	strh.w	r4, [sp, #24]
+   b4a96:	9407      	str	r4, [sp, #28]
     system_format_diag_data(&id, 1, 1, Callback.appender, &data, nullptr);
-   b5340:	f000 f9c2 	bl	b56c8 <system_format_diag_data>
+   b4a98:	f000 fe16 	bl	b56c8 <system_format_diag_data>
 
     // Log.info("idSize=%u valueSize=%u id=%u value=%ld", data.u.d.idSize, data.u.d.valueSize, data.u.d.id, data.u.d.value);
 
     if (data.offset == sizeof(Data::u)) {
-   b5344:	9b07      	ldr	r3, [sp, #28]
-   b5346:	2b0a      	cmp	r3, #10
+   b4a9c:	9b07      	ldr	r3, [sp, #28]
+   b4a9e:	2b0a      	cmp	r3, #10
     	return data.u.d.value;
-   b5348:	bf0c      	ite	eq
-   b534a:	f8dd 0016 	ldreq.w	r0, [sp, #22]
+   b4aa0:	bf0c      	ite	eq
+   b4aa2:	f8dd 0016 	ldreq.w	r0, [sp, #22]
     }
     else {
         return 0;
-   b534e:	4620      	movne	r0, r4
+   b4aa6:	4620      	movne	r0, r4
     }
 }
-   b5350:	b008      	add	sp, #32
-   b5352:	bd10      	pop	{r4, pc}
-   b5354:	000b52fd 	.word	0x000b52fd
+   b4aa8:	b008      	add	sp, #32
+   b4aaa:	bd10      	pop	{r4, pc}
+   b4aac:	000b4a55 	.word	0x000b4a55
+
+000b4ab0 <_ZN5spark10LogHandler5writeEPKcj>:
+    }
+}
+
+inline void spark::LogHandler::write(const char *data, size_t size) {
+    // Default implementation does nothing
+}
+   b4ab0:	4770      	bx	lr
+	...
+
+000b4ab4 <_Z9ledToggle6String>:
+   b4ab4:	b510      	push	{r4, lr}
+	operator StringIfHelperType() const { return buffer ? &String::StringIfHelper : 0; }
+	int compareTo(const String &s) const;
+	unsigned char equals(const String &s) const;
+	unsigned char equals(const char *cstr) const;
+	unsigned char operator == (const String &rhs) const {return equals(rhs);}
+	unsigned char operator == (const char *cstr) const {return equals(cstr);}
+   b4ab6:	4908      	ldr	r1, [pc, #32]	; (b4ad8 <_Z9ledToggle6String+0x24>)
+   b4ab8:	4604      	mov	r4, r0
+   b4aba:	f003 f97a 	bl	b7db2 <_ZNK6String6equalsEPKc>
+   b4abe:	b940      	cbnz	r0, b4ad2 <_Z9ledToggle6String+0x1e>
+   b4ac0:	4906      	ldr	r1, [pc, #24]	; (b4adc <_Z9ledToggle6String+0x28>)
+   b4ac2:	4620      	mov	r0, r4
+   b4ac4:	f003 f975 	bl	b7db2 <_ZNK6String6equalsEPKc>
+   b4ac8:	fab0 f080 	clz	r0, r0
+   b4acc:	0940      	lsrs	r0, r0, #5
+   b4ace:	4240      	negs	r0, r0
+   b4ad0:	bd10      	pop	{r4, pc}
+   b4ad2:	2001      	movs	r0, #1
+   b4ad4:	e7fc      	b.n	b4ad0 <_Z9ledToggle6String+0x1c>
+   b4ad6:	bf00      	nop
+   b4ad8:	000b87a1 	.word	0x000b87a1
+   b4adc:	000b87a4 	.word	0x000b87a4
+
+000b4ae0 <_ZN5spark16SerialLogHandlerD1Ev>:
+            StreamLogHandler(Serial, level, filters) {
+        Serial.begin(baud);
+        LogManager::instance()->addHandler(this);
+    }
+
+    virtual ~SerialLogHandler() {
+   b4ae0:	4b0a      	ldr	r3, [pc, #40]	; (b4b0c <_ZN5spark16SerialLogHandlerD1Ev+0x2c>)
+   b4ae2:	b510      	push	{r4, lr}
+   b4ae4:	4604      	mov	r4, r0
+   b4ae6:	6003      	str	r3, [r0, #0]
+        LogManager::instance()->removeHandler(this);
+   b4ae8:	f002 f854 	bl	b6b94 <_ZN5spark10LogManager8instanceEv>
+   b4aec:	4621      	mov	r1, r4
+   b4aee:	f002 fa8c 	bl	b700a <_ZN5spark10LogManager13removeHandlerEPNS_10LogHandlerE>
+        Serial.end();
+   b4af2:	f003 fa8d 	bl	b8010 <_Z16_fetch_usbserialv>
+   b4af6:	f003 fa7f 	bl	b7ff8 <_ZN9USBSerial3endEv>
+    virtual ~LogHandler() = default;
+   b4afa:	4620      	mov	r0, r4
+   b4afc:	4b04      	ldr	r3, [pc, #16]	; (b4b10 <_ZN5spark16SerialLogHandlerD1Ev+0x30>)
+   b4afe:	f840 3b04 	str.w	r3, [r0], #4
+   b4b02:	f002 f91d 	bl	b6d40 <_ZN5spark6detail9LogFilterD1Ev>
+    }
+   b4b06:	4620      	mov	r0, r4
+   b4b08:	bd10      	pop	{r4, pc}
+   b4b0a:	bf00      	nop
+   b4b0c:	000b8900 	.word	0x000b8900
+   b4b10:	000b88e8 	.word	0x000b88e8
+
+000b4b14 <_ZN5spark16SerialLogHandlerD0Ev>:
+    virtual ~SerialLogHandler() {
+   b4b14:	b510      	push	{r4, lr}
+   b4b16:	4604      	mov	r4, r0
+    }
+   b4b18:	f7ff ffe2 	bl	b4ae0 <_ZN5spark16SerialLogHandlerD1Ev>
+   b4b1c:	4620      	mov	r0, r4
+   b4b1e:	2124      	movs	r1, #36	; 0x24
+   b4b20:	f7ff ff81 	bl	b4a26 <_ZdlPvj>
+   b4b24:	4620      	mov	r0, r4
+   b4b26:	bd10      	pop	{r4, pc}
+
+000b4b28 <_ZNK5spark6Logger4infoEPKcz>:
+    va_start(args, fmt);
+    log(LOG_LEVEL_TRACE, fmt, args);
+    va_end(args);
+}
+
+inline void spark::Logger::info(const char *fmt, ...) const {
+   b4b28:	b40e      	push	{r1, r2, r3}
+   b4b2a:	b500      	push	{lr}
+   b4b2c:	b08c      	sub	sp, #48	; 0x30
+   b4b2e:	aa0d      	add	r2, sp, #52	; 0x34
+}
+
+inline void spark::Logger::log(LogLevel level, const char *fmt, va_list args) const {
+    LogAttributes attr;
+    attr.size = sizeof(LogAttributes);
+    attr.flags = 0;
+   b4b30:	f04f 0c20 	mov.w	ip, #32
+inline void spark::Logger::info(const char *fmt, ...) const {
+   b4b34:	f852 1b04 	ldr.w	r1, [r2], #4
+    va_start(args, fmt);
+   b4b38:	9203      	str	r2, [sp, #12]
+    log_message_v(level, name_, &attr, nullptr, fmt, args);
+   b4b3a:	e9cd 1200 	strd	r1, r2, [sp]
+    attr.flags = 0;
+   b4b3e:	2300      	movs	r3, #0
+    log_message_v(level, name_, &attr, nullptr, fmt, args);
+   b4b40:	6801      	ldr	r1, [r0, #0]
+   b4b42:	aa04      	add	r2, sp, #16
+   b4b44:	201e      	movs	r0, #30
+    attr.flags = 0;
+   b4b46:	e9cd c304 	strd	ip, r3, [sp, #16]
+    log_message_v(level, name_, &attr, nullptr, fmt, args);
+   b4b4a:	f000 fd7d 	bl	b5648 <log_message_v>
+}
+   b4b4e:	b00c      	add	sp, #48	; 0x30
+   b4b50:	f85d eb04 	ldr.w	lr, [sp], #4
+   b4b54:	b003      	add	sp, #12
+   b4b56:	4770      	bx	lr
+
+000b4b58 <setup>:
+   b4b58:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+        return _variable(varKey, (const char*)userVar, userVarType);
+    }
+
+    template<typename T> static inline bool _variable(const char *varKey, typename T::PointerType userVar, const T& userVarType)
+    {
+        return spark_variable(varKey, (const void*)userVar, T::TYPE_ID, NULL);
+   b4b5c:	4932      	ldr	r1, [pc, #200]	; (b4c28 <setup+0xd0>)
+   b4b5e:	4833      	ldr	r0, [pc, #204]	; (b4c2c <setup+0xd4>)
+   b4b60:	f8df 80f8 	ldr.w	r8, [pc, #248]	; b4c5c <setup+0x104>
+    virtual void setListenTimeout(uint16_t timeout);
+    virtual uint16_t getListenTimeout();
+    virtual bool listening();
+
+    operator network_interface_t() const {
+        return iface_;
+   b4b64:	4e32      	ldr	r6, [pc, #200]	; (b4c30 <setup+0xd8>)
+   b4b66:	b096      	sub	sp, #88	; 0x58
+   b4b68:	2300      	movs	r3, #0
+   b4b6a:	2209      	movs	r2, #9
+   b4b6c:	f000 fdca 	bl	b5704 <spark_variable>
+   b4b70:	4b30      	ldr	r3, [pc, #192]	; (b4c34 <setup+0xdc>)
+   b4b72:	2203      	movs	r2, #3
+   b4b74:	601a      	str	r2, [r3, #0]
+   b4b76:	4b30      	ldr	r3, [pc, #192]	; (b4c38 <setup+0xe0>)
+   b4b78:	2101      	movs	r1, #1
+   b4b7a:	8818      	ldrh	r0, [r3, #0]
+   b4b7c:	f003 fb48 	bl	b8210 <pinMode>
+   b4b80:	2400      	movs	r4, #0
+        return _function(name, args...);
+    }
+
+    static bool _function(const char *funcKey, user_function_int_str_t* func)
+    {
+        return register_function(call_raw_user_function, (void*)func, funcKey);
+   b4b82:	4a2e      	ldr	r2, [pc, #184]	; (b4c3c <setup+0xe4>)
+   b4b84:	492e      	ldr	r1, [pc, #184]	; (b4c40 <setup+0xe8>)
+   b4b86:	482f      	ldr	r0, [pc, #188]	; (b4c44 <setup+0xec>)
+   b4b88:	f8c8 4000 	str.w	r4, [r8]
+   b4b8c:	f001 f879 	bl	b5c82 <_ZN10CloudClass17register_functionEPFiPvPKcS0_ES0_S2_>
+        return network_listening(*this, 0, NULL);
+    }
+
+    bool ready()
+    {
+        return network_ready(*this, 0,  NULL);
+   b4b90:	6870      	ldr	r0, [r6, #4]
+   b4b92:	4622      	mov	r2, r4
+   b4b94:	4621      	mov	r1, r4
+   b4b96:	f000 fe0d 	bl	b57b4 <network_ready>
+   b4b9a:	2800      	cmp	r0, #0
+   b4b9c:	d041      	beq.n	b4c22 <setup+0xca>
+   b4b9e:	4631      	mov	r1, r6
+   b4ba0:	a80e      	add	r0, sp, #56	; 0x38
+   b4ba2:	f000 ff2b 	bl	b59fc <_ZN5spark13CellularClass4RSSIEv>
+   b4ba6:	a80e      	add	r0, sp, #56	; 0x38
+   b4ba8:	f000 ffa4 	bl	b5af4 <_ZNK14CellularSignal11getStrengthEv>
+   b4bac:	4f26      	ldr	r7, [pc, #152]	; (b4c48 <setup+0xf0>)
+   b4bae:	a80e      	add	r0, sp, #56	; 0x38
+   b4bb0:	ed87 0a00 	vstr	s0, [r7]
+   b4bb4:	f000 ffce 	bl	b5b54 <_ZNK14CellularSignal10getQualityEv>
+   b4bb8:	4b24      	ldr	r3, [pc, #144]	; (b4c4c <setup+0xf4>)
+   b4bba:	ed83 0a00 	vstr	s0, [r3]
+   b4bbe:	f8d8 3000 	ldr.w	r3, [r8]
+   b4bc2:	ee10 5a10 	vmov	r5, s0
+   b4bc6:	b363      	cbz	r3, b4c22 <setup+0xca>
+   b4bc8:	6838      	ldr	r0, [r7, #0]
+   b4bca:	f7ff fb8b 	bl	b42e4 <__aeabi_f2d>
+   b4bce:	4602      	mov	r2, r0
+   b4bd0:	460b      	mov	r3, r1
+   b4bd2:	4628      	mov	r0, r5
+   b4bd4:	e9cd 2302 	strd	r2, r3, [sp, #8]
+   b4bd8:	f7ff fb84 	bl	b42e4 <__aeabi_f2d>
+   b4bdc:	e9dd 2302 	ldrd	r2, r3, [sp, #8]
+   b4be0:	e9cd 0100 	strd	r0, r1, [sp]
+   b4be4:	491a      	ldr	r1, [pc, #104]	; (b4c50 <setup+0xf8>)
+   b4be6:	481b      	ldr	r0, [pc, #108]	; (b4c54 <setup+0xfc>)
+   b4be8:	f7ff ff9e 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+        return IPAddress(((CellularConfig*)network_config(*this, 0, NULL))->nw.aucIP);
+   b4bec:	4622      	mov	r2, r4
+   b4bee:	4621      	mov	r1, r4
+   b4bf0:	6870      	ldr	r0, [r6, #4]
+   b4bf2:	f000 fdbf 	bl	b5774 <network_config>
+   b4bf6:	1c81      	adds	r1, r0, #2
+   b4bf8:	a808      	add	r0, sp, #32
+   b4bfa:	f001 fc3d 	bl	b6478 <_ZN9IPAddressC1ERK16_HAL_IPAddress_t>
+
+    virtual size_t printTo(Print& p) const;
+
+    void clear() { memset(&address, 0, sizeof (address)); }
+
+    String toString() const { return String(*this); }
+   b4bfe:	a908      	add	r1, sp, #32
+   b4c00:	a804      	add	r0, sp, #16
+   b4c02:	f003 f8e9 	bl	b7dd8 <_ZN6StringC1ERK9Printable>
+   b4c06:	4914      	ldr	r1, [pc, #80]	; (b4c58 <setup+0x100>)
+   b4c08:	9a04      	ldr	r2, [sp, #16]
+   b4c0a:	4812      	ldr	r0, [pc, #72]	; (b4c54 <setup+0xfc>)
+   b4c0c:	f7ff ff8c 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b4c10:	a804      	add	r0, sp, #16
+   b4c12:	f002 ffdf 	bl	b7bd4 <_ZN6StringD1Ev>
+   b4c16:	f003 f9fb 	bl	b8010 <_Z16_fetch_usbserialv>
+   b4c1a:	f44f 5116 	mov.w	r1, #9600	; 0x2580
+   b4c1e:	f003 f9e7 	bl	b7ff0 <_ZN9USBSerial5beginEl>
+   b4c22:	b016      	add	sp, #88	; 0x58
+   b4c24:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+   b4c28:	2003e5d8 	.word	0x2003e5d8
+   b4c2c:	000b87a8 	.word	0x000b87a8
+   b4c30:	2003e648 	.word	0x2003e648
+   b4c34:	2003e5f4 	.word	0x2003e5f4
+   b4c38:	2003e54c 	.word	0x2003e54c
+   b4c3c:	000b87b8 	.word	0x000b87b8
+   b4c40:	000b4ab5 	.word	0x000b4ab5
+   b4c44:	000b5c57 	.word	0x000b5c57
+   b4c48:	2003e5e4 	.word	0x2003e5e4
+   b4c4c:	2003e5e0 	.word	0x2003e5e0
+   b4c50:	000b87bc 	.word	0x000b87bc
+   b4c54:	2003e68c 	.word	0x2003e68c
+   b4c58:	000b87f2 	.word	0x000b87f2
+   b4c5c:	2003e5e8 	.word	0x2003e5e8
+
+000b4c60 <_Z19get_battery_voltagev>:
+   b4c60:	b508      	push	{r3, lr}
+   b4c62:	480a      	ldr	r0, [pc, #40]	; (b4c8c <_Z19get_battery_voltagev+0x2c>)
+   b4c64:	f001 fb14 	bl	b6290 <_ZN9FuelGauge8getVCellEv>
+   b4c68:	ee10 0a10 	vmov	r0, s0
+   b4c6c:	f7ff fb3a 	bl	b42e4 <__aeabi_f2d>
+   b4c70:	4b07      	ldr	r3, [pc, #28]	; (b4c90 <_Z19get_battery_voltagev+0x30>)
+   b4c72:	e9c3 0100 	strd	r0, r1, [r3]
+   b4c76:	4b07      	ldr	r3, [pc, #28]	; (b4c94 <_Z19get_battery_voltagev+0x34>)
+   b4c78:	681b      	ldr	r3, [r3, #0]
+   b4c7a:	2b01      	cmp	r3, #1
+   b4c7c:	d105      	bne.n	b4c8a <_Z19get_battery_voltagev+0x2a>
+   b4c7e:	4602      	mov	r2, r0
+   b4c80:	460b      	mov	r3, r1
+   b4c82:	4805      	ldr	r0, [pc, #20]	; (b4c98 <_Z19get_battery_voltagev+0x38>)
+   b4c84:	4905      	ldr	r1, [pc, #20]	; (b4c9c <_Z19get_battery_voltagev+0x3c>)
+   b4c86:	f7ff ff4f 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b4c8a:	bd08      	pop	{r3, pc}
+   b4c8c:	2003e5ec 	.word	0x2003e5ec
+   b4c90:	2003e5d8 	.word	0x2003e5d8
+   b4c94:	2003e5e8 	.word	0x2003e5e8
+   b4c98:	2003e68c 	.word	0x2003e68c
+   b4c9c:	000b87fe 	.word	0x000b87fe
+
+000b4ca0 <_Z14test_flash_ledii>:
+   b4ca0:	b538      	push	{r3, r4, r5, lr}
+   b4ca2:	b285      	uxth	r5, r0
+   b4ca4:	460c      	mov	r4, r1
+   b4ca6:	4628      	mov	r0, r5
+   b4ca8:	2101      	movs	r1, #1
+   b4caa:	f003 fac2 	bl	b8232 <digitalWrite>
+   b4cae:	4620      	mov	r0, r4
+   b4cb0:	f000 fe10 	bl	b58d4 <delay>
+   b4cb4:	4628      	mov	r0, r5
+   b4cb6:	2100      	movs	r1, #0
+   b4cb8:	f003 fabb 	bl	b8232 <digitalWrite>
+   b4cbc:	4620      	mov	r0, r4
+   b4cbe:	e8bd 4038 	ldmia.w	sp!, {r3, r4, r5, lr}
+   b4cc2:	f000 be07 	b.w	b58d4 <delay>
+	...
+
+000b4cc8 <_Z19check_day_time_syncv>:
+   b4cc8:	b510      	push	{r4, lr}
+   b4cca:	4c09      	ldr	r4, [pc, #36]	; (b4cf0 <_Z19check_day_time_syncv+0x28>)
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+inline system_tick_t millis(void) { return HAL_Timer_Get_Milli_Seconds(); }
+   b4ccc:	f000 fb7c 	bl	b53c8 <HAL_Timer_Get_Milli_Seconds>
+   b4cd0:	6823      	ldr	r3, [r4, #0]
+   b4cd2:	1ac0      	subs	r0, r0, r3
+   b4cd4:	4b07      	ldr	r3, [pc, #28]	; (b4cf4 <_Z19check_day_time_syncv+0x2c>)
+   b4cd6:	4298      	cmp	r0, r3
+   b4cd8:	d908      	bls.n	b4cec <_Z19check_day_time_syncv+0x24>
+    static void sleep(Spark_Sleep_TypeDef sleepMode, long seconds=0) __attribute__ ((deprecated("Please use System.sleep() instead.")))
+    { SystemClass::sleep(sleepMode, seconds); }
+    static void sleep(uint16_t wakeUpPin, InterruptMode edgeTriggerMode, long seconds=0) __attribute__ ((deprecated("Please use System.sleep() instead.")))
+    { SystemClass::sleep(wakeUpPin, edgeTriggerMode, seconds); }
+
+    static bool connected(void) { return spark_cloud_flag_connected(); }
+   b4cda:	f000 fd2b 	bl	b5734 <spark_cloud_flag_connected>
+        if (!connected()) {
+   b4cde:	b110      	cbz	r0, b4ce6 <_Z19check_day_time_syncv+0x1e>
+        return spark_sync_time(NULL);
+   b4ce0:	2000      	movs	r0, #0
+   b4ce2:	f000 fd37 	bl	b5754 <spark_sync_time>
+   b4ce6:	f000 fb6f 	bl	b53c8 <HAL_Timer_Get_Milli_Seconds>
+   b4cea:	6020      	str	r0, [r4, #0]
+   b4cec:	bd10      	pop	{r4, pc}
+   b4cee:	bf00      	nop
+   b4cf0:	2003e5f8 	.word	0x2003e5f8
+   b4cf4:	05265c00 	.word	0x05265c00
+
+000b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>:
+      explicit __shared_count(const __weak_count<_Lp>& __r);
+
+      // Does not throw if __r._M_get_use_count() == 0, caller must check.
+      explicit __shared_count(const __weak_count<_Lp>& __r, std::nothrow_t);
+
+      ~__shared_count() noexcept
+   b4cf8:	b538      	push	{r3, r4, r5, lr}
+      {
+	if (_M_pi != nullptr)
+   b4cfa:	6804      	ldr	r4, [r0, #0]
+      ~__shared_count() noexcept
+   b4cfc:	4605      	mov	r5, r0
+	if (_M_pi != nullptr)
+   b4cfe:	b17c      	cbz	r4, b4d20 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x28>
+      if (--_M_use_count == 0)
+   b4d00:	6863      	ldr	r3, [r4, #4]
+   b4d02:	3b01      	subs	r3, #1
+   b4d04:	6063      	str	r3, [r4, #4]
+   b4d06:	b95b      	cbnz	r3, b4d20 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x28>
+          _M_dispose();
+   b4d08:	6823      	ldr	r3, [r4, #0]
+   b4d0a:	4620      	mov	r0, r4
+   b4d0c:	689b      	ldr	r3, [r3, #8]
+   b4d0e:	4798      	blx	r3
+          if (--_M_weak_count == 0)
+   b4d10:	68a3      	ldr	r3, [r4, #8]
+   b4d12:	3b01      	subs	r3, #1
+   b4d14:	60a3      	str	r3, [r4, #8]
+   b4d16:	b91b      	cbnz	r3, b4d20 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x28>
+            _M_destroy();
+   b4d18:	6823      	ldr	r3, [r4, #0]
+   b4d1a:	4620      	mov	r0, r4
+   b4d1c:	68db      	ldr	r3, [r3, #12]
+   b4d1e:	4798      	blx	r3
+	  _M_pi->_M_release();
+      }
+   b4d20:	4628      	mov	r0, r5
+   b4d22:	bd38      	pop	{r3, r4, r5, pc}
+
+000b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>:
+inline spark::Vector<T, AllocatorT>::Vector(Vector<T, AllocatorT>&& vector) : Vector() {
+    swap(*this, vector);
+}
+
+template<typename T, typename AllocatorT>
+inline spark::Vector<T, AllocatorT>::~Vector() {
+   b4d24:	b570      	push	{r4, r5, r6, lr}
+    destruct(data_, data_ + size_);
+   b4d26:	e9d0 5300 	ldrd	r5, r3, [r0]
+   b4d2a:	2614      	movs	r6, #20
+inline spark::Vector<T, AllocatorT>::~Vector() {
+   b4d2c:	4604      	mov	r4, r0
+    destruct(data_, data_ + size_);
+   b4d2e:	fb06 5603 	mla	r6, r6, r3, r5
+        for (; p != end; ++p) {
+   b4d32:	42ae      	cmp	r6, r5
+   b4d34:	d004      	beq.n	b4d40 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev+0x1c>
+class LogCategoryFilter {
+   b4d36:	4628      	mov	r0, r5
+   b4d38:	f002 ff4c 	bl	b7bd4 <_ZN6StringD1Ev>
+   b4d3c:	3514      	adds	r5, #20
+   b4d3e:	e7f8      	b.n	b4d32 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev+0xe>
+    ::free(ptr);
+   b4d40:	6820      	ldr	r0, [r4, #0]
+   b4d42:	f000 fd87 	bl	b5854 <free>
+    AllocatorT::free(data_);
+}
+   b4d46:	4620      	mov	r0, r4
+   b4d48:	bd70      	pop	{r4, r5, r6, pc}
+
+000b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>:
+    // Constructs succeeded future
+    explicit Future(ResultT result = ResultT()) :
+            FutureBase<ResultT, ContextT>(std::make_shared<detail::FutureImpl<ResultT, ContextT>>(std::move(result))) {
+    }
+
+    ResultT result() const {
+   b4d4a:	b538      	push	{r3, r4, r5, lr}
+        { __shared_ptr(__p, std::move(__d), std::move(__a)).swap(*this); }
+
+      /// Return the stored pointer.
+      element_type*
+      get() const noexcept
+      { return _M_ptr; }
+   b4d4c:	6804      	ldr	r4, [r0, #0]
+        return (application_thread_current(nullptr) != 0);
+   b4d4e:	2000      	movs	r0, #0
+   b4d50:	f000 fcaa 	bl	b56a8 <application_thread_current>
+        if (ContextT::isApplicationThreadCurrent()) {
+   b4d54:	b120      	cbz	r0, b4d60 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x16>
+      {
+	memory_order __b = __m & __memory_order_mask;
+	__glibcxx_assert(__b != memory_order_release);
+	__glibcxx_assert(__b != memory_order_acq_rel);
+
+	return __atomic_load_n(&_M_i, int(__m));
+   b4d56:	7863      	ldrb	r3, [r4, #1]
+                if (isDone()) { // We can use relaxed ordering here, as long as the future's result is not examined
+   b4d58:	b913      	cbnz	r3, b4d60 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x16>
+        spark_process();
+   b4d5a:	f000 fce3 	bl	b5724 <spark_process>
+    }
+   b4d5e:	e7fa      	b.n	b4d56 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0xc>
+   b4d60:	7863      	ldrb	r3, [r4, #1]
+   b4d62:	f3bf 8f5b 	dmb	ish
+   b4d66:	1c65      	adds	r5, r4, #1
+        if (this->acquireDone() && this->isSucceeded()) {
+   b4d68:	b90b      	cbnz	r3, b4d6e <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x24>
+        return std::move(defaultValue);
+   b4d6a:	2000      	movs	r0, #0
+        return this->p_->result();
+    }
+   b4d6c:	bd38      	pop	{r3, r4, r5, pc}
+        return (application_thread_current(nullptr) != 0);
+   b4d6e:	2000      	movs	r0, #0
+   b4d70:	f000 fc9a 	bl	b56a8 <application_thread_current>
+        if (ContextT::isApplicationThreadCurrent()) {
+   b4d74:	b120      	cbz	r0, b4d80 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x36>
+   b4d76:	782b      	ldrb	r3, [r5, #0]
+                if (isDone()) { // We can use relaxed ordering here, as long as the future's result is not examined
+   b4d78:	b913      	cbnz	r3, b4d80 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x36>
+        spark_process();
+   b4d7a:	f000 fcd3 	bl	b5724 <spark_process>
+    }
+   b4d7e:	e7fa      	b.n	b4d76 <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x2c>
+      _Tp
+      load(memory_order __m = memory_order_seq_cst) const noexcept
+      {
+	alignas(_Tp) unsigned char __buf[sizeof(_Tp)];
+	_Tp* __ptr = reinterpret_cast<_Tp*>(__buf);
+	__atomic_load(std::__addressof(_M_i), __ptr, int(__m));
+   b4d80:	7823      	ldrb	r3, [r4, #0]
+        if (this->acquireDone() && this->isSucceeded()) {
+   b4d82:	2b01      	cmp	r3, #1
+   b4d84:	d1f1      	bne.n	b4d6a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x20>
+            return result_;
+   b4d86:	7b20      	ldrb	r0, [r4, #12]
+   b4d88:	e7f0      	b.n	b4d6c <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv+0x22>
+	...
+
+000b4d8c <_Z19detect_power_sourcev>:
+   b4d8c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   b4d90:	2018      	movs	r0, #24
+   b4d92:	4e81      	ldr	r6, [pc, #516]	; (b4f98 <_Z19detect_power_sourcev+0x20c>)
+   b4d94:	4c81      	ldr	r4, [pc, #516]	; (b4f9c <_Z19detect_power_sourcev+0x210>)
+   b4d96:	b087      	sub	sp, #28
+   b4d98:	f7ff fe6c 	bl	b4a74 <_ZN17DiagnosticsHelper8getValueEt>
+   b4d9c:	6833      	ldr	r3, [r6, #0]
+   b4d9e:	6020      	str	r0, [r4, #0]
+   b4da0:	b153      	cbz	r3, b4db8 <_Z19detect_power_sourcev+0x2c>
+	char operator [] (unsigned int index) const;
+	char& operator [] (unsigned int index);
+	void getBytes(unsigned char *buf, unsigned int bufsize, unsigned int index=0) const;
+	void toCharArray(char *buf, unsigned int bufsize, unsigned int index=0) const
+		{getBytes((unsigned char *)buf, bufsize, index);}
+	const char * c_str() const { return buffer; }
+   b4da2:	4b7f      	ldr	r3, [pc, #508]	; (b4fa0 <_Z19detect_power_sourcev+0x214>)
+   b4da4:	497f      	ldr	r1, [pc, #508]	; (b4fa4 <_Z19detect_power_sourcev+0x218>)
+   b4da6:	681a      	ldr	r2, [r3, #0]
+   b4da8:	487f      	ldr	r0, [pc, #508]	; (b4fa8 <_Z19detect_power_sourcev+0x21c>)
+   b4daa:	f7ff febd 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b4dae:	6822      	ldr	r2, [r4, #0]
+   b4db0:	497e      	ldr	r1, [pc, #504]	; (b4fac <_Z19detect_power_sourcev+0x220>)
+   b4db2:	487d      	ldr	r0, [pc, #500]	; (b4fa8 <_Z19detect_power_sourcev+0x21c>)
+   b4db4:	f7ff feb8 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b4db8:	4f7d      	ldr	r7, [pc, #500]	; (b4fb0 <_Z19detect_power_sourcev+0x224>)
+   b4dba:	6823      	ldr	r3, [r4, #0]
+   b4dbc:	683a      	ldr	r2, [r7, #0]
+   b4dbe:	4293      	cmp	r3, r2
+   b4dc0:	f000 810f 	beq.w	b4fe2 <_Z19detect_power_sourcev+0x256>
+   b4dc4:	f8df 820c 	ldr.w	r8, [pc, #524]	; b4fd4 <_Z19detect_power_sourcev+0x248>
+   b4dc8:	f8d8 2000 	ldr.w	r2, [r8]
+   b4dcc:	4293      	cmp	r3, r2
+   b4dce:	f000 8108 	beq.w	b4fe2 <_Z19detect_power_sourcev+0x256>
+   b4dd2:	6833      	ldr	r3, [r6, #0]
+   b4dd4:	b12b      	cbz	r3, b4de2 <_Z19detect_power_sourcev+0x56>
+   b4dd6:	4b72      	ldr	r3, [pc, #456]	; (b4fa0 <_Z19detect_power_sourcev+0x214>)
+   b4dd8:	4976      	ldr	r1, [pc, #472]	; (b4fb4 <_Z19detect_power_sourcev+0x228>)
+   b4dda:	681a      	ldr	r2, [r3, #0]
+   b4ddc:	4872      	ldr	r0, [pc, #456]	; (b4fa8 <_Z19detect_power_sourcev+0x21c>)
+   b4dde:	f7ff fea3 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b4de2:	f241 3088 	movw	r0, #5000	; 0x1388
+   b4de6:	f000 fd75 	bl	b58d4 <delay>
+   b4dea:	2018      	movs	r0, #24
+   b4dec:	f7ff fe42 	bl	b4a74 <_ZN17DiagnosticsHelper8getValueEt>
+   b4df0:	683b      	ldr	r3, [r7, #0]
+   b4df2:	6020      	str	r0, [r4, #0]
+   b4df4:	4298      	cmp	r0, r3
+   b4df6:	f000 80f4 	beq.w	b4fe2 <_Z19detect_power_sourcev+0x256>
+   b4dfa:	6833      	ldr	r3, [r6, #0]
+   b4dfc:	b12b      	cbz	r3, b4e0a <_Z19detect_power_sourcev+0x7e>
+   b4dfe:	4b68      	ldr	r3, [pc, #416]	; (b4fa0 <_Z19detect_power_sourcev+0x214>)
+   b4e00:	496d      	ldr	r1, [pc, #436]	; (b4fb8 <_Z19detect_power_sourcev+0x22c>)
+   b4e02:	681a      	ldr	r2, [r3, #0]
+   b4e04:	4868      	ldr	r0, [pc, #416]	; (b4fa8 <_Z19detect_power_sourcev+0x21c>)
+   b4e06:	f7ff fe8f 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b4e0a:	6823      	ldr	r3, [r4, #0]
+   b4e0c:	2b05      	cmp	r3, #5
+   b4e0e:	d147      	bne.n	b4ea0 <_Z19detect_power_sourcev+0x114>
+   b4e10:	4d63      	ldr	r5, [pc, #396]	; (b4fa0 <_Z19detect_power_sourcev+0x214>)
+   b4e12:	496a      	ldr	r1, [pc, #424]	; (b4fbc <_Z19detect_power_sourcev+0x230>)
+   b4e14:	f8df 91b4 	ldr.w	r9, [pc, #436]	; b4fcc <_Z19detect_power_sourcev+0x240>
+        val_(val) {
+}
+
+template<typename TagT, typename ValueT>
+inline particle::Flags<TagT, ValueT> particle::Flags<TagT, ValueT>::operator|(Flags<TagT, ValueT> flags) const {
+    return Flags<TagT, ValueT>(val_ | flags.val_);
+   b4e18:	f8df b1bc 	ldr.w	fp, [pc, #444]	; b4fd8 <_Z19detect_power_sourcev+0x24c>
+   b4e1c:	f8df a1b0 	ldr.w	sl, [pc, #432]	; b4fd0 <_Z19detect_power_sourcev+0x244>
+   b4e20:	4628      	mov	r0, r5
+   b4e22:	f002 ff81 	bl	b7d28 <_ZN6StringaSEPKc>
+   b4e26:	f7ff ff1b 	bl	b4c60 <_Z19get_battery_voltagev>
+   b4e2a:	682a      	ldr	r2, [r5, #0]
+   b4e2c:	4964      	ldr	r1, [pc, #400]	; (b4fc0 <_Z19detect_power_sourcev+0x234>)
+   b4e2e:	a802      	add	r0, sp, #8
+   b4e30:	f002 ffec 	bl	b7e0c <_ZN6String6formatEPKcz>
+   b4e34:	a902      	add	r1, sp, #8
+   b4e36:	4648      	mov	r0, r9
+   b4e38:	f002 ff6e 	bl	b7d18 <_ZN6StringaSEOS_>
+   b4e3c:	a802      	add	r0, sp, #8
+   b4e3e:	f002 fec9 	bl	b7bd4 <_ZN6StringD1Ev>
+   b4e42:	f89a 2000 	ldrb.w	r2, [sl]
+   b4e46:	f89b 3000 	ldrb.w	r3, [fp]
+        return publish_event(eventName, eventData, ttl, flags1 | flags2);
+   b4e4a:	495e      	ldr	r1, [pc, #376]	; (b4fc4 <_Z19detect_power_sourcev+0x238>)
+   b4e4c:	4313      	orrs	r3, r2
+   b4e4e:	f88d 3000 	strb.w	r3, [sp]
+   b4e52:	f8d9 2000 	ldr.w	r2, [r9]
+   b4e56:	233c      	movs	r3, #60	; 0x3c
+   b4e58:	a802      	add	r0, sp, #8
+   b4e5a:	f001 f809 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
+    ResultT result(ResultT defaultValue) const {
+        return this->p_->result(std::move(defaultValue));
+    }
+
+    operator ResultT() const {
+        return result();
+   b4e5e:	a802      	add	r0, sp, #8
+   b4e60:	f7ff ff73 	bl	b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
+   b4e64:	4605      	mov	r5, r0
+      ~__shared_ptr() = default;
+   b4e66:	a803      	add	r0, sp, #12
+   b4e68:	f7ff ff46 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b4e6c:	6823      	ldr	r3, [r4, #0]
+   b4e6e:	f8c8 3000 	str.w	r3, [r8]
+   b4e72:	4954      	ldr	r1, [pc, #336]	; (b4fc4 <_Z19detect_power_sourcev+0x238>)
+   b4e74:	b9a5      	cbnz	r5, b4ea0 <_Z19detect_power_sourcev+0x114>
+   b4e76:	f89a 2000 	ldrb.w	r2, [sl]
+   b4e7a:	f89b 3000 	ldrb.w	r3, [fp]
+   b4e7e:	4313      	orrs	r3, r2
+   b4e80:	f88d 3000 	strb.w	r3, [sp]
+   b4e84:	f8d9 2000 	ldr.w	r2, [r9]
+   b4e88:	233c      	movs	r3, #60	; 0x3c
+   b4e8a:	a802      	add	r0, sp, #8
+   b4e8c:	f000 fff0 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
+   b4e90:	a802      	add	r0, sp, #8
+   b4e92:	f7ff ff5a 	bl	b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
+   b4e96:	4605      	mov	r5, r0
+   b4e98:	a803      	add	r0, sp, #12
+   b4e9a:	f7ff ff2d 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b4e9e:	e7e8      	b.n	b4e72 <_Z19detect_power_sourcev+0xe6>
+   b4ea0:	6823      	ldr	r3, [r4, #0]
+   b4ea2:	2b01      	cmp	r3, #1
+   b4ea4:	d13b      	bne.n	b4f1e <_Z19detect_power_sourcev+0x192>
+   b4ea6:	4d3e      	ldr	r5, [pc, #248]	; (b4fa0 <_Z19detect_power_sourcev+0x214>)
+   b4ea8:	4947      	ldr	r1, [pc, #284]	; (b4fc8 <_Z19detect_power_sourcev+0x23c>)
+   b4eaa:	f8df 9120 	ldr.w	r9, [pc, #288]	; b4fcc <_Z19detect_power_sourcev+0x240>
+   b4eae:	f8df a128 	ldr.w	sl, [pc, #296]	; b4fd8 <_Z19detect_power_sourcev+0x24c>
+   b4eb2:	f8df b11c 	ldr.w	fp, [pc, #284]	; b4fd0 <_Z19detect_power_sourcev+0x244>
+   b4eb6:	4628      	mov	r0, r5
+   b4eb8:	f002 ff36 	bl	b7d28 <_ZN6StringaSEPKc>
+   b4ebc:	682a      	ldr	r2, [r5, #0]
+   b4ebe:	4940      	ldr	r1, [pc, #256]	; (b4fc0 <_Z19detect_power_sourcev+0x234>)
+   b4ec0:	a802      	add	r0, sp, #8
+   b4ec2:	f002 ffa3 	bl	b7e0c <_ZN6String6formatEPKcz>
+   b4ec6:	a902      	add	r1, sp, #8
+   b4ec8:	4648      	mov	r0, r9
+   b4eca:	f002 ff25 	bl	b7d18 <_ZN6StringaSEOS_>
+   b4ece:	a802      	add	r0, sp, #8
+   b4ed0:	f002 fe80 	bl	b7bd4 <_ZN6StringD1Ev>
+   b4ed4:	f89b 2000 	ldrb.w	r2, [fp]
+   b4ed8:	f89a 3000 	ldrb.w	r3, [sl]
+   b4edc:	4939      	ldr	r1, [pc, #228]	; (b4fc4 <_Z19detect_power_sourcev+0x238>)
+   b4ede:	4313      	orrs	r3, r2
+   b4ee0:	f88d 3000 	strb.w	r3, [sp]
+   b4ee4:	f8d9 2000 	ldr.w	r2, [r9]
+   b4ee8:	233c      	movs	r3, #60	; 0x3c
+   b4eea:	a802      	add	r0, sp, #8
+   b4eec:	f000 ffc0 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
+   b4ef0:	a802      	add	r0, sp, #8
+   b4ef2:	f7ff ff2a 	bl	b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
+   b4ef6:	4605      	mov	r5, r0
+   b4ef8:	a803      	add	r0, sp, #12
+   b4efa:	f7ff fefd 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b4efe:	4931      	ldr	r1, [pc, #196]	; (b4fc4 <_Z19detect_power_sourcev+0x238>)
+   b4f00:	b955      	cbnz	r5, b4f18 <_Z19detect_power_sourcev+0x18c>
+   b4f02:	f89a 2000 	ldrb.w	r2, [sl]
+   b4f06:	f89b 3000 	ldrb.w	r3, [fp]
+   b4f0a:	4313      	orrs	r3, r2
+   b4f0c:	f88d 3000 	strb.w	r3, [sp]
+   b4f10:	f8d9 2000 	ldr.w	r2, [r9]
+   b4f14:	233c      	movs	r3, #60	; 0x3c
+   b4f16:	e7e8      	b.n	b4eea <_Z19detect_power_sourcev+0x15e>
+   b4f18:	6823      	ldr	r3, [r4, #0]
+   b4f1a:	f8c8 3000 	str.w	r3, [r8]
+   b4f1e:	6823      	ldr	r3, [r4, #0]
+   b4f20:	3b02      	subs	r3, #2
+   b4f22:	2b02      	cmp	r3, #2
+   b4f24:	d85d      	bhi.n	b4fe2 <_Z19detect_power_sourcev+0x256>
+   b4f26:	4d1e      	ldr	r5, [pc, #120]	; (b4fa0 <_Z19detect_power_sourcev+0x214>)
+   b4f28:	4927      	ldr	r1, [pc, #156]	; (b4fc8 <_Z19detect_power_sourcev+0x23c>)
+   b4f2a:	f8df 90a0 	ldr.w	r9, [pc, #160]	; b4fcc <_Z19detect_power_sourcev+0x240>
+   b4f2e:	f8df b0a8 	ldr.w	fp, [pc, #168]	; b4fd8 <_Z19detect_power_sourcev+0x24c>
+   b4f32:	f8df a09c 	ldr.w	sl, [pc, #156]	; b4fd0 <_Z19detect_power_sourcev+0x244>
+   b4f36:	4628      	mov	r0, r5
+   b4f38:	f002 fef6 	bl	b7d28 <_ZN6StringaSEPKc>
+   b4f3c:	682a      	ldr	r2, [r5, #0]
+   b4f3e:	4920      	ldr	r1, [pc, #128]	; (b4fc0 <_Z19detect_power_sourcev+0x234>)
+   b4f40:	a802      	add	r0, sp, #8
+   b4f42:	f002 ff63 	bl	b7e0c <_ZN6String6formatEPKcz>
+   b4f46:	a902      	add	r1, sp, #8
+   b4f48:	4648      	mov	r0, r9
+   b4f4a:	f002 fee5 	bl	b7d18 <_ZN6StringaSEOS_>
+   b4f4e:	a802      	add	r0, sp, #8
+   b4f50:	f002 fe40 	bl	b7bd4 <_ZN6StringD1Ev>
+   b4f54:	f89a 2000 	ldrb.w	r2, [sl]
+   b4f58:	f89b 3000 	ldrb.w	r3, [fp]
+   b4f5c:	4919      	ldr	r1, [pc, #100]	; (b4fc4 <_Z19detect_power_sourcev+0x238>)
+   b4f5e:	4313      	orrs	r3, r2
+   b4f60:	f88d 3000 	strb.w	r3, [sp]
+   b4f64:	f8d9 2000 	ldr.w	r2, [r9]
+   b4f68:	233c      	movs	r3, #60	; 0x3c
+   b4f6a:	a802      	add	r0, sp, #8
+   b4f6c:	f000 ff80 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
+   b4f70:	a802      	add	r0, sp, #8
+   b4f72:	f7ff feea 	bl	b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
+   b4f76:	4605      	mov	r5, r0
+   b4f78:	a803      	add	r0, sp, #12
+   b4f7a:	f7ff febd 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b4f7e:	4911      	ldr	r1, [pc, #68]	; (b4fc4 <_Z19detect_power_sourcev+0x238>)
+   b4f80:	bb65      	cbnz	r5, b4fdc <_Z19detect_power_sourcev+0x250>
+   b4f82:	f89a 2000 	ldrb.w	r2, [sl]
+   b4f86:	f89b 3000 	ldrb.w	r3, [fp]
+   b4f8a:	4313      	orrs	r3, r2
+   b4f8c:	f88d 3000 	strb.w	r3, [sp]
+   b4f90:	f8d9 2000 	ldr.w	r2, [r9]
+   b4f94:	233c      	movs	r3, #60	; 0x3c
+   b4f96:	e7e8      	b.n	b4f6a <_Z19detect_power_sourcev+0x1de>
+   b4f98:	2003e5e8 	.word	0x2003e5e8
+   b4f9c:	2003e620 	.word	0x2003e620
+   b4fa0:	2003e624 	.word	0x2003e624
+   b4fa4:	000b881a 	.word	0x000b881a
+   b4fa8:	2003e68c 	.word	0x2003e68c
+   b4fac:	000b882c 	.word	0x000b882c
+   b4fb0:	2003e5f4 	.word	0x2003e5f4
+   b4fb4:	000b883e 	.word	0x000b883e
+   b4fb8:	000b8860 	.word	0x000b8860
+   b4fbc:	000b8882 	.word	0x000b8882
+   b4fc0:	000b8895 	.word	0x000b8895
+   b4fc4:	000b88aa 	.word	0x000b88aa
+   b4fc8:	000b88b7 	.word	0x000b88b7
+   b4fcc:	2003e634 	.word	0x2003e634
+   b4fd0:	2003e5d5 	.word	0x2003e5d5
+   b4fd4:	2003e550 	.word	0x2003e550
+   b4fd8:	2003e5d4 	.word	0x2003e5d4
+   b4fdc:	6823      	ldr	r3, [r4, #0]
+   b4fde:	f8c8 3000 	str.w	r3, [r8]
+   b4fe2:	6822      	ldr	r2, [r4, #0]
+   b4fe4:	683b      	ldr	r3, [r7, #0]
+   b4fe6:	429a      	cmp	r2, r3
+   b4fe8:	d16c      	bne.n	b50c4 <_Z19detect_power_sourcev+0x338>
+   b4fea:	f8df 8108 	ldr.w	r8, [pc, #264]	; b50f4 <_Z19detect_power_sourcev+0x368>
+   b4fee:	f8d8 3000 	ldr.w	r3, [r8]
+   b4ff2:	429a      	cmp	r2, r3
+   b4ff4:	d066      	beq.n	b50c4 <_Z19detect_power_sourcev+0x338>
+   b4ff6:	3301      	adds	r3, #1
+   b4ff8:	d064      	beq.n	b50c4 <_Z19detect_power_sourcev+0x338>
+   b4ffa:	6833      	ldr	r3, [r6, #0]
+   b4ffc:	4d33      	ldr	r5, [pc, #204]	; (b50cc <_Z19detect_power_sourcev+0x340>)
+   b4ffe:	b123      	cbz	r3, b500a <_Z19detect_power_sourcev+0x27e>
+   b5000:	682a      	ldr	r2, [r5, #0]
+   b5002:	4933      	ldr	r1, [pc, #204]	; (b50d0 <_Z19detect_power_sourcev+0x344>)
+   b5004:	4833      	ldr	r0, [pc, #204]	; (b50d4 <_Z19detect_power_sourcev+0x348>)
+   b5006:	f7ff fd8f 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b500a:	f241 3088 	movw	r0, #5000	; 0x1388
+   b500e:	f000 fc61 	bl	b58d4 <delay>
+   b5012:	2018      	movs	r0, #24
+   b5014:	f7ff fd2e 	bl	b4a74 <_ZN17DiagnosticsHelper8getValueEt>
+   b5018:	492f      	ldr	r1, [pc, #188]	; (b50d8 <_Z19detect_power_sourcev+0x34c>)
+   b501a:	6020      	str	r0, [r4, #0]
+   b501c:	482b      	ldr	r0, [pc, #172]	; (b50cc <_Z19detect_power_sourcev+0x340>)
+   b501e:	f002 fe83 	bl	b7d28 <_ZN6StringaSEPKc>
+   b5022:	6822      	ldr	r2, [r4, #0]
+   b5024:	683b      	ldr	r3, [r7, #0]
+   b5026:	429a      	cmp	r2, r3
+   b5028:	d14c      	bne.n	b50c4 <_Z19detect_power_sourcev+0x338>
+   b502a:	6833      	ldr	r3, [r6, #0]
+   b502c:	b14b      	cbz	r3, b5042 <_Z19detect_power_sourcev+0x2b6>
+   b502e:	682a      	ldr	r2, [r5, #0]
+   b5030:	492a      	ldr	r1, [pc, #168]	; (b50dc <_Z19detect_power_sourcev+0x350>)
+   b5032:	4828      	ldr	r0, [pc, #160]	; (b50d4 <_Z19detect_power_sourcev+0x348>)
+   b5034:	f7ff fd78 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b5038:	6822      	ldr	r2, [r4, #0]
+   b503a:	4929      	ldr	r1, [pc, #164]	; (b50e0 <_Z19detect_power_sourcev+0x354>)
+   b503c:	4825      	ldr	r0, [pc, #148]	; (b50d4 <_Z19detect_power_sourcev+0x348>)
+   b503e:	f7ff fd73 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b5042:	6823      	ldr	r3, [r4, #0]
+   b5044:	3b02      	subs	r3, #2
+   b5046:	2b02      	cmp	r3, #2
+   b5048:	d83c      	bhi.n	b50c4 <_Z19detect_power_sourcev+0x338>
+   b504a:	4e26      	ldr	r6, [pc, #152]	; (b50e4 <_Z19detect_power_sourcev+0x358>)
+   b504c:	682a      	ldr	r2, [r5, #0]
+   b504e:	4926      	ldr	r1, [pc, #152]	; (b50e8 <_Z19detect_power_sourcev+0x35c>)
+   b5050:	4f26      	ldr	r7, [pc, #152]	; (b50ec <_Z19detect_power_sourcev+0x360>)
+   b5052:	f8df 90a4 	ldr.w	r9, [pc, #164]	; b50f8 <_Z19detect_power_sourcev+0x36c>
+   b5056:	f8df a0a4 	ldr.w	sl, [pc, #164]	; b50fc <_Z19detect_power_sourcev+0x370>
+   b505a:	a802      	add	r0, sp, #8
+   b505c:	f002 fed6 	bl	b7e0c <_ZN6String6formatEPKcz>
+   b5060:	a902      	add	r1, sp, #8
+   b5062:	4630      	mov	r0, r6
+   b5064:	f002 fe58 	bl	b7d18 <_ZN6StringaSEOS_>
+   b5068:	a802      	add	r0, sp, #8
+   b506a:	f002 fdb3 	bl	b7bd4 <_ZN6StringD1Ev>
+   b506e:	f899 2000 	ldrb.w	r2, [r9]
+   b5072:	783b      	ldrb	r3, [r7, #0]
+   b5074:	491e      	ldr	r1, [pc, #120]	; (b50f0 <_Z19detect_power_sourcev+0x364>)
+   b5076:	4313      	orrs	r3, r2
+   b5078:	f88d 3000 	strb.w	r3, [sp]
+   b507c:	6832      	ldr	r2, [r6, #0]
+   b507e:	233c      	movs	r3, #60	; 0x3c
+   b5080:	a802      	add	r0, sp, #8
+   b5082:	f000 fef5 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
+   b5086:	a802      	add	r0, sp, #8
+   b5088:	f7ff fe5f 	bl	b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
+   b508c:	4605      	mov	r5, r0
+   b508e:	a803      	add	r0, sp, #12
+   b5090:	f7ff fe32 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b5094:	b99d      	cbnz	r5, b50be <_Z19detect_power_sourcev+0x332>
+   b5096:	783a      	ldrb	r2, [r7, #0]
+   b5098:	f899 3000 	ldrb.w	r3, [r9]
+   b509c:	4313      	orrs	r3, r2
+   b509e:	f88d 3000 	strb.w	r3, [sp]
+   b50a2:	6832      	ldr	r2, [r6, #0]
+   b50a4:	233c      	movs	r3, #60	; 0x3c
+   b50a6:	4651      	mov	r1, sl
+   b50a8:	a802      	add	r0, sp, #8
+   b50aa:	f000 fee1 	bl	b5e70 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE>
+   b50ae:	a802      	add	r0, sp, #8
+   b50b0:	f7ff fe4b 	bl	b4d4a <_ZNK8particle6FutureIbNS_6detail13FutureContextEE6resultEv>
+   b50b4:	4605      	mov	r5, r0
+   b50b6:	a803      	add	r0, sp, #12
+   b50b8:	f7ff fe1e 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b50bc:	e7ea      	b.n	b5094 <_Z19detect_power_sourcev+0x308>
+   b50be:	6823      	ldr	r3, [r4, #0]
+   b50c0:	f8c8 3000 	str.w	r3, [r8]
+   b50c4:	b007      	add	sp, #28
+   b50c6:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+   b50ca:	bf00      	nop
+   b50cc:	2003e624 	.word	0x2003e624
+   b50d0:	000b883e 	.word	0x000b883e
+   b50d4:	2003e68c 	.word	0x2003e68c
+   b50d8:	000b88b7 	.word	0x000b88b7
+   b50dc:	000b8860 	.word	0x000b8860
+   b50e0:	000b882c 	.word	0x000b882c
+   b50e4:	2003e634 	.word	0x2003e634
+   b50e8:	000b8895 	.word	0x000b8895
+   b50ec:	2003e5d5 	.word	0x2003e5d5
+   b50f0:	000b88aa 	.word	0x000b88aa
+   b50f4:	2003e550 	.word	0x2003e550
+   b50f8:	2003e5d4 	.word	0x2003e5d4
+   b50fc:	000b88ce 	.word	0x000b88ce
+
+000b5100 <loop>:
+   b5100:	b530      	push	{r4, r5, lr}
+   b5102:	4b21      	ldr	r3, [pc, #132]	; (b5188 <loop+0x88>)
+   b5104:	681b      	ldr	r3, [r3, #0]
+   b5106:	b08d      	sub	sp, #52	; 0x34
+   b5108:	2b00      	cmp	r3, #0
+   b510a:	d03a      	beq.n	b5182 <loop+0x82>
+   b510c:	4b1f      	ldr	r3, [pc, #124]	; (b518c <loop+0x8c>)
+   b510e:	4c20      	ldr	r4, [pc, #128]	; (b5190 <loop+0x90>)
+   b5110:	6818      	ldr	r0, [r3, #0]
+   b5112:	21c8      	movs	r1, #200	; 0xc8
+   b5114:	f7ff fdc4 	bl	b4ca0 <_Z14test_flash_ledii>
+        return network_ready(*this, 0,  NULL);
+   b5118:	2200      	movs	r2, #0
+   b511a:	6860      	ldr	r0, [r4, #4]
+   b511c:	4611      	mov	r1, r2
+   b511e:	f000 fb49 	bl	b57b4 <network_ready>
+   b5122:	b328      	cbz	r0, b5170 <loop+0x70>
+   b5124:	4621      	mov	r1, r4
+   b5126:	a804      	add	r0, sp, #16
+   b5128:	f000 fc68 	bl	b59fc <_ZN5spark13CellularClass4RSSIEv>
+   b512c:	a804      	add	r0, sp, #16
+   b512e:	f000 fce1 	bl	b5af4 <_ZNK14CellularSignal11getStrengthEv>
+   b5132:	4d18      	ldr	r5, [pc, #96]	; (b5194 <loop+0x94>)
+   b5134:	a804      	add	r0, sp, #16
+   b5136:	ed85 0a00 	vstr	s0, [r5]
+   b513a:	f000 fd0b 	bl	b5b54 <_ZNK14CellularSignal10getQualityEv>
+   b513e:	4b16      	ldr	r3, [pc, #88]	; (b5198 <loop+0x98>)
+   b5140:	6828      	ldr	r0, [r5, #0]
+   b5142:	ed83 0a00 	vstr	s0, [r3]
+   b5146:	ee10 4a10 	vmov	r4, s0
+   b514a:	f7ff f8cb 	bl	b42e4 <__aeabi_f2d>
+   b514e:	4602      	mov	r2, r0
+   b5150:	460b      	mov	r3, r1
+   b5152:	4620      	mov	r0, r4
+   b5154:	e9cd 2302 	strd	r2, r3, [sp, #8]
+   b5158:	f7ff f8c4 	bl	b42e4 <__aeabi_f2d>
+   b515c:	e9dd 2302 	ldrd	r2, r3, [sp, #8]
+   b5160:	e9cd 0100 	strd	r0, r1, [sp]
+   b5164:	490d      	ldr	r1, [pc, #52]	; (b519c <loop+0x9c>)
+   b5166:	480e      	ldr	r0, [pc, #56]	; (b51a0 <loop+0xa0>)
+   b5168:	f7ff fcde 	bl	b4b28 <_ZNK5spark6Logger4infoEPKcz>
+   b516c:	f7ff fd78 	bl	b4c60 <_Z19get_battery_voltagev>
+   b5170:	f7ff fe0c 	bl	b4d8c <_Z19detect_power_sourcev>
+   b5174:	f242 7010 	movw	r0, #10000	; 0x2710
+   b5178:	b00d      	add	sp, #52	; 0x34
+   b517a:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
+   b517e:	f000 bba9 	b.w	b58d4 <delay>
+   b5182:	f7ff fda1 	bl	b4cc8 <_Z19check_day_time_syncv>
+   b5186:	e7f3      	b.n	b5170 <loop+0x70>
+   b5188:	2003e5e8 	.word	0x2003e5e8
+   b518c:	2003e54c 	.word	0x2003e54c
+   b5190:	2003e648 	.word	0x2003e648
+   b5194:	2003e5e4 	.word	0x2003e5e4
+   b5198:	2003e5e0 	.word	0x2003e5e0
+   b519c:	000b87bc 	.word	0x000b87bc
+   b51a0:	2003e68c 	.word	0x2003e68c
+
+000b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_>:
+        if (dest > p && dest < end) {
+   b51a4:	4288      	cmp	r0, r1
+    static void move(T* dest, T* p, T* end) {
+   b51a6:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+   b51a8:	4604      	mov	r4, r0
+   b51aa:	460d      	mov	r5, r1
+   b51ac:	4616      	mov	r6, r2
+        if (dest > p && dest < end) {
+   b51ae:	d916      	bls.n	b51de <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x3a>
+   b51b0:	4290      	cmp	r0, r2
+   b51b2:	d215      	bcs.n	b51e0 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x3c>
+            --end;
+   b51b4:	f1a2 0614 	sub.w	r6, r2, #20
+            dest += end - p - 1;
+   b51b8:	1a75      	subs	r5, r6, r1
+   b51ba:	f1a1 0714 	sub.w	r7, r1, #20
+   b51be:	442c      	add	r4, r5
+            for (; end != p; --end, --dest) {
+   b51c0:	42b7      	cmp	r7, r6
+   b51c2:	d01c      	beq.n	b51fe <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x5a>
+                new(dest) T(std::move(*end));
+   b51c4:	b12c      	cbz	r4, b51d2 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x2e>
+   b51c6:	4631      	mov	r1, r6
+   b51c8:	4620      	mov	r0, r4
+   b51ca:	f002 fd80 	bl	b7cce <_ZN6StringC1EOS_>
+   b51ce:	7c33      	ldrb	r3, [r6, #16]
+   b51d0:	7423      	strb	r3, [r4, #16]
+   b51d2:	4630      	mov	r0, r6
+   b51d4:	f002 fcfe 	bl	b7bd4 <_ZN6StringD1Ev>
+            for (; end != p; --end, --dest) {
+   b51d8:	3e14      	subs	r6, #20
+   b51da:	3c14      	subs	r4, #20
+   b51dc:	e7f0      	b.n	b51c0 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x1c>
+        } else if (dest != p) {
+   b51de:	d00e      	beq.n	b51fe <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x5a>
+            for (; p != end; ++p, ++dest) {
+   b51e0:	42b5      	cmp	r5, r6
+   b51e2:	d00c      	beq.n	b51fe <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x5a>
+                new(dest) T(std::move(*p));
+   b51e4:	b12c      	cbz	r4, b51f2 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x4e>
+   b51e6:	4629      	mov	r1, r5
+   b51e8:	4620      	mov	r0, r4
+   b51ea:	f002 fd70 	bl	b7cce <_ZN6StringC1EOS_>
+   b51ee:	7c2b      	ldrb	r3, [r5, #16]
+   b51f0:	7423      	strb	r3, [r4, #16]
+   b51f2:	4628      	mov	r0, r5
+   b51f4:	f002 fcee 	bl	b7bd4 <_ZN6StringD1Ev>
+            for (; p != end; ++p, ++dest) {
+   b51f8:	3514      	adds	r5, #20
+   b51fa:	3414      	adds	r4, #20
+   b51fc:	e7f0      	b.n	b51e0 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_+0x3c>
+    }
+   b51fe:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+
+000b5200 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>:
+inline spark::Vector<T, AllocatorT>::Vector(const Vector<T, AllocatorT>& vector) : Vector() {
+   b5200:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+        capacity_(0) {
+   b5204:	2300      	movs	r3, #0
+   b5206:	e9c0 3300 	strd	r3, r3, [r0]
+   b520a:	6083      	str	r3, [r0, #8]
+    if (vector.size_ > 0 && realloc(vector.size_)) {
+   b520c:	684f      	ldr	r7, [r1, #4]
+   b520e:	429f      	cmp	r7, r3
+inline spark::Vector<T, AllocatorT>::Vector(const Vector<T, AllocatorT>& vector) : Vector() {
+   b5210:	4604      	mov	r4, r0
+   b5212:	460e      	mov	r6, r1
+    if (vector.size_ > 0 && realloc(vector.size_)) {
+   b5214:	dd23      	ble.n	b525e <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x5e>
+            d = (T*)AllocatorT::malloc(n * sizeof(T));
+   b5216:	f04f 0814 	mov.w	r8, #20
+    return ::malloc(size);
+   b521a:	fb08 f007 	mul.w	r0, r8, r7
+   b521e:	f000 fb11 	bl	b5844 <malloc>
+            if (!d) {
+   b5222:	4605      	mov	r5, r0
+   b5224:	b1d8      	cbz	r0, b525e <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x5e>
+            move(d, data_, data_ + size_);
+   b5226:	e9d4 1200 	ldrd	r1, r2, [r4]
+   b522a:	fb08 1202 	mla	r2, r8, r2, r1
+   b522e:	f7ff ffb9 	bl	b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEE4moveIS1_Li0EEEvPS1_S5_S5_>
+    ::free(ptr);
+   b5232:	6820      	ldr	r0, [r4, #0]
+   b5234:	f000 fb0e 	bl	b5854 <free>
+        data_ = d;
+   b5238:	6025      	str	r5, [r4, #0]
+        capacity_ = n;
+   b523a:	60a7      	str	r7, [r4, #8]
+        copy(data_, vector.data_, vector.data_ + vector.size_);
+   b523c:	e9d6 7300 	ldrd	r7, r3, [r6]
+   b5240:	fb08 7803 	mla	r8, r8, r3, r7
+        for (; it != end; ++it, ++dest) {
+   b5244:	45b8      	cmp	r8, r7
+   b5246:	d008      	beq.n	b525a <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x5a>
+   b5248:	4639      	mov	r1, r7
+   b524a:	4628      	mov	r0, r5
+   b524c:	f002 fd59 	bl	b7d02 <_ZN6StringC1ERKS_>
+   b5250:	7c3b      	ldrb	r3, [r7, #16]
+   b5252:	742b      	strb	r3, [r5, #16]
+   b5254:	3714      	adds	r7, #20
+   b5256:	3514      	adds	r5, #20
+   b5258:	e7f4      	b.n	b5244 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_+0x44>
+        size_ = vector.size_;
+   b525a:	6873      	ldr	r3, [r6, #4]
+   b525c:	6063      	str	r3, [r4, #4]
+}
+   b525e:	4620      	mov	r0, r4
+   b5260:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+
+000b5264 <_GLOBAL__sub_I_SystemMode>:
+        val_(val) {
+   b5264:	4b2f      	ldr	r3, [pc, #188]	; (b5324 <_GLOBAL__sub_I_SystemMode+0xc0>)
+   b5266:	b570      	push	{r4, r5, r6, lr}
+   b5268:	2501      	movs	r5, #1
+   b526a:	701d      	strb	r5, [r3, #0]
+   b526c:	4b2e      	ldr	r3, [pc, #184]	; (b5328 <_GLOBAL__sub_I_SystemMode+0xc4>)
+   b526e:	2208      	movs	r2, #8
+   b5270:	701a      	strb	r2, [r3, #0]
+
+class SystemSleepResult {
+public:
+    SystemSleepResult()
+            : wakeupSource_(nullptr),
+              error_(SYSTEM_ERROR_NONE) {
+   b5272:	4b2e      	ldr	r3, [pc, #184]	; (b532c <_GLOBAL__sub_I_SystemMode+0xc8>)
+    SleepResult() {}
+   b5274:	4a2e      	ldr	r2, [pc, #184]	; (b5330 <_GLOBAL__sub_I_SystemMode+0xcc>)
+   b5276:	609a      	str	r2, [r3, #8]
+              error_(SYSTEM_ERROR_NONE) {
+   b5278:	2400      	movs	r4, #0
+   b527a:	b08c      	sub	sp, #48	; 0x30
+   b527c:	e9c3 4400 	strd	r4, r4, [r3]
+
+class SystemClass {
+public:
+
+    SystemClass(System_Mode_TypeDef mode = DEFAULT) {
+        set_system_mode(mode);
+   b5280:	4628      	mov	r0, r5
+   b5282:	f000 f9f9 	bl	b5678 <set_system_mode>
+   b5286:	4621      	mov	r1, r4
+   b5288:	4628      	mov	r0, r5
+   b528a:	f000 fa05 	bl	b5698 <system_thread_set_state>
+   b528e:	4621      	mov	r1, r4
+   b5290:	4828      	ldr	r0, [pc, #160]	; (b5334 <_GLOBAL__sub_I_SystemMode+0xd0>)
+   b5292:	f000 ffb1 	bl	b61f8 <_ZN9FuelGaugeC1Eb>
+        capacity_(0) {
+   b5296:	e9cd 4400 	strd	r4, r4, [sp]
+   b529a:	9402      	str	r4, [sp, #8]
+            StreamLogHandler(Serial, level, filters) {
+   b529c:	f002 feb8 	bl	b8010 <_Z16_fetch_usbserialv>
+        filter_(level, filters) {
+   b52a0:	4c25      	ldr	r4, [pc, #148]	; (b5338 <_GLOBAL__sub_I_SystemMode+0xd4>)
+   b52a2:	4605      	mov	r5, r0
+   b52a4:	4669      	mov	r1, sp
+   b52a6:	a803      	add	r0, sp, #12
+   b52a8:	f7ff ffaa 	bl	b5200 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
+   b52ac:	4626      	mov	r6, r4
+        stream_(&stream) {
+   b52ae:	a903      	add	r1, sp, #12
+   b52b0:	a806      	add	r0, sp, #24
+   b52b2:	f7ff ffa5 	bl	b5200 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
+        filter_(level, filters) {
+   b52b6:	4b21      	ldr	r3, [pc, #132]	; (b533c <_GLOBAL__sub_I_SystemMode+0xd8>)
+   b52b8:	f846 3b04 	str.w	r3, [r6], #4
+   b52bc:	a906      	add	r1, sp, #24
+   b52be:	a809      	add	r0, sp, #36	; 0x24
+   b52c0:	f7ff ff9e 	bl	b5200 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
+   b52c4:	aa09      	add	r2, sp, #36	; 0x24
+   b52c6:	211e      	movs	r1, #30
+   b52c8:	4630      	mov	r0, r6
+   b52ca:	f001 ff81 	bl	b71d0 <_ZN5spark6detail9LogFilterC1E8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEE>
+   b52ce:	a809      	add	r0, sp, #36	; 0x24
+   b52d0:	f7ff fd28 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+        stream_(&stream) {
+   b52d4:	a806      	add	r0, sp, #24
+   b52d6:	f7ff fd25 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+   b52da:	4b19      	ldr	r3, [pc, #100]	; (b5340 <_GLOBAL__sub_I_SystemMode+0xdc>)
+   b52dc:	6023      	str	r3, [r4, #0]
+   b52de:	6225      	str	r5, [r4, #32]
+   b52e0:	a803      	add	r0, sp, #12
+   b52e2:	f7ff fd1f 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+   b52e6:	4b17      	ldr	r3, [pc, #92]	; (b5344 <_GLOBAL__sub_I_SystemMode+0xe0>)
+   b52e8:	6023      	str	r3, [r4, #0]
+        Serial.begin();
+   b52ea:	f002 fe91 	bl	b8010 <_Z16_fetch_usbserialv>
+   b52ee:	f44f 5116 	mov.w	r1, #9600	; 0x2580
+   b52f2:	f002 fe7d 	bl	b7ff0 <_ZN9USBSerial5beginEl>
+        LogManager::instance()->addHandler(this);
+   b52f6:	f001 fc4d 	bl	b6b94 <_ZN5spark10LogManager8instanceEv>
+   b52fa:	4621      	mov	r1, r4
+   b52fc:	f001 fe3e 	bl	b6f7c <_ZN5spark10LogManager10addHandlerEPNS_10LogHandlerE>
+   b5300:	4668      	mov	r0, sp
+   b5302:	f7ff fd0f 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+   b5306:	f000 f85f 	bl	b53c8 <HAL_Timer_Get_Milli_Seconds>
+   b530a:	4b0f      	ldr	r3, [pc, #60]	; (b5348 <_GLOBAL__sub_I_SystemMode+0xe4>)
+   b530c:	490f      	ldr	r1, [pc, #60]	; (b534c <_GLOBAL__sub_I_SystemMode+0xe8>)
+   b530e:	6018      	str	r0, [r3, #0]
+   b5310:	480f      	ldr	r0, [pc, #60]	; (b5350 <_GLOBAL__sub_I_SystemMode+0xec>)
+   b5312:	f002 fcaa 	bl	b7c6a <_ZN6StringC1EPK19__FlashStringHelper>
+   b5316:	490d      	ldr	r1, [pc, #52]	; (b534c <_GLOBAL__sub_I_SystemMode+0xe8>)
+   b5318:	480e      	ldr	r0, [pc, #56]	; (b5354 <_GLOBAL__sub_I_SystemMode+0xf0>)
+   b531a:	b00c      	add	sp, #48	; 0x30
+   b531c:	e8bd 4070 	ldmia.w	sp!, {r4, r5, r6, lr}
+   b5320:	f002 bca3 	b.w	b7c6a <_ZN6StringC1EPK19__FlashStringHelper>
+   b5324:	2003e5d4 	.word	0x2003e5d4
+   b5328:	2003e5d5 	.word	0x2003e5d5
+   b532c:	2003e5c8 	.word	0x2003e5c8
+   b5330:	ffff0000 	.word	0xffff0000
+   b5334:	2003e5ec 	.word	0x2003e5ec
+   b5338:	2003e5fc 	.word	0x2003e5fc
+   b533c:	000b88e8 	.word	0x000b88e8
+   b5340:	000b8ab8 	.word	0x000b8ab8
+   b5344:	000b8900 	.word	0x000b8900
+   b5348:	2003e5f8 	.word	0x2003e5f8
+   b534c:	000b8a7f 	.word	0x000b8a7f
+   b5350:	2003e624 	.word	0x2003e624
+   b5354:	2003e634 	.word	0x2003e634
 
 000b5358 <cellular_signal>:
 DYNALIB_FN(12, hal_cellular, cellular_sim_ready, bool(void*))
@@ -3996,13 +3996,13 @@ bool CloudClass::register_function(cloud_function_t fn, void* data, const char* 
 	__r._M_ptr = 0;
    b5cd0:	9300      	str	r3, [sp, #0]
       ~__shared_ptr() = default;
-   b5cd2:	f7fe ffe3 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b5cd2:	f7ff f811 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
         auto d = static_cast<detail::FutureImplPtr<ResultT, ContextT>*>(data);
         const Promise<ResultT, ContextT> p(*d);
         delete d;
    b5cd6:	b135      	cbz	r5, b5ce6 <_ZN8particle11PromiseBaseIbNS_6detail13FutureContextEE11fromDataPtrEPv+0x30>
    b5cd8:	1d28      	adds	r0, r5, #4
-   b5cda:	f7fe ffdf 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b5cda:	f7ff f80d 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
    b5cde:	2108      	movs	r1, #8
    b5ce0:	4628      	mov	r0, r5
    b5ce2:	f7fe fea0 	bl	b4a26 <_ZdlPvj>
@@ -4419,7 +4419,7 @@ Future<bool> CloudClass::publish_event(const char *eventName, const char *eventD
    b5f4e:	f7ff feb2 	bl	b5cb6 <_ZN8particle11PromiseBaseIbNS_6detail13FutureContextEE11fromDataPtrEPv>
       ~__shared_ptr() = default;
    b5f52:	a806      	add	r0, sp, #24
-   b5f54:	f7fe fea2 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b5f54:	f7fe fed0 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
    b5f58:	a903      	add	r1, sp, #12
    b5f5a:	a805      	add	r0, sp, #20
    b5f5c:	f7ff fea2 	bl	b5ca4 <_ZNSt12__shared_ptrIN8particle6detail10FutureImplIbNS1_13FutureContextEEELN9__gnu_cxx12_Lock_policyE0EEC1ERKS7_>
@@ -4440,9 +4440,9 @@ Future<bool> CloudClass::publish_event(const char *eventName, const char *eventD
 	__r._M_ptr = 0;
    b5f6e:	9305      	str	r3, [sp, #20]
       ~__shared_ptr() = default;
-   b5f70:	f7fe fe94 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b5f70:	f7fe fec2 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
    b5f74:	a804      	add	r0, sp, #16
-   b5f76:	f7fe fe91 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b5f76:	f7fe febf 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
 class Promise: public PromiseBase<ResultT, ContextT> {
    b5f7a:	e7ab      	b.n	b5ed4 <_ZN10CloudClass13publish_eventEPKcS1_iN8particle5FlagsI15PublishFlagTypehEE+0x64>
    b5f7c:	000b5ffd 	.word	0x000b5ffd
@@ -4566,7 +4566,7 @@ void publishCompletionCallback(int error, const void* data, void* callbackData, 
    b6028:	a803      	add	r0, sp, #12
    b602a:	f7ff fdea 	bl	b5c02 <_ZN8particle5ErrorD1Ev>
    b602e:	a802      	add	r0, sp, #8
-   b6030:	f7fe fe34 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6030:	f7fe fe62 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
 }
    b6034:	b009      	add	sp, #36	; 0x24
    b6036:	bdf0      	pop	{r4, r5, r6, r7, pc}
@@ -6742,7 +6742,7 @@ inline spark::JSONObjectIterator::JSONObjectIterator(const JSONValue &value) :
    b6c02:	f7ff fd51 	bl	b66a8 <_ZN5spark18JSONObjectIteratorC1EPK9jsmntok_tSt10shared_ptrINS_6detail8JSONDataEE>
       ~__shared_ptr() = default;
    b6c06:	a801      	add	r0, sp, #4
-   b6c08:	f7fe f848 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6c08:	f7fe f876 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
 }
    b6c0c:	4620      	mov	r0, r4
    b6c0e:	b003      	add	sp, #12
@@ -6763,7 +6763,7 @@ inline spark::JSONString spark::JSONObjectIterator::name() const {
    b6c22:	4620      	mov	r0, r4
    b6c24:	f7ff fd1c 	bl	b6660 <_ZN5spark10JSONStringC1EPK9jsmntok_tSt10shared_ptrINS_6detail8JSONDataEE>
    b6c28:	a801      	add	r0, sp, #4
-   b6c2a:	f7fe f837 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6c2a:	f7fe f865 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
 }
    b6c2e:	4620      	mov	r0, r4
    b6c30:	b003      	add	sp, #12
@@ -6784,7 +6784,7 @@ inline spark::JSONValue spark::JSONObjectIterator::value() const {
    b6c44:	4620      	mov	r0, r4
    b6c46:	f7ff fcb4 	bl	b65b2 <_ZN5spark9JSONValueC1EPK9jsmntok_tSt10shared_ptrINS_6detail8JSONDataEE>
    b6c4a:	a801      	add	r0, sp, #4
-   b6c4c:	f7fe f826 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6c4c:	f7fe f854 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
 }
    b6c50:	4620      	mov	r0, r4
    b6c52:	b003      	add	sp, #12
@@ -6819,7 +6819,7 @@ void spark::DefaultOutputStreamFactory::getParams(const JSONValue &params, int *
    b6c86:	bf18      	it	ne
    b6c88:	2401      	movne	r4, #1
    b6c8a:	a801      	add	r0, sp, #4
-   b6c8c:	f7fe f806 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6c8c:	f7fe f834 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
    b6c90:	2c00      	cmp	r4, #0
    b6c92:	d0e9      	beq.n	b6c68 <_ZN5spark26DefaultOutputStreamFactory9getParamsERKNS_9JSONValueEPi+0x10>
             *baudRate = it.value().toInt();
@@ -6830,10 +6830,10 @@ void spark::DefaultOutputStreamFactory::getParams(const JSONValue &params, int *
    b6c9e:	f7ff fcbe 	bl	b661e <_ZNK5spark9JSONValue5toIntEv>
    b6ca2:	6028      	str	r0, [r5, #0]
    b6ca4:	a801      	add	r0, sp, #4
-   b6ca6:	f7fd fff9 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6ca6:	f7fe f827 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
    b6caa:	e7dd      	b.n	b6c68 <_ZN5spark26DefaultOutputStreamFactory9getParamsERKNS_9JSONValueEPi+0x10>
    b6cac:	a805      	add	r0, sp, #20
-   b6cae:	f7fd fff5 	bl	b4c9c <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+   b6cae:	f7fe f823 	bl	b4cf8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
 }
    b6cb2:	b00a      	add	sp, #40	; 0x28
    b6cb4:	bd70      	pop	{r4, r5, r6, pc}
@@ -7944,22 +7944,22 @@ inline spark::StreamLogHandler::StreamLogHandler(Print &stream, LogLevel level, 
 inline spark::StreamLogHandler::StreamLogHandler(Print &stream, LogLevel level, LogCategoryFilters filters) :
    b73d2:	4617      	mov	r7, r2
         stream_(&stream) {
-   b73d4:	f7fd fee6 	bl	b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
+   b73d4:	f7fd ff14 	bl	b5200 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
         filter_(level, filters) {
    b73d8:	4b0b      	ldr	r3, [pc, #44]	; (b7408 <_ZN5spark16StreamLogHandlerC1ER5Print8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEE+0x44>)
    b73da:	f846 3b04 	str.w	r3, [r6], #4
    b73de:	4669      	mov	r1, sp
    b73e0:	a803      	add	r0, sp, #12
-   b73e2:	f7fd fedf 	bl	b51a4 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
+   b73e2:	f7fd ff0d 	bl	b5200 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEC1ERKS3_>
    b73e6:	aa03      	add	r2, sp, #12
    b73e8:	4639      	mov	r1, r7
    b73ea:	4630      	mov	r0, r6
    b73ec:	f7ff fef0 	bl	b71d0 <_ZN5spark6detail9LogFilterC1E8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEE>
    b73f0:	a803      	add	r0, sp, #12
-   b73f2:	f7fd fc69 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+   b73f2:	f7fd fc97 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
         stream_(&stream) {
    b73f6:	4668      	mov	r0, sp
-   b73f8:	f7fd fc66 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+   b73f8:	f7fd fc94 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
    b73fc:	4b03      	ldr	r3, [pc, #12]	; (b740c <_ZN5spark16StreamLogHandlerC1ER5Print8LogLevelNS_6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEEE+0x48>)
    b73fe:	6023      	str	r3, [r4, #0]
 }
@@ -8009,7 +8009,7 @@ inline spark::StreamLogHandler::StreamLogHandler(Print &stream, LogLevel level, 
    b7448:	602b      	str	r3, [r5, #0]
         return new(std::nothrow) StreamLogHandler(*stream, level, std::move(filters));
    b744a:	a801      	add	r0, sp, #4
-   b744c:	f7fd fc3c 	bl	b4cc8 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
+   b744c:	f7fd fc6a 	bl	b4d24 <_ZN5spark6VectorINS_17LogCategoryFilterENS_16DefaultAllocatorEED1Ev>
    b7450:	462c      	mov	r4, r5
 }
    b7452:	4620      	mov	r0, r4
@@ -11134,11 +11134,11 @@ USARTSerial& __fetch_global_Serial1()
 
 000b88e0 <_ZTVN5spark10LogHandlerE>:
 	...
-   b88f0:	4a2d 000b 4a55 000b                         -J..UJ..
+   b88f0:	4a2d 000b 4ab1 000b                         -J...J..
 
 000b88f8 <_ZTVN5spark16SerialLogHandlerE>:
 	...
-   b8900:	4a85 000b 4ab9 000b 74ad 000b 7651 000b     .J...J...t..Qv..
+   b8900:	4ae1 000b 4b15 000b 74ad 000b 7651 000b     .J...K...t..Qv..
 
 000b8910 <_ZTVN5spark13CellularClassE>:
 	...
@@ -11255,7 +11255,7 @@ USARTSerial& __fetch_global_Serial1()
 	...
 
 000b8d64 <link_constructors_location>:
-   b8d64:	000b5209 	.word	0x000b5209
+   b8d64:	000b5265 	.word	0x000b5265
    b8d68:	000b5985 	.word	0x000b5985
    b8d6c:	000b5a51 	.word	0x000b5a51
    b8d70:	000b61b1 	.word	0x000b61b1

@@ -1,4 +1,4 @@
-/Volumes/s_ssd_ext/codes/particle_deviceos/KNETL/target/5.5.0/boron//obj/./src/user_export.o: \
+/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/target/5.5.0/boron//obj/./src/user_export.o: \
  src/user_export.c \
  ../../../modules/shared/nRF52840/inc/user_part_export.c \
  ../../../modules/shared/nRF52840/inc/module_user_init.h \

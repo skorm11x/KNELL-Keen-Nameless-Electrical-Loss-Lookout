@@ -1,4 +1,4 @@
-/Volumes/s_ssd_ext/codes/particle_deviceos/KNETL/target/5.5.0/boron//obj/./src/newlib_stubs.o: \
+/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/target/5.5.0/boron//obj/./src/newlib_stubs.o: \
  src/newlib_stubs.cpp \
  ../../../modules/shared/nRF52840/inc/user-part/newlib_stubs.inc \
  /Users/christopherkosik/.particle/toolchains/gcc-arm/10.2.1/arm-none-eabi/include/sys/types.h \
