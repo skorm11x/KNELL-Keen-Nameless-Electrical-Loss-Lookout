@@ -5,7 +5,7 @@ A cellular Internet of Things (IOT) device that can detect power loss from wall 
 ## System description
 The entire system is composed of a sensor layer, gateway layer, a cloud layer, a service layer, and a user layer.
 See the following diagram for a visual model:
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/KNELLv0.1.drawio.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/KNELLv0.1.drawio.png/)
 
 ### Account credentials
 Currently, the system operates off of a single particle account (controlled by the primary developer) that is used for device monitoring and control of the cloud events and a single user account through the Pushover.net service: (https://pushover.net/)
@@ -15,7 +15,7 @@ There are no future plans to expand the number of accounts directly interfacing 
 Account login details are stored in the 705 CTS government only drive under Facility management/KNELL_Facility_Monitoring_System
 
 ### Push notification service: Pushover
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/pushover.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/pushover.png/)
 
 Why pushover? It is dead simple and cheap! 
 
@@ -69,13 +69,13 @@ If your project includes a library that has not been registered in the Particle 
 Hardware required:
 
 BORON 404x LTE (USA)
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/Boron-LTE-Cat-M1.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/Boron-LTE-Cat-M1.png/)
 
 STOCK ANTENNA:
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/Taoglas-Cellular-Flex-Antenna.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/Taoglas-Cellular-Flex-Antenna.png/)
 
 Battery (any 3.7 LIPO):
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/3.7LIPO.jpg/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/3.7LIPO.jpg/)
 
 
 Follow the Boron 404x quickstart: https://tools.particle.io/setup
@@ -96,27 +96,27 @@ Login with the developer credentials to https://console.particle.io/devices
 Ensure that the device is registered properly and is active. This should have also been done in the Device setup/ Hardware section.
 
 Navigate to the *Integrations* section.
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/integrations_overview.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/integrations_overview.png/)
 
 Click new integration to create a new webhook or integrate another service:
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/integration_selection.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/integration_selection.png/)
 
 Click webhook and you will enter into the webhook builder. This is where you will create the POST or GET form request to interface into your application. For pusher, we create a POST request and model it off of our basic DEV event one:
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/webhook_builder_1.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/webhook_builder_1.png/)
 
 Copy the information in the picture above and adjust the event name and target device or device groups as needed. If you are doing something custom you can copy the format but will definately diverge in the API URL and second part of the webhook builder!
 
 ***NOTE on event name***
 This must correspond to the event name that your device firmware is pushing! For example, our event name is dev_events in our particle cloud and in the device firmware!
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/webhook_code_payload.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/webhook_code_payload.png/)
 
 Now that you are in the second part or "advanced" tab in the webhook builder you will create the form POST request for Pushover. Have your Particle API key and Pushover user key (details above in this readme and details on how to generate a new Pushover API key in next section) and add them as the first two fields with exactly the same field names as above. The title can be whatever title message you want. 
 
 **The Interesting part**
 Message: this is where the payload information from the device comes in. You will need to get the information from the Javascript Object Notation, or JSON, format the device sends up! To do this we must unwrap the JSON using the curly brackets shown around the String payload message we have defined "DEV":
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/webhook_code_payload.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/webhook_code_payload.png/)
 
-Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/pics/webhook_builder_2.png/)
+Markup : ![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNELL/pics/webhook_builder_2.png/)
 
 Other very important notes:
 The extra fields shown in the example above can be edited as needed or ommitted. In our example we specify only one device to be tied to the cloud webhook. Additional paramaters specify timeout and retry attempts. To send to all devices, leave it blank!
