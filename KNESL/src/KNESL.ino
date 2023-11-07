@@ -12,6 +12,7 @@
  * direct wifi between devices for dasta transfer
  */
 
+// #define DEV_DEBUG
 // #define BLE_DEBUG
 // #define POWER_DEBUG
 // #define CELLULAR_DEBUG
