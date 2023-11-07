@@ -7,7 +7,7 @@
  */
 
 // #define DEV_DEBUG
-#define BLE_DEBUG
+// #define BLE_DEBUG
 // #define POWER_DEBUG
 // #define CELLULAR_DEBUG
 // #define SENSOR_DEBUG
