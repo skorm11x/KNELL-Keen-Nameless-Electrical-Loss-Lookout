@@ -1,4 +1,3 @@
-
 # KNELL: Keen Nameless Electrical Loss Lookout
 ## 705-power-loss-detection
 
@@ -135,4 +134,9 @@ Most of the time you will not need to configure Pushover.net. The single API key
 4. Store the infomation in the government only drive or appropriate location!
 
 ## Future work
-Check out the associate github project if you want to get involved! 
+1. Handle disconnections from KNESL nodes. Handle multiple device nodes
+2. Implement the cloud forwarding/processing of the values
+3. decide on frequency for sensor values with n sensors and m nodes!
+4. Integrate with some GUI/ webapp to show values!
+5. Edge AI/ other ways to intelligently react to changes to generate alerts etc.
+6. Proto out hardware schmeatic for real product.
