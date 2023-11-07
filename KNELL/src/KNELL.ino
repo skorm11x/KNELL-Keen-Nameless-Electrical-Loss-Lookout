@@ -70,7 +70,7 @@ POWER_CODES p_table[] = {
 */
 void get_battery_voltage();
 void check_day_time_sync();
-void detect_power_source();
+void detect_power_state();
 void pinMode(uint16_t pin, PinMode mode);
 void dev_tests();
 
@@ -111,11 +111,11 @@ void loop() {
       Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
       get_battery_voltage();
     }
-    detect_power_source();
+    detect_power_state();
   }
   else{
     check_day_time_sync();
-    detect_power_source();
+    detect_power_state();
   }
   //dev_tests();
   delay(10000);
@@ -148,7 +148,7 @@ void check_day_time_sync() {
   Checked at top of every loop and during setup() to see if power has changed from its initialization source
   See POWER_CODES structure for string messages associated with message reads.
 */
-void detect_power_source() {
+void detect_power_state() {
   bool success;
   powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
   //powerSourceStr = p_table[powerSource].value;

@@ -19,14 +19,14 @@
  */
 
 // #define BLE_DEBUG
-// #define POWER_DEBUG
-// #define CELLULAR_DEBUG
 void setup();
 void loop();
-void detect_power_source();
+void detect_power_state();
 void convert_to_gatt_format(float value, uint8_t* buf);
 void convert_to_gatt_format(double value, uint8_t* buf);
-#line 18 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
+#line 16 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
+#define POWER_DEBUG
+// #define CELLULAR_DEBUG
 #define SENSOR_DEBUG
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
@@ -64,10 +64,7 @@ int initPowerSource;
 int powerSource;
 String powerSourceStr;
 String status;
-int lastPowerSource = -1;
-
-//TODO: refactor battery detection code to remove cloud connection
-//TODO: fragment this out to some other files to clean up the code
+uint8_t lastPowerSource = -1;
 float last_temp_bus = 25.0; // 77.0 deg F initialized
 
 /*
@@ -75,7 +72,8 @@ float last_temp_bus = 25.0; // 77.0 deg F initialized
 */
 // The "environment " service is 0x181A
 // See https://www.bluetooth.com/specifications/gatt/services/
-BleUuid envMonitoringService(0x181A);
+const BleUuid envMonitoringService(0x181A);
+const BleUuid powerStateService("0a59feb8-625f-460b-a9dc-e3698701d9ff");
 
 // We're using a well-known characteristics UUID. They're defined here:
 // https://www.bluetooth.com/specifications/gatt/characteristics/
@@ -87,6 +85,9 @@ BleCharacteristic temperatureMeasurementCharacteristic("temp",
 BleUuid batteryLevelService(BLE_SIG_UUID_BATTERY_SVC);
 // The battery_level characteristic shows the battery level of
 BleCharacteristic batteryLevelCharacteristic("bat", BleCharacteristicProperty::NOTIFY, BleUuid(0x2A19), batteryLevelService);
+
+BleCharacteristic powerStateCharacteristic("power state",
+ BleCharacteristicProperty::NOTIFY, BleUuid("bddfdfad-b9bf-488c-a86c-7017a160b3c8"), powerStateService);
 
 typedef struct power_codes {
   int key;
@@ -135,6 +136,8 @@ void setup() {
     BLE.setDeviceName("KNESL-0");
     BLE.addCharacteristic(temperatureMeasurementCharacteristic);
     BLE.addCharacteristic(batteryLevelCharacteristic);
+    BLE.addCharacteristic(powerStateCharacteristic);
+    powerStateCharacteristic.setValue(&lastPowerSource, 1);
     batteryLevelCharacteristic.setValue(&batt_percent, 1);
 
     BleAdvertisingData advData;
@@ -142,6 +145,7 @@ void setup() {
     // only advertise the health thermometer. The battery service will be found after
     // connecting.
     advData.appendServiceUUID(envMonitoringService);
+    advData.appendServiceUUID(powerStateService);
     advData.deviceName("KNESL-0", 7);
 
     // Continuously advertise when not connected
@@ -152,7 +156,7 @@ void setup() {
 void loop() {
   poll_temp_c(); 
   check_day_time_sync();
-  detect_power_source();
+  detect_power_state();
   get_battery_voltage();
   if (millis() - lastUpdate >= UPDATE_INTERVAL_MS)
     {
@@ -191,63 +195,63 @@ void check_day_time_sync() {
   Checked at top of every loop and during setup() to see if power has changed from its initialization source
   See POWER_CODES structure for string messages associated with message reads.
 */
-void detect_power_source() {
+void detect_power_state() {
   powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
   #ifdef POWER_DEBUG
     Log.info("power src str: %s", powerSourceStr.c_str());
     Log.info("power src INT: %d", powerSource);
   #endif
-  if (powerSource != initPowerSource && powerSource != lastPowerSource) {
-      // the power source just changed from its initial 
-      // wait 5 seconds and double check to see if it was just a blip/ misread then affirm or break
+    if(powerSource != initPowerSource && powerSource != lastPowerSource) {
+        // the power source just changed from its initial 
+        // wait 5 seconds and double check to see if it was just a blip/ misread then affirm or break
+        #ifdef POWER_DEBUG
+          Log.info("Potential Power source change: %s", powerSourceStr.c_str());
+        #endif 
+        delay(5000);
+        powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+        //powerSourceStr = p_table[powerSource].value;
+        if(powerSource != initPowerSource) {
+          #ifdef POWER_DEBUG
+            Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
+          #endif
+          // On battery power
+          if(powerSource == 5) {
+            // Power changed from last and we are now on battery power: yields power loss!
+            lastPowerSource = powerSource;
+          }
+          //On VIN power. Unexpected and should be an error
+          if(powerSource == 1) {
+            lastPowerSource = powerSource;
+          }
+          // should never get here if we initialized initPowerSource to USB correctly
+          // On Wall AC power
+          if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
+            // Power changed from last and we are running off of USB now: yields power restored / on AC power!
+            lastPowerSource = powerSource;
+          }
+        }
+    }
+    if(powerSource == initPowerSource && lastPowerSource != powerSource && lastPowerSource != -1) {
+      // Getting here indicates that we set lastPowerSource (changed from init to seperate power)
+      // and then we restored back to the original initialized power source 
+      // Basically, this is going onto battery for a while and then back to USB power
       #ifdef POWER_DEBUG
         Log.info("Potential Power source change: %s", powerSourceStr.c_str());
       #endif 
       delay(5000);
       powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
-      //powerSourceStr = p_table[powerSource].value;
-      if(powerSource != initPowerSource) {
+      if(powerSource == initPowerSource) {
         #ifdef POWER_DEBUG
           Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
+          Log.info("power src INT: %d", powerSource);
         #endif
-        // On battery power
-        if(powerSource == 5) {
-          // Power changed from last and we are now on battery power: yields power loss!
-          lastPowerSource = powerSource;
-        }
-        //On VIN power. Unexpected and should be an error
-        if(powerSource == 1) {
-          lastPowerSource = powerSource;
-        }
-        // should never get here if we initialized initPowerSource to USB correctly
-        // On Wall AC power
-        if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          // Power changed from last and we are running off of USB now: yields power restored / on AC power!
-          lastPowerSource = powerSource;
-        }
+          // On Wall AC power
+          if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
+            // Power changed from last and we are running off of USB now: yields power restored / on AC power!
+            lastPowerSource = powerSource;
+          }
       }
   }
-  if(powerSource == initPowerSource && lastPowerSource != powerSource && lastPowerSource != -1) {
-    // Getting here indicates that we set lastPowerSource (changed from init to seperate power)
-    // and then we restored back to the original initialized power source 
-    // Basically, this is going onto battery for a while and then back to USB power
-    #ifdef POWER_DEBUG
-      Log.info("Potential Power source change: %s", powerSourceStr.c_str());
-    #endif 
-    delay(5000);
-    powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
-    if(powerSource == initPowerSource) {
-      #ifdef POWER_DEBUG
-        Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
-        Log.info("power src INT: %d", powerSource);
-      #endif
-        // On Wall AC power
-        if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
-          // Power changed from last and we are running off of USB now: yields power restored / on AC power!
-          lastPowerSource = powerSource;
-        }
-    }
-}
 }
 
 /*
