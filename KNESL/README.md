@@ -11,7 +11,7 @@ None! KNELL is the component with all the accounts and tokens to concern yoursel
 
 ## Device setup/ Hardware
 The included schematic should be enough to get the project going on a breadboard. Currently, all the attached sensors to KNELL operate in active mode and need a +3.3V supplied to them. The minimum pull up resistance on the data wire per sensors should be 4.7K ohms.
-![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/production/KNESL/docs/KNESL.png/)
+![picture alt](https://github.com/skorm11x/705-power-loss-detection/blob/master/KNESL/docs/KNESL.png/)
 
 ## Future work
 1. Create a collection to handle variable sensor values and send them all to gateway if needed.
