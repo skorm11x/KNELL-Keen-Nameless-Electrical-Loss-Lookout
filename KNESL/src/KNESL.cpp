@@ -18,16 +18,17 @@
  * direct wifi between devices for dasta transfer
  */
 
+// #define DEV_DEBUG
 // #define BLE_DEBUG
+// #define POWER_DEBUG
+// #define CELLULAR_DEBUG
+// #define SENSOR_DEBUG
 void setup();
 void loop();
 void detect_power_state();
 void convert_to_gatt_format(float value, uint8_t* buf);
 void convert_to_gatt_format(double value, uint8_t* buf);
-#line 16 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
-#define POWER_DEBUG
-// #define CELLULAR_DEBUG
-#define SENSOR_DEBUG
+#line 20 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 // The following is our call to the community library for device diagnostics
@@ -131,7 +132,7 @@ void setup() {
       #endif  
       Serial.begin(9600);
     }
-  // https://docs.particle.io/reference/device-os/bluetooth-le/
+    // https://docs.particle.io/reference/device-os/bluetooth-le/
     BLE.on();
     BLE.setDeviceName("KNESL-0");
     BLE.addCharacteristic(temperatureMeasurementCharacteristic);
@@ -158,10 +159,8 @@ void loop() {
   check_day_time_sync();
   detect_power_state();
   get_battery_voltage();
-  if (millis() - lastUpdate >= UPDATE_INTERVAL_MS)
-    {
+  if (millis() - lastUpdate >= UPDATE_INTERVAL_MS) {
       lastUpdate = millis();
-
       if (BLE.connected()) {
           // The Temperature Measurement characteristic data is defined here:
           // https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_measurement.xml

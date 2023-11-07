@@ -7,7 +7,7 @@
  */
 
 // #define DEV_DEBUG
-// #define BLE_DEBUG
+#define BLE_DEBUG
 // #define POWER_DEBUG
 // #define CELLULAR_DEBUG
 // #define SENSOR_DEBUG
@@ -43,6 +43,23 @@ int powerSource;
 String powerSourceStr;
 String status;
 int lastPowerSource = -1;
+float receivedTemp = 0.0;
+
+/*
+  BLE definitions
+*/
+// TODO: integrate custom KNELL/KNESL service to look for and
+// only connect to those devices.
+BlePeerDevice peer;
+const BleUuid envMonitoringService(0x181A);
+const BleUuid tempUUID(0x2A6E);
+// BleCharacteristic temperatureMeasurementCharacteristic("temp",
+//  BleCharacteristicProperty::NOTIFY, BleUuid(0x2A6E), envMonitoringService);
+BleCharacteristic peerTempCharacteristic;
+BleCharacteristic peerBattCharacteristic;
+const BleAddress DEVICE_ADDRESS("F8:A2:E9:EF:04:65");
+const char* DEVICE_NAME = "KNESL-0";
+
 
 typedef struct power_codes {
   int key;
@@ -70,6 +87,7 @@ void detect_power_state();
 void publish_power_loss();
 void publish_power_restored();
 void dev_tests();
+void onDataReceived(BleOnDataReceivedCallback callback, void* context);
 
 
 // setup() runs once, when the device is first turned on.
@@ -93,13 +111,36 @@ void setup() {
     }
     BLE.on();
     BLE.setDeviceName("KNELL");
-
+    // temperatureMeasurementCharacteristic.onDataReceived(onDataReceived, NULL);
+    if(!peer.connected()){
+      Vector<BleScanResult> scanResult = BLE.scan();
+        if (scanResult.size()) {
+          #ifdef BLE_DEBUG
+            Log.info("%d devices found", scanResult.size());
+          #endif
+          for (int ii = 0; ii < scanResult.size(); ii++) {
+            if (scanResult[ii].address().toString() == DEVICE_ADDRESS.toString()) {
+              #ifdef BLE_DEBUG
+                Serial.println("address found.");
+              #endif
+              peer = BLE.connect(scanResult[ii].address());
+              if (peer.connected()) {
+                #ifdef BLE_DEBUG
+                  Serial.println("CONNECTED.");
+                #endif
+                peer.getCharacteristicByUUID(peerTempCharacteristic, tempUUID);
+                peerTempCharacteristic.onDataReceived(onDataReceived);
+              }
+            }
+          }
+        }
+    }
 }
 
 
 void loop() {
   check_day_time_sync();
-  detect_power_state();
+  //detect_power_state();
   //dev_tests();
   delay(5000);
 }
@@ -215,6 +256,26 @@ void publish_power_restored(){
   }
   lastPowerSource = powerSource;
 }
+
+/*
+  Call back function to handle KNESL temperature value on the
+  GATT env monitoring service.
+*/
+void onDataReceived(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context)
+{
+  // Check if the received data length is valid
+  if (len == 2)
+  {
+    // Convert the two uint8_t values to a float value
+    int16_t rawValue = (data[1] << 8) | data[0];
+    float receivedTemp = rawValue / 100.0;
+    
+    // Print the received float value
+    Serial.print("Received Temp: ");
+    Serial.println(receivedTemp);
+  }
+}
+
 
 void dev_tests() {
    String devStr = "HELLO WORLD";
