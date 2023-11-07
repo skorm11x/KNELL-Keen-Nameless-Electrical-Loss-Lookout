@@ -33,7 +33,6 @@ double battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
 bool isOnWallPower;
 unsigned long lastSync = millis();
 // char *cell_private_ip; //cellular connection private ip, TBD
-int LED1 = D5;
 int initPowerSource;
 int powerSource;
 String powerSourceStr;
@@ -71,7 +70,6 @@ POWER_CODES p_table[] = {
 */
 void get_battery_voltage();
 void check_day_time_sync();
-void test_flash_led(int LED, int time);
 void detect_power_source();
 void pinMode(uint16_t pin, PinMode mode);
 void dev_tests();
@@ -83,12 +81,7 @@ void setup() {
   // Particle.variable("debug", debug);
   Particle.variable("battery_voltage", battery_voltage);
   initPowerSource = 3; //this should be USB/ wall power for our design
-  pinMode(LED1, OUTPUT);               // sets pin as output
   debug = 0; // 0  represents no debug, 1 represents debug
-
-   // We are also going to declare a Particle.function so that we can turn the LED on and off from the cloud.
-   Particle.function("led",ledToggle);
-   // This is saying that when we ask the cloud for the function "led", it will employ the function ledToggle() from this app.
 
   if (Cellular.ready()) {
       CellularSignal sig = Cellular.RSSI();
@@ -102,6 +95,8 @@ void setup() {
         Serial.begin(9600);
       }
     }
+    BLE.on();
+    BLE.setDeviceName("KNELL");
 
 }
 
@@ -109,9 +104,6 @@ void setup() {
 void loop() {
 
   if(debug){
-    // Serial.println("Beginning main loop in debug.");
-    // Serial.println("Flashing LED: ");
-    test_flash_led(LED1, 200);
     if (Cellular.ready()) {
       CellularSignal sig = Cellular.RSSI();
       cell_sig_str = sig.getStrength();
@@ -139,21 +131,6 @@ void loop() {
   if(debug == 1){
     Log.info("Current battery voltage: %f", battery_voltage);
   }
-}
-
-/*
-  TEST/Debug function.
-  Flash the LED: turning on for a set time and then turning off.
-  LED: the led setup to be turned on and off
-  time: time in milliseconds, as an integer
-*/
-void test_flash_led(int LED, int time){
-  //TODO: probably store this information in addressable array to see setup config
-  //Ensure LED exists/ pinmode enabled
-    digitalWrite(LED, HIGH);          // sets the LED on
-    delay(time);                      
-    digitalWrite(LED, LOW);           // sets the LED off
-    delay(time);  
 }
 
 /*
@@ -271,31 +248,4 @@ void dev_tests() {
         tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
       }
 
-}
-
-/*
-  Example "Particle" cloud event handler function. We use the standard connotation for return value success or failures.
-*/
-int ledToggle(String command) {
-    /* Particle.functions always take a string as an argument and return an integer.
-    Since we can pass a string, it means that we can give the program commands on how the function should be used.
-    In this case, telling the function "on" will turn the LED on and telling it "off" will turn the LED off.
-    Then, the function returns a value to us to let us know what happened.
-    In this case, it will return 1 for the LEDs turning on, 0 for the LEDs turning off,
-    and -1 if we received a totally bogus command that didn't do anything to the LEDs.
-    */
-
-    if (command=="on") {
-        //digitalWrite(led1,HIGH);
-        //digitalWrite(led2,HIGH);
-        return 1;
-    }
-    else if (command=="off") {
-        //digitalWrite(led1,LOW);
-        //digitalWrite(led2,LOW);
-        return 0;
-    }
-    else {
-        return -1;
-    }
 }

@@ -9,7 +9,7 @@
  * Keen Nameless Electronic Sensor Lookout
  * Description: Node power loss detection & sensor additions routed to KNELL gateway
  * Author: Christopher J. Kosik
- * Date: 27 Oct 2023
+ * Date: 6 NOV 2023
  * 
  * 
  * NOTES: 
@@ -18,17 +18,24 @@
  * direct wifi between devices for dasta transfer
  */
 
+// #define BLE_DEBUG
+// #define POWER_DEBUG
+// #define CELLULAR_DEBUG
+void setup();
+void loop();
+void detect_power_source();
+void convert_to_gatt_format(float value, uint8_t* buf);
+void convert_to_gatt_format(double value, uint8_t* buf);
+#line 18 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
+#define SENSOR_DEBUG
+#define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
+
 // The following is our call to the community library for device diagnostics
 // https://github.com/rickkas7/DiagnosticsHelperRK
 // The following for DS18/OneWire library 
 // https://github.com/particle-iot/OneWireLibrary/tree/master
 #include "DiagnosticsHelperRK.h"
 #include "DS18.h"
-void setup();
-void loop();
-void convert_to_gatt_format(float temperature, uint8_t* buf);
-#line 21 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNESL/src/KNESL.ino"
-#define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 /*
   Particle specific configurations for modes, power, and data. 
@@ -40,18 +47,17 @@ SYSTEM_THREAD(ENABLED); // handles data/ cloud messaging in a seperate thread fr
 /*
   Global variables, including class definitions
 */
-particle::Future<bool> publish(const char* name, const char* data);
 FuelGauge fuel; // fuel object used to access the battery monitoring circuit
 SerialLogHandler logHandler;
-int debug; // control variable for print statements
-DS18 sensor0(D5, true);
+DS18 sensorBus(D5, true);
 
 const unsigned long UPDATE_INTERVAL_MS = 2000;
 unsigned long lastUpdate = 0;
 
 float cell_sig_str; //celluar signal strength
 float cell_sig_qual; //celluar signal quality
-double battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
+double battery_voltage = 3.7; // voltage in volts, returns -1.0 if it cannot be read
+uint8_t batt_percent = (uint8_t)((battery_voltage/3.7)*100);
 bool isOnWallPower;
 unsigned long lastSync = millis();
 int initPowerSource;
@@ -60,11 +66,9 @@ String powerSourceStr;
 String status;
 int lastPowerSource = -1;
 
-//TODO: update debug to be C preprocessor part
 //TODO: refactor battery detection code to remove cloud connection
 //TODO: fragment this out to some other files to clean up the code
-float last_temp_0 = 25.0; // 77.0 deg F initialized
-uint8_t lastBattery = 100;
+float last_temp_bus = 25.0; // 77.0 deg F initialized
 
 /*
   BLE definitions
@@ -108,69 +112,68 @@ POWER_CODES p_table[] = {
 void get_battery_voltage();
 void check_day_time_sync();
 void poll_temp_c();
-void convert_to_gatt_format();
+void convert_to_gatt_format(float, uint8_t*);
+void convert_to_gatt_format(double, uint8_t*);
 
 void setup() {
   initPowerSource = 3; //this should be USB/ wall power for our design
-  debug = 1; // 0  represents no debug, 1 represents debug
 
   if (Cellular.ready()) {
       CellularSignal sig = Cellular.RSSI();
       cell_sig_str = sig.getStrength();
       cell_sig_qual = sig.getQuality();
-      if(debug){
+      #ifdef CELLULAR_DEBUG
         // Prints out the cellular 
         Log.info("Cellular ready at startup: %f strength and %f quality", cell_sig_str, cell_sig_qual);
         // Prints out the local (private) IP over Serial
         Log.info("localIP: %s", Cellular.localIP().toString().c_str());
-        Serial.begin(9600);
-      }
-  }
+      #endif  
+      Serial.begin(9600);
+    }
   // https://docs.particle.io/reference/device-os/bluetooth-le/
-  BLE.on();
-  BLE.setDeviceName("KNESL-0");
-  BLE.addCharacteristic(temperatureMeasurementCharacteristic);
-	BLE.addCharacteristic(batteryLevelCharacteristic);
-	batteryLevelCharacteristic.setValue(&lastBattery, 1);
+    BLE.on();
+    BLE.setDeviceName("KNESL-0");
+    BLE.addCharacteristic(temperatureMeasurementCharacteristic);
+    BLE.addCharacteristic(batteryLevelCharacteristic);
+    batteryLevelCharacteristic.setValue(&batt_percent, 1);
 
-	BleAdvertisingData advData;
-  // While we support both the health thermometer service and the battery service, we
-	// only advertise the health thermometer. The battery service will be found after
-	// connecting.
-	advData.appendServiceUUID(envMonitoringService);
-  advData.deviceName("KNESL-0", 7);
+    BleAdvertisingData advData;
+    // While we support both the health thermometer service and the battery service, we
+    // only advertise the health thermometer. The battery service will be found after
+    // connecting.
+    advData.appendServiceUUID(envMonitoringService);
+    advData.deviceName("KNESL-0", 7);
 
-	// Continuously advertise when not connected
-	BLE.advertise(&advData);
+    // Continuously advertise when not connected
+    BLE.advertise(&advData);
 
 }
 
 void loop() {
-  poll_temp_c();
+  poll_temp_c(); 
+  check_day_time_sync();
+  detect_power_source();
+  get_battery_voltage();
+  if (millis() - lastUpdate >= UPDATE_INTERVAL_MS)
+    {
+      lastUpdate = millis();
 
-  if(debug){
-    if (millis() - lastUpdate >= UPDATE_INTERVAL_MS)
-      {
-        lastUpdate = millis();
-
-        if (BLE.connected()) {
-            // The Temperature Measurement characteristic data is defined here:
-            // https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_measurement.xml
-
-            uint8_t sensor0_buf[2];
-            convert_to_gatt_format(last_temp_0, sensor0_buf);
-
-            temperatureMeasurementCharacteristic.setValue(sensor0_buf, sizeof(sensor0_buf));
-
-            // The battery starts at 100% and drops to 10% then will jump back up again
-            batteryLevelCharacteristic.setValue(&lastBattery, 1);
-            if (--lastBattery < 10) {
-              lastBattery = 100;
-            }
-        }
+      if (BLE.connected()) {
+          // The Temperature Measurement characteristic data is defined here:
+          // https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.temperature_measurement.xml
+          uint8_t sensorBus_buf[2];
+          convert_to_gatt_format(last_temp_bus, sensorBus_buf);
+          temperatureMeasurementCharacteristic.setValue(sensorBus_buf, sizeof(sensorBus_buf));
+          batteryLevelCharacteristic.setValue(&batt_percent, sizeof(batt_percent));
       }
-  }
+    }
+}
 
+/*
+  Reads battery voltage and updates stack value
+*/
+void get_battery_voltage(){
+  battery_voltage = fuel.getVCell();
 }
 
 /*
@@ -185,27 +188,125 @@ void check_day_time_sync() {
 }
 
 /*
-  Reads battery voltage and updates global value
+  Checked at top of every loop and during setup() to see if power has changed from its initialization source
+  See POWER_CODES structure for string messages associated with message reads.
 */
-void get_battery_voltage(){
-  battery_voltage = fuel.getVCell();
-  if(debug == 1){
-    Log.info("Current battery voltage: %f", battery_voltage);
+void detect_power_source() {
+  powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+  #ifdef POWER_DEBUG
+    Log.info("power src str: %s", powerSourceStr.c_str());
+    Log.info("power src INT: %d", powerSource);
+  #endif
+  if (powerSource != initPowerSource && powerSource != lastPowerSource) {
+      // the power source just changed from its initial 
+      // wait 5 seconds and double check to see if it was just a blip/ misread then affirm or break
+      #ifdef POWER_DEBUG
+        Log.info("Potential Power source change: %s", powerSourceStr.c_str());
+      #endif 
+      delay(5000);
+      powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+      //powerSourceStr = p_table[powerSource].value;
+      if(powerSource != initPowerSource) {
+        #ifdef POWER_DEBUG
+          Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
+        #endif
+        // On battery power
+        if(powerSource == 5) {
+          // Power changed from last and we are now on battery power: yields power loss!
+          lastPowerSource = powerSource;
+        }
+        //On VIN power. Unexpected and should be an error
+        if(powerSource == 1) {
+          lastPowerSource = powerSource;
+        }
+        // should never get here if we initialized initPowerSource to USB correctly
+        // On Wall AC power
+        if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
+          // Power changed from last and we are running off of USB now: yields power restored / on AC power!
+          lastPowerSource = powerSource;
+        }
+      }
   }
+  if(powerSource == initPowerSource && lastPowerSource != powerSource && lastPowerSource != -1) {
+    // Getting here indicates that we set lastPowerSource (changed from init to seperate power)
+    // and then we restored back to the original initialized power source 
+    // Basically, this is going onto battery for a while and then back to USB power
+    #ifdef POWER_DEBUG
+      Log.info("Potential Power source change: %s", powerSourceStr.c_str());
+    #endif 
+    delay(5000);
+    powerSource = DiagnosticsHelper::getValue(DIAG_ID_SYSTEM_POWER_SOURCE);
+    if(powerSource == initPowerSource) {
+      #ifdef POWER_DEBUG
+        Log.info("Confirmed Power source change: %s", powerSourceStr.c_str());
+        Log.info("power src INT: %d", powerSource);
+      #endif
+        // On Wall AC power
+        if(powerSource == 2 || powerSource == 3 || powerSource == 4) {
+          // Power changed from last and we are running off of USB now: yields power restored / on AC power!
+          lastPowerSource = powerSource;
+        }
+    }
+}
 }
 
+/*
+  Poll the sensor bus of the DS18 for sensor values.
+  All sensors have a unique 64-bit address and publish
+  results that we loop around a read as function called.
+*/
 void poll_temp_c(){
-  bool success = sensor0.read();
+  /*
+    Copies the 1-Wire ROM data / address of the last read 
+    device in the buffer. All zeros if no device was found
+    or search is done.
+  */
+  uint8_t addr[8];
+  sensorBus.addr(addr);
+  bool success = sensorBus.read();
   if (success) {
-    last_temp_0 = sensor0.celsius();
-    if(debug){
-      Serial.printlnf("temperature: %f", last_temp_0);
+    /*
+      You need to decide which sensor on the local bus, if multple
+      are attached like in current schematic, is attached to the 
+      environmental sensing service/ character.
+      //ignore addr of all zero. See: https://github.com/particle-iot/OneWireLibrary/tree/master
+      // and the search done section API
+    */
+    int i;
+    if(addr != 0){
+      last_temp_bus = sensorBus.celsius();
+      #ifdef SENSOR_DEBUG
+        Serial.printlnf("temperature: %f", last_temp_bus);
+        Serial.printf("address: ");
+        for (i = 0; i < 7; i++){
+          Serial.printf("%d", addr[i]);
+        }
+        Serial.println("");
+      #endif
     }
   }
 }
 
-void convert_to_gatt_format(float temperature, uint8_t* buf) {
-  int16_t raw_temperature = temperature * 100;
-  buf[0] = raw_temperature & 0xFF;
-  buf[1] = (raw_temperature >> 8) & 0xFF;
+/*
+  Take in a raw float value and a pointer to the 
+  buffer uint8_t that we will attach to our 
+  BLE characteristic(s)
+*/
+void convert_to_gatt_format(float value, uint8_t* buf) {
+  //scale by a dec factor of 100!
+  int16_t raw_value = value * 100;
+  buf[0] = raw_value & 0xFF; // first byte masked with max
+  buf[1] = (raw_value >> 8) & 0xFF; //shift right & mask with max
+}
+
+/*
+  Take in a raw float value and a pointer to the 
+  buffer uint8_t that we will attach to our 
+  BLE characteristic(s)
+*/
+void convert_to_gatt_format(double value, uint8_t* buf) {
+  // scale by a dec factor of 100!
+  int16_t raw_value = value * 100;
+  buf[0] = raw_value & 0xFF; // first byte masked with max
+  buf[1] = (raw_value >> 8) & 0xFF; // shift right & mask with max
 }
