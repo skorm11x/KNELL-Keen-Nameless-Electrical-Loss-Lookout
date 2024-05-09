@@ -86,8 +86,8 @@ void check_day_time_sync();
 void detect_power_state();
 void publish_power_loss();
 void publish_power_restored();
-void dev_tests();
 void onDataReceived(BleOnDataReceivedCallback callback, void* context);
+bool dummyTest = Particle.function("funckey", dummyTest);
 
 
 // setup() runs once, when the device is first turned on.
@@ -277,14 +277,14 @@ void onDataReceived(const uint8_t* data, size_t len, const BlePeerDevice& peer, 
 }
 
 
-void dev_tests() {
-   String devStr = "HELLO WORLD";
-   String test_status = String::format("{\"DEV\":\"%s\"}", devStr.c_str());
+int dummyTest(String extra) {
+  String devStr = "HELLO WORLD";
+  String test_status = String::format("{\"DEV\":\"%s\"}", devStr.c_str());
 
-   bool tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
-   while(!tst_success) {
-        // get here if event publish did not work, reattempt
-        tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
-      }
-
+  bool tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
+  while(!tst_success) {
+      // get here if event publish did not work, reattempt
+      tst_success = Particle.publish("dev_events", test_status, PRIVATE, WITH_ACK);
+    }
+  return 0;
 }
