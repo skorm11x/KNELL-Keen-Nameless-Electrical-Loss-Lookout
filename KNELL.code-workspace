@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "KNELL"
+		},
+		{
+			"path": "KNESL"
+		}
+	],
+	"settings": {
+		"extensions.ignoreRecommendations": true,
+		"files.associations": {
+			"*.ino": "cpp"
+		}
+	}
+}
