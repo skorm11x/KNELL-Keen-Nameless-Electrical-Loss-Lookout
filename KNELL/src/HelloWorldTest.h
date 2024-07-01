@@ -4,4 +4,4 @@
 #error system firmware 0.8.0 or later is required for this library
 #endif
 
-int helloWorldTest(String);
+int HelloWorldTest(String);

@@ -1,8 +1,6 @@
-// #define DEV_DEBUG
-// #define BLE_DEBUG
-// #define POWER_DEBUG
-// #define CELLULAR_DEBUG
-// #define SENSOR_DEBUG
+#ifndef __SYSTEMDEF_H
+#define __SYSTEMDEF_H
+
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 /*
@@ -14,7 +12,6 @@ double battery_voltage; // voltage in volts, returns -1.0 if it cannot be read
 bool isOnWallPower;
 int initPowerSource = 3; //this should be USB/ wall power for our design
 // char *cell_private_ip; //cellular connection private ip, TBD
-int initPowerSource;
 int powerSource;
 int lastPowerSource = -1;
 float receivedTemp = 0.0;
@@ -42,3 +39,5 @@ char powerLossStr[255] {"POWER LOSS AT DMOC"};
 char powerRestoredStr[255] {"POWER RESTORED AT DMOC"};
 bool success;
 int loopDelayTime = 5000;
+
+#endif /* __SYSTEMDEF_H */
