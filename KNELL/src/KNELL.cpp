@@ -13,14 +13,14 @@
  */
 
 // #define DEV_DEBUG
-void setup();
-void loop();
-void onDataReceived(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context);
-#line 10 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNELL/src/KNELL.ino"
-#define BLE_DEBUG
+// #define BLE_DEBUG
 // #define POWER_DEBUG
 // #define CELLULAR_DEBUG
 // #define SENSOR_DEBUG
+void setup();
+void loop();
+void onDataReceived(const uint8_t* data, size_t len, const BlePeerDevice& peer, void* context);
+#line 14 "/Users/christopherkosik/Documents/codes/KNELL_SYS/KNELL/src/KNELL.ino"
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 
 // The following is our call to the community library for device diagnostics
@@ -125,13 +125,19 @@ void setup() {
     if(!peer.connected()){
       Vector<BleScanResult> scanResult = BLE.scan();
         if (scanResult.size()) {
-          Log.info("%d devices found", scanResult.size());
+          #ifdef BLE_DEBUG
+            Log.info("%d devices found", scanResult.size());
+          #endif
           for (int ii = 0; ii < scanResult.size(); ii++) {
             if (scanResult[ii].address().toString() == DEVICE_ADDRESS.toString()) {
-              Serial.println("address found.");
+              #ifdef BLE_DEBUG
+                Serial.println("address found.");
+              #endif
               peer = BLE.connect(scanResult[ii].address());
               if (peer.connected()) {
-                Serial.println("CONNECTED.");
+                #ifdef BLE_DEBUG
+                  Serial.println("CONNECTED.");
+                #endif
                 peer.getCharacteristicByUUID(peerTempCharacteristic, tempUUID);
                 peerTempCharacteristic.onDataReceived(onDataReceived);
               }
@@ -144,55 +150,9 @@ void setup() {
 
 void loop() {
   check_day_time_sync();
-  //detect_power_state();
-
-  //Vector<BleScanResult> scanResult = BLE.scan();
-  // if (scanResult.size()) {
-  //       Log.info("%d devices found", scanResult.size());
-  //       for (int ii = 0; ii < scanResult.size(); ii++) {
-  //         if (scanResult[ii].address().toString() == DEVICE_ADDRESS.toString()) {
-  //           Serial.println("address found.");
-  //           peer = BLE.connect(scanResult[ii].address());
-  //           if (peer.connected()) {
-  //             Serial.println("CONNECTED.");
-
-  //           }
-  //         }
-  //       }
-
-  // }
-
-    // if (scanResult.address().toString() == DEVICE_ADDRESS.toString()) {
-    //   Serial.println("address found.");
-    //   // Stop scanning when the device is found
-    //   BLE.stopScanning();
-    //   // Connect to the Bluetooth device
-    //   //https://docs.particle.io/reference/device-os/api/bluetooth-le-ble/blepeerdevice/#connected-
-    //   BlePeerDevice peer = BLE.connect(scanResult.address());
-    //   if (peer.connected()) {
-    //     Serial.println("CONNECTED!");
-    //     Vector<BleCharacteristic> characteristics = peer.characteristics();
-    //      for(size_t i = 0; i < characteristics.size(); i++){
-    //       if (BleUuid(characteristics[i]) == tempUUID)
-    //         {
-    //           // Assign the characteristic to the peerTempCharacteristic variable
-    //           //peerTempCharacteristic = characteristics[i];
-    //           String value;
-    //           characteristics[i].getValue(value);
-    //           Serial.printlnf("temp value: %s", value);
-    //           break;
-    //         }
-    //      }
-    //   }
-
-    // }
-    // else{
-    //   #ifdef BLE_DEBUG
-    //     Serial.printlnf("Device Address: %s\n", scanResult.address().toString().c_str());
-    //   #endif
-    // }
+  detect_power_state();
   //dev_tests();
-  //delay(5000);
+  delay(5000);
 }
 
 

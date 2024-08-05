@@ -1,2 +1,9 @@
+*.bin
+*.code-workspace
+*.env
+*.DS_Store
 KNELL/target
 KNESL/target
+keys/
+
+

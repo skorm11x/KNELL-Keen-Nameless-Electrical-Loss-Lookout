@@ -140,7 +140,7 @@ void setup() {
 
 void loop() {
   check_day_time_sync();
-  //detect_power_state();
+  detect_power_state();
   //dev_tests();
   delay(5000);
 }
