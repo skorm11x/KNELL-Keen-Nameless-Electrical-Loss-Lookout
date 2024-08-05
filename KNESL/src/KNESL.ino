@@ -263,10 +263,10 @@ void poll_temp_c(){
       //ignore addr of all zero. See: https://github.com/particle-iot/OneWireLibrary/tree/master
       // and the search done section API
     */
-    int i;
     if(addr != 0){
       last_temp_bus = sensorBus.celsius();
       #ifdef SENSOR_DEBUG
+        int i;
         Serial.printlnf("temperature: %f", last_temp_bus);
         Serial.printf("address: ");
         for (i = 0; i < 7; i++){

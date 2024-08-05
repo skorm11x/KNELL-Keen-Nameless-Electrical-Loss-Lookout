@@ -2,8 +2,10 @@
 *.code-workspace
 *.env
 *.DS_Store
+keys
 KNELL/target
 KNESL/target
-keys/
+*.bin
+.vscodekeys/
 
 
