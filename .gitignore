@@ -2,6 +2,7 @@
 *.code-workspace
 *.env
 *.DS_Store
+*node_modules
 keys
 KNELL/target
 KNESL/target
