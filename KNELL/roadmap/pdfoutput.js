@@ -1,3 +1,7 @@
+/**
+ * Generates a PDF from the nodejs rendered html with css
+ */
+
 const puppeteer = require('puppeteer');
 const path = require('path');
 

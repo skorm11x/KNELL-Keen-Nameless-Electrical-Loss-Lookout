@@ -6,13 +6,13 @@
 
 #include "Particle.h"
 
-#if SYSTEM_VERSION < 0x00080000
-#error system firmware 0.8.0 or later is required for this library
-#endif
+// #if SYSTEM_VERSION < 0x00080000
+// #error system firmware 0.8.0 or later is required for this library
+// #endif
 
-#if PLATFORM_ID == 0
-#error diagnostics are not supported on the Spark Core
-#endif
+// #if PLATFORM_ID == 0
+// #error diagnostics are not supported on the Spark Core
+// #endif
 
 /**
  * @brief Handy functions for getting system diagnostic data from user firmware

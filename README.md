@@ -131,5 +131,26 @@ Most of the time you will not need to configure Pushover.net. The single API key
 3. Fill out the name and description
 4. Store the infomation in the government only drive or appropriate location!
 
-## Future work
-Honestly quite a bit. Comprehensively KNELL & KNESL should agree of UUID's and integrations into other services. See each components README for a list/sublist of todo's. None of this incldues rewrites/ making it more readable etc :)
+### NEW
+
+Add the particle tool chain via npm:
+```
+npm install -g particle-cli
+```
+
+compile firmware
+```
+particle compile boron
+```
+TODO@skorm11x R only filesystem in /KNELL/bin fix
+
+run cppcheck for analysis
+```
+bash run_cppcheck.sh
+But really just use the .vscode for most linting!
+```
+flashing
+```
+particle flash <device_name> <binary location>
+particle flash KNELL ./KNELL/bin/knell_0.0.2.bin
+```
