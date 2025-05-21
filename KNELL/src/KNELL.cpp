@@ -161,7 +161,7 @@ void publish_power_restored() {
 */
 void get_weather() {
     // Log.info("Time is: %i:%i:%i:", Time.hour(), Time.minute(), Time.second());
-    if (Time.hour() == 15 && Time.minute() == 0 && Time.second() < 5) {
+    if (Time.hour() == 14 && Time.minute() == 0 && Time.second() < 5) {
         success = Particle.publish("get_weather", PRIVATE, WITH_ACK);
 
         while (!success) {
