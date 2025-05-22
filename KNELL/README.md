@@ -140,3 +140,44 @@ Most of the time you will not need to configure Pushover.net. The single API key
 4. Integrate with some GUI/ webapp to show values!
 5. Edge AI/ other ways to intelligently react to changes to generate alerts etc.
 6. Proto out hardware schmeatic for real product.
+
+## Weather bot feature
+This new feature will make a call https://api.weather.gov/gridpoints/ABQ/100,119/forecast via a  "get_weather" webhook to retrive the weather conditions. We subscribe to response from "get_weather" and post notifications of weather conditions to "post_weather" webhook. The "post_weather" will post notification to the Pushover app. 
+The weather conditions will only be posted if wind speeds are greater than values specified in the "highwinds" array. The notifications will be sent ones a day at 8:00 a.m. 
+Due to size of the respond from the api call the data will be reduced and remaped using the Response template for the "get_weather" webhook, defenition of template is under `./resources/response_template.json`.
+The following two webhooks will need to be created:
+
+**Name: `Get weather`**
+
+Event name: `get_weather`
+
+URL: `https://api.weather.gov/gridpoints/ABQ/100,119/forecast`
+
+Request type: `GET`
+
+Query Parameters : `none`
+
+
+WEHOOK RESPONSE
+
+Response template: {"periods":[{"no":"{{{properties.periods.0.number}}}","nm":"{{{properties.periods.0.name}}}","st":"{{{properties.periods.0.startTime}}}","et":"{{{properties.periods.0.endTime}}}","temp":"{{{properties.periods.0.temperature}}}","tempu":"{{{properties.periods.0.temperatureUnit}}}","ws":"{{{properties.periods.0.windSpeed}}}","wd":"{{{properties.periods.0.windDirection}}}","df":"{{{properties.periods.0.detailedForecast}}}"},{"no":"{{{properties.periods.1.number}}}","nm":"{{{properties.periods.1.name}}}","st":"{{{properties.periods.1.startTime}}}","et":"{{{properties.periods.1.endTime}}}","temp":"{{{properties.periods.1.temperature}}}","tempu":"{{{properties.periods.1.temperatureUnit}}}","ws":"{{{properties.periods.1.windSpeed}}}","wd":"{{{properties.periods.1.windDirection}}}","df":"{{{properties.periods.1.detailedForecast}}}"},{"no":"{{{properties.periods.2.number}}}","nm":"{{{properties.periods.2.name}}}","st":"{{{properties.periods.2.startTime}}}","et":"{{{properties.periods.2.endTime}}}","temp":"{{{properties.periods.2.temperature}}}","tempu":"{{{properties.periods.2.temperatureUnit}}}","ws":"{{{properties.periods.2.windSpeed}}}","wd":"{{{properties.periods.2.windDirection}}}","df":"{{{properties.periods.2.detailedForecast}}}"},{"no":"{{{properties.periods.3.number}}}","nm":"{{{properties.periods.3.name}}}","st":"{{{properties.periods.3.startTime}}}","et":"{{{properties.periods.3.endTime}}}","temp":"{{{properties.periods.3.temperature}}}","tempu":"{{{properties.periods.3.temperatureUnit}}}","ws":"{{{properties.periods.3.windSpeed}}}","wd":"{{{properties.periods.3.windDirection}}}","df":"{{{properties.periods.3.detailedForecast}}}"},{"no":"{{{properties.periods.4.number}}}","nm":"{{{properties.periods.4.name}}}","st":"{{{properties.periods.4.startTime}}}","et":"{{{properties.periods.4.endTime}}}","temp":"{{{properties.periods.4.temperature}}}","tempu":"{{{properties.periods.4.temperatureUnit}}}","ws":"{{{properties.periods.4.windSpeed}}}","wd":"{{{properties.periods.4.windDirection}}}","df":"{{{properties.periods.4.detailedForecast}}}"},{"no":"{{{properties.periods.5.number}}}","nm":"{{{properties.periods.5.name}}}","st":"{{{properties.periods.5.startTime}}}","et":"{{{properties.periods.5.endTime}}}","temp":"{{{properties.periods.5.temperature}}}","tempu":"{{{properties.periods.5.temperatureUnit}}}","ws":"{{{properties.periods.5.windSpeed}}}","wd":"{{{properties.periods.5.windDirection}}}","df":"{{{properties.periods.5.detailedForecast}}}"},{"no":"{{{properties.periods.6.number}}}","nm":"{{{properties.periods.6.name}}}","st":"{{{properties.periods.6.startTime}}}","endTime":"{{{properties.periods.6.endTime}}}","temp":"{{{properties.periods.6.temperature}}}","tempu":"{{{properties.periods.6.temperatureUnit}}}","ws":"{{{properties.periods.6.windSpeed}}}","wd":"{{{properties.periods.6.windDirection}}}","df":"{{{properties.periods.6.detailedForecast}}}"}]}
+
+
+**Name: `Post weather`**
+
+Event name: `post_weather`
+
+URL: `https://api.pushover.net/1/messages.json`
+
+Request type: `POST`
+
+QUERY PARAMETERS keys
+
+Key: `user`     value: `user key from pushover`
+
+Key: `token`    value: `Application/API Token from pushover`
+
+Key: `message`  value: `{{{msg}}}`
+
+key: `html`     value: `1`
+

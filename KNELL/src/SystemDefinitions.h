@@ -16,7 +16,7 @@ int powerSource;
 int lastPowerSource = -1;
 float receivedTemp = 0.0;
 const char* DEVICE_NAME = "KNESL-0";
-
+String highwinds[7] = {"45", "50", "55", "60", "65", "70", "75"};  // Array containing the high wind values
 
 typedef struct power_codes {
   int key;
