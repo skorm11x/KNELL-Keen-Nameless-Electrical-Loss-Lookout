@@ -53,7 +53,7 @@ class KnellClientState extends State<KnellClient> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Environmental Notifications',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: _themeMode,

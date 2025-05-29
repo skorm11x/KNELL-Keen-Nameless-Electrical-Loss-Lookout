@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'notification_detail.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../model/knell_notification.dart';
+import '../components/notification_tile.dart';
 
 class NotificationListScreen extends StatefulWidget {
   final VoidCallback toggleTheme;
@@ -11,18 +12,9 @@ class NotificationListScreen extends StatefulWidget {
 }
 
 class NotificationListScreenState extends State<NotificationListScreen> {
-  List<KnellNotification> notifications = [
-    KnellNotification(
-      title: 'Weather Alert',
-      message: 'Rain expected tomorrow',
-      time: '10:30 AM',
-    ),
-    KnellNotification(
-      title: 'Reminder',
-      message: 'Meeting at 2 PM',
-      time: '9:15 AM',
-    ),
-  ];
+  final Box<KnellNotification> box = Hive.box<KnellNotification>(
+    'notifications',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +28,24 @@ class NotificationListScreenState extends State<NotificationListScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          final notification = notifications[index];
-          return ListTile(
-            leading: const Icon(Icons.notifications),
-            title: Text(notification.title),
-            subtitle: Text(notification.message),
-            trailing: Text(notification.time),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      NotificationDetailScreen(notification: notification),
-                ),
+      body: ValueListenableBuilder(
+        valueListenable: box.listenable(),
+        builder: (context, Box<KnellNotification> notificationsBox, _) {
+          if (notificationsBox.isEmpty) {
+            return const Center(child: Text('No notifications'));
+          }
+
+          return ListView.builder(
+            itemCount: notificationsBox.length,
+            itemBuilder: (context, index) {
+              final notification = notificationsBox.getAt(index)!;
+
+              return NotificationTile(
+                key: ValueKey(notification.time + notification.title),
+                notification: notification,
+                onDismissed: () {
+                  notificationsBox.deleteAt(index);
+                },
               );
             },
           );
