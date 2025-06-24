@@ -4,8 +4,9 @@
     "files.associations": {
         "*.ino": "cpp"
     },
-    "particle.firmwareVersion": "5.8.0",
+    "particle.firmwareVersion": "6.1.1",
     "particle.targetPlatform": "boron",
     "C_Cpp.errorSquiggles": "disabled",
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "particle.targetDevice": "KNESL-0"
 }
