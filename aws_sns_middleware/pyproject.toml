@@ -7,11 +7,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-fastapi = "^0.112.0"
-uvicorn = "^0.30.5"
-boto3 = "^1.34.152"
-python-dotenv = "^1.0.1"
-pylint = "^3.2.6"
+fastapi = "^0.128.0"
+uvicorn = "^0.40.0"
+boto3 = "^1.42.36"
+python-dotenv = "^1.2.1"
+pylint = "^4.0.4"
 black = "^26.1.0"
 
 
