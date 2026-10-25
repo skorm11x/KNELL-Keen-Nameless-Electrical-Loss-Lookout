@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "puppeteer": "^23.4.0"
+    "puppeteer": "^25.16.0"
   },
   "name": "roadmap",
   "version": "1.0.0",
